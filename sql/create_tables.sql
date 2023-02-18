@@ -1,12 +1,11 @@
 create database sensorifydb;
 use sensorifydb;
 
-drop table if exists users;
-drop table if exists rooms;
-drop table if exists sensors;
 drop table if exists addresses;
 drop table if exists devices;
-
+drop table if exists sensors;
+drop table if exists rooms;
+drop table if exists users;
 
 create table users(
     name varchar(50) not null,
@@ -19,7 +18,6 @@ create table users(
 
 create table rooms(
     room_name varchar(30) not null,
-    password varchar(30) not null,
     user_id int,
     room_id int primary key auto_increment,
     foreign key(user_id) references users(user_id)
