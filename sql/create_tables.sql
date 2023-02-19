@@ -13,6 +13,7 @@ create table users(
     user_name varchar(50) not null,
     email varchar(100) not null,
     password varchar(50) not null,
+    image_dest varchar(100) not null,
     user_id int primary key auto_increment
 );
 
@@ -49,4 +50,5 @@ create table devices(
     sensor_id int,
     foreign key (sensor_id) references sensors(sensor_id)
 );
+
 
