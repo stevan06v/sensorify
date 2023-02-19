@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 
@@ -115,7 +113,7 @@ if (
             </div>
             <div id='image-selector'> 
                 <label for='fileimage'>
-                    <img src='./img/user.svg' class='file_image' alt='profile_image'>
+                    <img src='./img/image-search.svg' class='file_image' alt='profile_image'>
                 </label>
                 <input id='fileimage' type='file' name='file' accept='image/png, image/jpg, image/svg, image/jpeg'/> 
             </div>
