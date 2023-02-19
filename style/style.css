@@ -7,24 +7,23 @@ body{
 #login_headline{
     text-align: center;
     font-family: ExtraBold;
-    font-size: 2.4rem;
-    color: white;
+    font-size: 2.7rem;
+    color: #000000;
 }
 
 #signup{
-    box-shadow: 0 0 0 5px rgba(3, 83, 44, 0.697);
-    background-color: rgb(255, 255, 255);
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
     padding-bottom: 2vw;
     width: max-content;
-    border-radius: 10px;
+    border-radius: 30px; 
+    /* border: 5px solid #1a876694; */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgb(56,213,82);
-    background: linear-gradient(348deg, rgba(56,213,82,1) 0%, rgb(9, 113, 57) 100%);
+    /* background: linear-gradient(45deg, #38d552 0%, #065b2e 100%); */
+    box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
 }
 
 .input{
@@ -33,17 +32,35 @@ body{
     display: block;
     margin: auto;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 5px; 
     width: 12vw;
     padding: 0.5vw;
     justify-content: center;
     transition: ease width .4s;
-    border: 2px solid rgba(255, 255, 255, 0.632);
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
+    /* border: 1px solid #1a876682;  */
+    border: 1px solid #1a876667;  
+    /* box-shadow: -2px -1px 55px -10px rgba(0,0,0,0.75); */
     color: #000000;
-    /* background-color: transparent; */
     background-color: rgb(255, 255, 255);
 }
+
+#submit{
+    width: 12vw;
+    padding: 0.5vw;
+    display: block;
+    font-size: 1.5rem;
+    font-family: ExtraBold;
+    cursor: pointer;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);  
+    color: white;
+    border-radius: 5px;
+    /* background: linear-gradient(188deg, #38d552 0%, #097139 100%); */
+    background-color: #1a8766;
+    border: none;
+    margin: auto;
+    box-shadow: -2px -1px 20px -10px rgba(0,0,0,0.75);
+}
+
 
 input[type="file"]{
     display: none;
@@ -53,72 +70,50 @@ input[type="file"]{
 
 .file_image{
     cursor: pointer;
-    width: 10rem;
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%;
-    padding: 2vw;
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
+    border: #1a876698 5px solid;
+    box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
 }
 
- ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #197b3b70;
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #1a876657;
     font-family: BoldItalic;
   }
   ::-moz-placeholder { /* Firefox 19+ */
-    color: #197b3b70;
+    color: #1a876657;
     font-family: BoldItalic;
   }
   :-ms-input-placeholder { /* IE 10+ */
-    color: #197b3b70;
+    color: #1a876657;
     font-family: BoldItalic;
   }
   :-moz-placeholder { /* Firefox 18- */
-    color: #197b3b70;
+    color: #1a876657;
     font-family: BoldItalic;
   }
-
-
 
 .input:focus{
     outline: none;
     box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
 }
 
-#submit{
-    width: 12vw;
-    padding: 0.5vw;
-    display: block;
-    margin: auto;
-    font-size: 20px;
-    font-family: ExtraBold;
-    margin-top:1vw;
-    cursor: pointer;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
-    border: none;
-    color: white;
-    border-radius: 10px;
-    background: linear-gradient(188deg, rgba(56,213,82,1) 0%, rgb(9, 113, 57) 100%);
-}
-
 #signup-grid{
     display: flex;
-    gap: 2vw;
-    justify-content: center
-    
+    gap: 4vw;
+    justify-content: center;
+    margin-bottom: 1vw;
 }
-#input-box{
-   
-}
+
+#input-box{}
+
 #image-selector{
    text-align: center;
    font-size: 5rem;
-
    display: -ms-flexbox;
    display: -webkit-flex;
    display: flex;
-
-
    align-items: center;
 }
 

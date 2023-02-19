@@ -45,8 +45,8 @@ if (
 
     if (in_array($file_actual_ext, $allowed)) { # if extention is inside the array
         if ($file_error === 0) {
-            if ($file_size <= 5_000_000_0) {
-                $file_name_new = uniqid('', true) . "." . $file_actual_ext;
+            if ($file_size <= 5_000_000_0) { # max iamge size
+                $file_name_new = uniqid('', true) . "." . $file_actual_ext; # image unique name for overriding purposes
                 $file_dest = './upload/' . $file_name_new; 
                 # move temp file loaction to new location
                 move_uploaded_file($file_tmp_name, $file_dest);
@@ -97,7 +97,7 @@ if (
     if (!$_SESSION['login']) {
         echo "
         <form id='signup' action='./home.php' method='post' enctype='multipart/form-data'>
-        <h3 id='login_headline'>Sign-Up</h3>
+        <h3 id='login_headline'>Sign up</h3>
         <div id='signup-grid'>
             <div id='input-box'>
                 <input type='text' class='input' name='username' placeholder='User Name' required>
@@ -112,10 +112,9 @@ if (
                 <br>
             </div>
             <div id='image-selector'> 
-                <label for='fileimage'>
-                    <img src='./img/image-search.svg' class='file_image' alt='profile_image'>
-                </label>
-                <input id='fileimage' type='file' name='file' accept='image/png, image/jpg, image/svg, image/jpeg'/> 
+            <img src='./img/image-search.svg' id='profile_image' class='file_image' alt='profile_image' onclick='triggerClick()'>
+                <label for='fileimage'></label>
+                <input onchange='displayImage(this)' id='fileimage' type='file' name='file' accept='image/png, image/jpg, image/svg, image/jpeg'/> 
             </div>
         </div>
         <input type='submit' id='submit' name='submit'>

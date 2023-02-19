@@ -8,12 +8,14 @@
     <title>HomePage</title>
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
+    <script src="./scripts//script.js" defer></script>
 </head>
 
 <body>
     <?php
         include('./components/signup.php');
     ?>
-</body>
 
+    
+</body>
 </html>
