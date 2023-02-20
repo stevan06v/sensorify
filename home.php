@@ -11,9 +11,9 @@
 </head>
 <body>
     <?php
-        include('./components/signup.php');
-    ?>
+       include('./components/signup.php');
 
-
+?>
 </body>
 </html>
+

@@ -28,13 +28,8 @@ if (typeof signup != "undefined" && signup != null) {
   // disable button --> enable after successfull regex-check
   const sendButton = document.getElementById("submit");
   sendButton.disabled = true;
-  // At least 8 characters long
-  // Contains at least one lowercase letter
-  // Contains at least one uppercase letter
-  // Contains at least one digit
-  // Contains at least one special character (one of !@#$%^&*()_+)
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  // at least 8 letters, one special char, one lowercase letter
+  const passwordRegex = /^(?=.*[@#$%^&+=-€])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
   // At least 3 characters long
   // At most 16 characters long
   // Contains only alphanumeric characters (letters and numbers) and underscores
@@ -59,6 +54,7 @@ if (typeof signup != "undefined" && signup != null) {
   lastname.addEventListener("keyup", validateLastname);
   email.addEventListener("keyup", validateEmail);
   password.addEventListener("keyup", validatePassword);
+
   setInterval(() => {
     if (
       validateUsername() &&
@@ -73,9 +69,11 @@ if (typeof signup != "undefined" && signup != null) {
       sendButton.disabled = true;
     }
   }, 100);
+
   function validateUsername() {
     let isValid = usernameRegex.test(username.value);
-    if (!isValid) {
+
+    if (!isValid ) {
       username.style.borderBlockColor = "#e30a0a77";
       return false;
     } else {
@@ -83,6 +81,7 @@ if (typeof signup != "undefined" && signup != null) {
       return true;
     }
   }
+
   function validateName() {
     let isValid = nameRegex.test(name.value);
     if (!isValid) {
@@ -93,6 +92,7 @@ if (typeof signup != "undefined" && signup != null) {
       return true;
     }
   }
+
   function validateLastname() {
     let isValid = nameRegex.test(lastname.value);
     if (!isValid) {
@@ -103,6 +103,7 @@ if (typeof signup != "undefined" && signup != null) {
       return true;
     }
   }
+
   function validateEmail() {
     let isValid = emailRegex.test(email.value);
     if (!isValid) {
@@ -113,9 +114,9 @@ if (typeof signup != "undefined" && signup != null) {
       return true;
     }
   }
-  // to compicated so... use simple passwords (need to change the regexPattern)
+
   function validatePassword() {
-    let isValid = nameRegex.test(password.value);
+    let isValid = passwordRegex.test(password.value);
     if (!isValid) {
       password.style.borderBlockColor = "#e30a0a77";
       return false;
@@ -124,27 +125,4 @@ if (typeof signup != "undefined" && signup != null) {
       return true;
     }
   }
-}
-
-window.onload = function () {
-  var reloading = sessionStorage.getItem("reloading");
-  if (reloading) {
-    sessionStorage.removeItem("reloading");
-    /* exception handling */
-    fetch("../home.php")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-};
-
-function reloadP() {
-  sessionStorage.setItem("reloading", "true");
-  document.location.reload();
 }
