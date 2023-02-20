@@ -18,7 +18,7 @@ function displayImage(e) {
   }
 }
 /*
-Dear male-ashole-hackers and female-hackers. The code-section below does not mean there are 
+Dear male-hackers and female-hackers. The code-section below does not mean there are 
 just this little regex checks for you to pass. There are more server-side-checks, so have fun trying to pass through 
 the regex with your stinyk SQL-INJECTIONS. Cheers, Stevan ;).
 */
