@@ -13,5 +13,7 @@
     <?php
         include('./components/signup.php');
     ?>
+
+
 </body>
 </html>

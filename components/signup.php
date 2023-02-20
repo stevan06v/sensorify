@@ -40,7 +40,7 @@ if (
     if ( # checking data for injections...
         preg_match($name_regex, $_POST['name']) &&
         preg_match($username_regex, $_POST['username']) &&
-        preg_match($lastname_regex, $_POST['lastname']) && # email check missing... regex not working
+        preg_match($lastname_regex, $_POST['lastname']) &&
         preg_match($password_regex, $_POST['password'])
     ) {
         # read the data out of the post-request(ape-form)
@@ -49,7 +49,6 @@ if (
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        echo $name . ": " . $username . ", " . $lastname . ", " . $email . ", " . $password;
     } else {
         array_push($_SESSION['errors'], "Check the input data...");
         header("Location: home.php");
@@ -67,6 +66,7 @@ if (
         die("Connection failed: " . mysqli_connect_errno());
     } else {
         if (!exists_username($username, $connection) && !exists_email($email, $connection)) {
+
             # uploads selected file if user does not exist
             upload_File();
 
@@ -121,7 +121,6 @@ function exists_email($email, $connection)
 function upload_file()
 {
     global $file_dest;
-
     # read image methods
     $file = $_FILES['file']; # output -> array ['name'], [type]...
     # $file-> propeteries
@@ -129,30 +128,37 @@ function upload_file()
     $file_tmp_name = $_FILES['file']['tmp_name']; # temp location of the file
     $file_size = $_FILES['file']['size']; # size of the file
     $file_error = $_FILES['file']['error']; # error of the file
-    # files allowings
-    $file_ext = explode('.', $file_name); # trim filename and the type[jpeg]
-    $file_actual_ext = strtolower(end($file_ext)); # Lowercase the last element of the file JPEG -> jpeg
-    $allowed = array('jpg', 'jpeg', 'png', 'svg'); # list all file types which can be uploaded
-    if (in_array($file_actual_ext, $allowed)) { # if extention is inside the array
+    $file_ext = explode('.', $file_name);
+    # Lowercase the last element of the file JPEG -> jpeg
+    $file_actual_ext = strtolower(end($file_ext)); 
+    $allowed = array('jpg', 'jpeg', 'png', 'svg'); 
+    if (in_array($file_actual_ext, $allowed)) { 
         if ($file_error === 0) {
-            if ($file_size <= 5_000_000_0) { # max image size
-                $file_name_new = uniqid('', true) . "." . $file_actual_ext; # image unique name for overriding purposes
+            if ($file_size <= 2_000_000) { # max image size
+                
+                $file_name_new = uniqid('', true) . "." . $file_actual_ext; 
                 $file_dest = './upload/' . $file_name_new;
 
                 // toDo: Convert given image to 170x170 
-
+                // cube: https://3dtransforms.desandro.com/cube
 
                 # move temp file loaction to new location
                 move_uploaded_file($file_tmp_name, $file_dest);
                 header("Location: home.php?uploadsuccess");
             } else {
                 array_push($_SESSION['errors'], "$file_name too large!");
+                $_SESSION['login'] = false; 
+                header("Location: home.php");
             }
         } else {
             array_push($_SESSION['errors'], "Error occured while uploading file!");
+            $_SESSION['login'] = false; 
+            header("Location: home.php");
         }
     } else {
         array_push($_SESSION['errors'], "No image added added!");
+        $_SESSION['login'] = false; 
+        header("Location: home.php");
     }
 }
 
@@ -166,8 +172,14 @@ function load_signUpForm()
         }
         unset($_SESSION['errors']);
     }
-
     echo "
+<div class='form-swapper-flex'>
+
+<div id=left-arrow-box>
+<img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></div>
+
+
+
     <form id='signup' action='./home.php' method='post' enctype='multipart/form-data'>
     <h3 id='login_headline'>Sign up</h3>
     <div id='signup-grid'>
@@ -191,5 +203,13 @@ function load_signUpForm()
     </div>
     <input type='submit' id='submit' name='submit'>
 </form>
+
+<div id=right-arrow-box>
+<img src='./img/right.svg' class='arrow' alt='right-arrow' id='right-arrow'>
+</div>
+
+
+</div>
+
 ";
 }
