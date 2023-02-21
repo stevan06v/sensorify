@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 if (!isset($_SESSION['login'])) {
     $_SESSION['login'] = false;
@@ -10,12 +10,7 @@ if (!isset($_SESSION['username_err'])) {
 if (!isset($_SESSION['email_err'])) {
     $_SESSION['email_err'] = "";
 }
-if (!isset($_SESSION['file_errors'])) {
-    $_SESSION['file_errors'] = array();
-    $errors = $_SESSION['file_errors'];
-} else {
-    $errors = $_SESSION['file_errors'];
-}
+
 $file_dest = "";
 $name = "";
 $username = "";
@@ -54,10 +49,8 @@ if (
         $password = $_POST['password'];
 
     } else {
-        array_push($_SESSION['errors'], "Check the input data...");
-        header("Location: home.php");
+        header('Location: home.php?login=cancelled');
     }
-
     $dbserver = "sensorify.ddns.net";
     $dbname = "sensorifydb";
     $dbusername = "stevan";
@@ -71,14 +64,14 @@ if (
             upload_File();
             $sql = "insert into users (name,lastname,user_name,email,password,image_dest)"
                 . "values('$name','$lastname','$username','$email','$password','$file_dest')";
-
             if (!mysqli_query($connection, $sql)) {
                 array_push($_SESSION['errors'], "error occurred while inerting into database!");
             }
             $_SESSION['login'] = true;
+            header('Location: home.php?login=success');
         } else {
             $_SESSION['login'] = false;
-            header('Location: home.php');
+            header('Location: home.php?login=cancelled');
         }
         mysqli_close($connection);
     }
@@ -153,7 +146,6 @@ function load_signUpForm()
             unset($_SESSION['email_err']);
         }
     }
-
     function print_user()
     {
         if (empty($_SESSION['username_err']) ) {
@@ -164,12 +156,12 @@ function load_signUpForm()
             unset($_SESSION['username_err']);
         }
     }
-
     echo "
 <div class='form-swapper-flex'>
     <div id=left-arrow-box>
-    <img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></div>
 
+    <a href='./home.php?enter=guest'><img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></a>
+    </div>
     <form id='signup' action='./home.php' method='post' enctype='multipart/form-data'>
     <h3 id='login_headline'>Sign up</h3>
     <div id='signup-grid'>
@@ -198,7 +190,7 @@ function load_signUpForm()
 </form>
 
 <div id=right-arrow-box>
-<img src='./img/right.svg' class='arrow' alt='right-arrow' id='right-arrow'>
+<a href='./home.php?enter=login'><img src='./img/right.svg' class='arrow' alt='right-arrow' id='right-arrow'></a>
 </div>
 </div>
 ";

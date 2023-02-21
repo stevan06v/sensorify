@@ -29,6 +29,23 @@ body{
     transform: translate(-50%, -50%);
 }
 
+#guest{
+    padding-left: 5vw;
+    padding-right: 5vw;
+    border-radius: 30px; 
+    box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
+}
+#guestIcon{
+    width: 10vw;
+}
+
+.guest-login-wrapper{
+    position: fixed;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
 #left-arrow-box,#right-arrow-box{
     display: flex;
     align-items: center;
