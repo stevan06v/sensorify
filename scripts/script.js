@@ -73,7 +73,7 @@ if (typeof signup != "undefined" && signup != null) {
   function validateUsername() {
     let isValid = usernameRegex.test(username.value);
 
-    if (!isValid ) {
+    if (!isValid) {
       username.style.borderBlockColor = "#e30a0a77";
       return false;
     } else {
@@ -122,6 +122,84 @@ if (typeof signup != "undefined" && signup != null) {
       return false;
     } else {
       password.style.borderBlockColor = "#1a876667";
+      return true;
+    }
+  }
+}
+
+// GUEST.php
+let guestin = document.getElementById("guestin");
+if (typeof guestin != "undefined" && guestin != null) {
+  let name = document.getElementById("name");
+  let lastname = document.getElementById("lastname");
+  let guestID = document.getElementById("guest-id");
+  let guestinButton = document.getElementById("guestin-btn");
+  let guestIcon = document.getElementById("guest-icon");
+  let guestLink = document.getElementById("guest-link");
+
+  name.addEventListener("keyup", validateName);
+  lastname.addEventListener("keyup", validateLastName);
+
+  const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+
+  let generated = false;
+  setInterval(() => {
+    if (validateName() && validateLastName()) {
+      guestID.value = genrateUniqueGuestID(generated);  
+      generated = true;
+      guestLink.style.pointerEvents = "auto";
+      guestIcon.addEventListener('click', simulateClick);
+      console.log("added");
+    } else {
+      generated = false;
+      guestLink.style.pointerEvents = "none";
+      guestID.value = "";
+      guestID.placeholder = "Guest-ID"; 
+      guestIcon.removeEventListener('click', simulateClick);
+    }
+  }, 200);
+
+  function genrateUniqueGuestID(generated) {
+    if (!generated) {
+      let prefix =
+        "Guest-" +
+        name.value.charAt(0).toUpperCase() +
+        lastname.value.charAt(0).toUpperCase();
+      let suffix = () => {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      };
+      return prefix + suffix() + "-" + suffix();
+    } else {
+      return guestID.value;
+    }
+  }
+
+  function simulateClick() {
+      let button = document.getElementById('guestin-btn')
+      console.log("click");
+      button.click();
+  }
+
+  function validateName() {
+    let isValid = nameRegex.test(name.value);
+    if (!isValid) {
+      name.style.borderBlockColor = "#e30a0a77";
+      return false;
+    } else {
+      name.style.borderBlockColor = "#1a876667";
+      return true;
+    }
+  }
+
+  function validateLastName() {
+    let isValid = nameRegex.test(lastname.value);
+    if (!isValid) {
+      lastname.style.borderBlockColor = "#e30a0a77";
+      return false;
+    } else {
+      lastname.style.borderBlockColor = "#1a876667";
       return true;
     }
   }

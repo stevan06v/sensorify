@@ -1,16 +1,5 @@
 <?php
 
-
-if (!isset($_SESSION['login'])) {
-    $_SESSION['login'] = false;
-}
-if (!isset($_SESSION['username_err'])) {
-    $_SESSION['username_err'] = "";
-}
-if (!isset($_SESSION['email_err'])) {
-    $_SESSION['email_err'] = "";
-}
-
 $file_dest = "";
 $name = "";
 $username = "";
@@ -47,7 +36,6 @@ if (
         $name = $_POST['name'];
         $lastname = $_POST['lastname'];
         $password = $_POST['password'];
-
     } else {
         header('Location: home.php?login=cancelled');
     }
@@ -56,7 +44,6 @@ if (
     $dbusername = "stevan";
     $dbpassword = "Stevan2006";
     $connection = new mysqli($dbserver, $dbusername, $dbpassword, $dbname);
-
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_errno());
     } else {
@@ -80,6 +67,7 @@ if (
         load_signUpForm();
     }
 }
+
 function exists_username($username, $connection)
 {
     $sql = "select user_name from users where user_name='$username'";
@@ -156,12 +144,15 @@ function load_signUpForm()
             unset($_SESSION['username_err']);
         }
     }
+
+    $last_guestURL = $_SESSION['last_guestURL'];
+
     echo "
 <div class='form-swapper-flex'>
     <div id=left-arrow-box>
-
-    <a href='./home.php?enter=guest'><img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></a>
+    <a href='$last_guestURL'><img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></a>
     </div>
+
     <form id='signup' action='./home.php' method='post' enctype='multipart/form-data'>
     <h3 id='login_headline'>Sign up</h3>
     <div id='signup-grid'>
@@ -188,8 +179,7 @@ function load_signUpForm()
     </div>
     <input type='submit' id='submit' name='submit'>
 </form>
-
-<div id=right-arrow-box>
+<div id='right-arrow-box'>
 <a href='./home.php?enter=login'><img src='./img/right.svg' class='arrow' alt='right-arrow' id='right-arrow'></a>
 </div>
 </div>

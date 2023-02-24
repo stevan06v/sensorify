@@ -1,5 +1,21 @@
 <?php
-    session_start();
+session_start();
+if (!isset($_SESSION['guest-login'])) {
+    $_SESSION['guest-login'] = false;
+}
+if (!isset($_SESSION['login'])) {
+    $_SESSION['login'] = false;
+}
+if (!isset($_SESSION['username_err'])) {
+    $_SESSION['username_err'] = "";
+}
+if (!isset($_SESSION['email_err'])) {
+    $_SESSION['email_err'] = "";
+}
+if(!isset($_SESSION['last_guestURL'])){
+    $_SESSION['last_guestURL'] = "./home.php?enter=guest";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,11 +32,19 @@
 
 <body>
     <?php
-
     if (isset($_GET['enter'])) {
         switch ($_GET['enter']) {
             case 'guest':
-                include('./components/guest.php');
+                if (
+                    isset($_GET['login']) &&
+                    isset($_GET['enter']) &&
+                    $_GET['login'] == "success" &&
+                    $_SESSION['guest-login'] == true
+                ) {
+                    echo "your are successfully logged in as a guest!!!";
+                } else {
+                    include('./components/guest.php');
+                }
                 break;
             case 'login':
                 include('./components/login.php');
@@ -33,13 +57,10 @@
         include('./components/signup.php');
     }
 
-    if($_SESSION['login'] == true){
-        echo "login succeded";
-    }
-
 
 
     ?>
 </body>
+
 
 </html>

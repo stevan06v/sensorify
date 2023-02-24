@@ -11,13 +11,16 @@ body{
     color: #000000;
 }
 
-#signup{
+#signup,#guestin{
     padding-left: 5vw;
     padding-right: 5vw;
     padding-bottom: 2vw;
     width: max-content;
     border-radius: 30px; 
     box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
+}
+#guestin-btn{
+    display: none;
 }
 
 .form-swapper-flex{
@@ -29,22 +32,18 @@ body{
     transform: translate(-50%, -50%);
 }
 
+
 #guest{
     padding-left: 5vw;
     padding-right: 5vw;
     border-radius: 30px; 
     box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
 }
-#guestIcon{
-    width: 10vw;
-}
 
-.guest-login-wrapper{
-    position: fixed;
-    top: 50%;
-    left: 50%; 
-    transform: translate(-50%, -50%);
-}
+
+
+
+
 
 #left-arrow-box,#right-arrow-box{
     display: flex;
@@ -57,6 +56,7 @@ body{
     width: 8vw;
     cursor: pointer;
     -webkit-user-drag: none;
+    
 }
 .arrow{
     opacity: 0.5; 
@@ -72,6 +72,7 @@ body{
     gap: 4vw;
     justify-content: center;
     margin-bottom: 1vw;
+    align-items: center;
 } 
 
 .input{
@@ -90,7 +91,6 @@ body{
     color: #000000;
     background-color: rgb(255, 255, 255);
 }
-
 
 
 
@@ -126,6 +126,29 @@ input[type="file"]{
     opacity: 0.4;
     box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
     -webkit-user-drag: none;
+}
+#guest-icon{
+    width: 12vw;
+    height: 12vw;
+    opacity: 0.4;
+    -webkit-user-drag: none;
+    cursor: pointer; 
+    transition: ease opacity .7s;
+
+
+}
+#guest-icon:hover{
+    opacity: 1;
+}
+
+.guest-login-wrapper{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+   
 }
 
 
