@@ -7,7 +7,7 @@ if (
     isset($_POST['guest-id'])
 ) {
 
-    $regex = "/^[a-zA-Z0-9_]{3,50}$/";
+    $regex = "/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*.{3,}$/";
 
     if (
         preg_match($regex, $_POST['name']) &&

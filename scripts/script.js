@@ -41,7 +41,7 @@ if (typeof signup != "undefined" && signup != null) {
   // The name can start with one or more alphabetical characters (^[a-zA-Z]+).
   // The name can have any number of middle names or initials, each separated by a space, hyphen, apostrophe, comma, or period (([',. -][a-zA-Z ])?).
   // The last name is required and can have any number of alphabetical characters ([a-zA-Z]*$).
-  const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+  const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*.{3,}$/;
 
   let username = document.getElementById("username");
   let name = document.getElementById("name");
@@ -140,7 +140,7 @@ if (typeof guestin != "undefined" && guestin != null) {
   name.addEventListener("keyup", validateName);
   lastname.addEventListener("keyup", validateLastName);
 
-  const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+  const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*.{3,}$/;
 
   let generated = false;
   setInterval(() => {

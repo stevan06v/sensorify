@@ -7,7 +7,7 @@ $lastname = "";
 $email = "";
 $password = "";
 # define regex patterns for ultra-uncrackable-giga-mega-peta-security
-$name_regex = "/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/";
+$name_regex = "/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*.{3,}$/";
 $username_regex = "/^[a-zA-Z0-9_]{3,20}$/";
 $lastname_regex = "/^[a-zA-Z0-9_]{3,20}$/";
 $email_regex = "/^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/";
