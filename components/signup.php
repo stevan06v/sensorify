@@ -67,7 +67,6 @@ if (
         load_signUpForm();
     }
 }
-
 function exists_username($username, $connection)
 {
     $sql = "select user_name from users where user_name='$username'";
@@ -103,7 +102,6 @@ function upload_file()
     if (in_array($file_actual_ext, $allowed)) {
         if ($file_error === 0) {
             $file_name_new = uniqid('', true) . "." . $file_actual_ext;
-            
             
             if(!is_dir($upload_dir)){
                 # path, permissions
@@ -172,9 +170,7 @@ function load_signUpForm()
             <br>
             <input type='text' id='lastname' class='input' name='lastname' placeholder='Last name' required>
             <br>";
-
     print_email();
-
     echo "    
             <input type='password' id='password' class='input' name='password' placeholder='Password' required>
             <br>
