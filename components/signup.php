@@ -92,6 +92,7 @@ function exists_email($email, $connection)
 }
 function upload_file()
 {
+    $upload_dir = "./upload/";
     global $file_dest;
     $file_name = $_FILES['file']['name'];
     $file_tmp_name = $_FILES['file']['tmp_name']; 
@@ -102,6 +103,13 @@ function upload_file()
     if (in_array($file_actual_ext, $allowed)) {
         if ($file_error === 0) {
             $file_name_new = uniqid('', true) . "." . $file_actual_ext;
+            
+            
+            if(!is_dir($upload_dir)){
+                # path, permissions
+                mkdir($upload_dir, 0777);
+            }
+
             $file_dest = './upload/' . $file_name_new;
             move_uploaded_file($file_tmp_name, $file_dest);
             compress_image($file_dest, $file_actual_ext);
