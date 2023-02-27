@@ -18,13 +18,13 @@ if(!isset($_SESSION['last_guestURL'])){
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePage</title>
+    <title>Sensorify</title>
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
     <script src="./scripts//script.js" defer></script>
