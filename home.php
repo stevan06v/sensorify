@@ -16,6 +16,10 @@ if(!isset($_SESSION['last_guestURL'])){
     $_SESSION['last_guestURL'] = "./home.php?enter=guest";
 }
 
+if(!isset($_SESSION['login'])){
+    $_SESSION['login'] = false;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="de">

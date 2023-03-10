@@ -11,7 +11,7 @@ body{
     color: #000000;
 }
 
-#signup,#guestin{
+#signup,#guestin,#login{
     padding-left: 5vw;
     padding-right: 5vw;
     padding-bottom: 2vw;
@@ -19,6 +19,8 @@ body{
     border-radius: 30px; 
     box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
 }
+
+
 #guestin-btn{
     display: none;
 }
@@ -39,9 +41,6 @@ body{
     border-radius: 30px; 
     box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
 }
-
-
-
 
 
 
@@ -127,7 +126,7 @@ input[type="file"]{
     box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
     -webkit-user-drag: none;
 }
-#guest-icon{
+#guest-icon,#login-icon{
     width: 12vw;
     height: 12vw;
     opacity: 0.4;
