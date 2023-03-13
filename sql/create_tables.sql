@@ -1,4 +1,5 @@
 create database sensorifydb;
+
 use sensorifydb;
 
 drop table if exists addresses;

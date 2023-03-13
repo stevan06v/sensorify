@@ -12,10 +12,9 @@ if (!isset($_SESSION['username_err'])) {
 if (!isset($_SESSION['email_err'])) {
     $_SESSION['email_err'] = "";
 }
-if(!isset($_SESSION['last_guestURL'])){
+if (!isset($_SESSION['last_guestURL'])) {
     $_SESSION['last_guestURL'] = "./home.php?enter=guest";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -28,6 +27,7 @@ if(!isset($_SESSION['last_guestURL'])){
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
     <script src="./scripts//script.js" defer></script>
+    <script src='./scripts/modules/PopupEngine/PopupEngine.js'></script>
 </head>
 
 <body>

@@ -25,6 +25,7 @@ the regex with your stinyk SQL-INJECTIONS. Cheers, Stevan ;).
 // regex checking input form
 let signup = document.getElementById("signup");
 if (typeof signup != "undefined" && signup != null) {
+
   // disable button --> enable after successfull regex-check
   const sendButton = document.getElementById("submit");
   sendButton.disabled = true;
@@ -71,6 +72,7 @@ if (typeof signup != "undefined" && signup != null) {
   }, 100);
 
   function validateUsername() {
+
     let isValid = usernameRegex.test(username.value);
 
     if (!isValid) {
@@ -145,7 +147,7 @@ if (typeof guestin != "undefined" && guestin != null) {
   let generated = false;
   setInterval(() => {
     if (validateName() && validateLastName()) {
-      guestID.value = genrateUniqueGuestID(generated);  
+      guestID.value = genrateUniqueGuestID(generated);
       generated = true;
       guestLink.style.pointerEvents = "auto";
       guestIcon.addEventListener('click', simulateClick);
@@ -154,7 +156,7 @@ if (typeof guestin != "undefined" && guestin != null) {
       generated = false;
       guestLink.style.pointerEvents = "none";
       guestID.value = "";
-      guestID.placeholder = "Guest-ID"; 
+      guestID.placeholder = "Guest-ID";
       guestIcon.removeEventListener('click', simulateClick);
     }
   }, 200);
@@ -177,9 +179,9 @@ if (typeof guestin != "undefined" && guestin != null) {
   }
 
   function simulateClick() {
-      let button = document.getElementById('guestin-btn')
-      console.log("click");
-      button.click();
+    let button = document.getElementById('guestin-btn')
+    console.log("click");
+    button.click();
   }
 
   function validateName() {

@@ -3,3 +3,5 @@
 Methods:
 * $response = http_get("http://www.example.com/file.xml");
 * $xml = file_get_contents("http://www.example.com/file.xml");
+
+* heroku: PHP hosting-service
