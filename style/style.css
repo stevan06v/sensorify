@@ -17,7 +17,11 @@ body {
     color: #000000;
 }
 
+<<<<<<< HEAD
 #signup, #guestin {
+=======
+#signup,#guestin,#login{
+>>>>>>> bdac067ee544ec79ef7abdb896ce5232b215197f
     padding-left: 5vw;
     padding-right: 5vw;
     padding-bottom: 2vw;
@@ -26,7 +30,12 @@ body {
     box-shadow: -2px -1px 35px -10px rgba(0, 0, 0, 0.75);
 }
 
+<<<<<<< HEAD
 #guestin-btn {
+=======
+
+#guestin-btn{
+>>>>>>> bdac067ee544ec79ef7abdb896ce5232b215197f
     display: none;
 }
 
@@ -48,7 +57,12 @@ body {
 }
 
 
+<<<<<<< HEAD
 #left-arrow-box, #right-arrow-box {
+=======
+
+#left-arrow-box,#right-arrow-box{
+>>>>>>> bdac067ee544ec79ef7abdb896ce5232b215197f
     display: flex;
     align-items: center;
     margin-left: -1.5vw;
@@ -132,8 +146,12 @@ input[type="file"] {
     box-shadow: -2px -1px 15px -10px rgba(0, 0, 0, 0.75);
     -webkit-user-drag: none;
 }
+<<<<<<< HEAD
 
 #guest-icon {
+=======
+#guest-icon,#login-icon{
+>>>>>>> bdac067ee544ec79ef7abdb896ce5232b215197f
     width: 12vw;
     height: 12vw;
     opacity: 0.4;

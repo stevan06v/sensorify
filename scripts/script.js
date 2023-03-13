@@ -206,3 +206,49 @@ if (typeof guestin != "undefined" && guestin != null) {
     }
   }
 }
+let login = document.getElementById('login');
+if(typeof login != 'undefined' && login != null){
+
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const passwordRegex = /^(?=.*[@#$%^&+=-€])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
+
+  let sendButton = document.getElementById('submit');
+  let email = document.getElementById('email');
+  let password = document.getElementById('password');
+
+  
+  email.addEventListener("keyup", validateEmail);
+  password.addEventListener("keyup", validatePassword);
+
+  setInterval(() => {
+    if (validateEmail() && validatePassword()) {
+      sendButton.disabled = false;
+    } else {
+      sendButton.disabled = false;
+    }
+  }, 200);
+
+
+ function validateEmail() {
+    let isValid = emailRegex.test(email.value);
+    if (!isValid) {
+      email.style.borderBlockColor = "#e30a0a77";
+      return false;
+    } else {
+      email.style.borderBlockColor = "#1a876667";
+      return true;
+    }
+  }
+
+  function validatePassword() {
+    let isValid = passwordRegex.test(password.value);
+    if (!isValid) {
+      password.style.borderBlockColor = "#e30a0a77";
+      return false;
+    } else {
+      password.style.borderBlockColor = "#1a876667";
+      return true;
+    }
+  }
+
+}
