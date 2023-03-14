@@ -1,6 +1,6 @@
 <?php
 
-
+// require database class
 require_once "./classes/repositories/Database.class.php";
 
 class UserRepository
@@ -22,7 +22,6 @@ class UserRepository
 
     function insert($user)
     {
-
         try {
             $sql = "INSERT INTO users (name, lastname, user_name, email, password, image_dest) 
             VALUES ('" . $user->getName() . "', '" . $user->getLastname() . "', '" . $user->getUsername() . "', '" . $user->getEmail() . "', '" . $user->getPassword() . "', '" . $user->getImageDest() . "')";
@@ -51,7 +50,6 @@ class UserRepository
 
     function exitsUsername($username)
     {
-
         $sql = "select * from users where user_name = '$username'";
         try {
             $result = $this->connection->query($sql);
