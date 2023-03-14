@@ -1,8 +1,0 @@
-=====================================
-            GD-library
-=====================================
-XAMP --> Apache --> Config --> PHP.ini 
---> search for: extension=fileinfo
---> paste: extension=gd below
-
-
