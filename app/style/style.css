@@ -10,7 +10,9 @@ body{
     font-size: 2.7rem;
     color: #000000;
 }
-
+input{
+    cursor: pointer;
+}
 #signup,#guestin,#login{
     padding-left: 5vw;
     padding-right: 5vw;
@@ -19,7 +21,6 @@ body{
     border-radius: 30px; 
     box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
 }
-
 
 #guestin-btn{
     display: none;
@@ -88,6 +89,7 @@ body{
     transition: ease width .4s;
     border: 1px solid #1a876667;  
     color: #000000;
+    cursor: pointer;
     background-color: rgb(255, 255, 255);
 }
 
@@ -113,7 +115,7 @@ body{
 input[type="file"]{
     display: none;
     visibility: none;
-    cursor: none;
+    cursor: pointer;
 }
 
 .file_image{
@@ -149,8 +151,6 @@ input[type="file"]{
     transform: translate(-50%, -50%);
    
 }
-
-
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #1a876657;
     font-family: BoldItalic;

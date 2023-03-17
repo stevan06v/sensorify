@@ -5,7 +5,6 @@ require_once "./classes/repositories/Database.class.php";
 
 class UserRepository
 {
-
     private $connection;
 
     function __construct()
@@ -19,7 +18,6 @@ class UserRepository
             exit;
         }
     }
-
     function insert($user)
     {
         try {
@@ -53,7 +51,6 @@ class UserRepository
         $sql = "select * from users where user_name = '$username'";
         try {
             $result = $this->connection->query($sql);
-
             if ($result->num_rows == 0) {
                 return false;
             } else {
