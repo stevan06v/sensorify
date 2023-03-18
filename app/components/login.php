@@ -30,8 +30,6 @@ if (
     }
 }
 
-
-
 function generateLogin($err)
 {
     echo $err;

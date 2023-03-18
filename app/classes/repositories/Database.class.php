@@ -1,12 +1,10 @@
 <?php
 class Database
 {
-
     private static $dbserver = "sensorify.ddns.net";
     private static $dbname = "sensorifydb";
     private static $dbusername = "stevan";
     private static $dbpassword = "Stevan2006";
-
     function getDataSource()
     {
         try {
@@ -21,7 +19,6 @@ class Database
             echo "Database currently unreachable... ";
         }
     }
-
     function isReachable()
     {
         if (mysqli_ping($this->getDataSource())) {

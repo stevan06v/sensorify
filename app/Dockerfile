@@ -20,4 +20,3 @@ RUN docker-php-ext-enable opcache gd zip
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # retsart apache service after adding line
 RUN service apache2 restart
-

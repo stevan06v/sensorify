@@ -7,8 +7,7 @@ require_once './classes/model/User.class.php';
 
 
     $user_repo = new UserRepository();
-
-
+    
     $file_dest = "";
     $name = "";
     $username = "";
@@ -58,7 +57,6 @@ require_once './classes/model/User.class.php';
         } else {
 
             if (!$user_repo->exitsUsername($user->getUsername()) && !$user_repo->exitsEmail($user->getEmail())) {
-
                 upload_File();
                 $user->setImageDest($file_dest);
 
