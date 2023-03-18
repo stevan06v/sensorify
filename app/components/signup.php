@@ -69,7 +69,8 @@ require_once './classes/model/User.class.php';
                 }else{
                     $_SESSION['login'] = true;
                     $user_repo->getConnection()->close();
-                    header('Location: home.php?login=success');
+                    $_SESSION['username'] = $user->getUsername();
+                    header('Location: home.php?enter=signup&login=success');
                 }                
             } else {
                 $_SESSION['login'] = false;
@@ -93,8 +94,6 @@ require_once './classes/model/User.class.php';
             return true;
         }
     }
-
-
     function exists_email($email, $connection)
     {
         $sql = "select user_name from users where email='$email'";

@@ -81,6 +81,22 @@ class UserRepository
         }
     }
 
+    function getImageSrcByUserName($username)
+    {
+        $sql = "select image_dest from users where user_name = '$username'";
+        try {
+            $result = $this->connection->query($sql);
+            if ($result->num_rows == 0) {
+                throw new Exception("User not found.");
+            } else {
+                $row = $result->fetch_assoc();
+                return $row["image_dest"];
+            }
+        } catch (mysqli_sql_exception $err) {
+            throw new Exception("SQL error occured: " . $err->getMessage());
+        }
+    }
+
     //getters & setters
     function getConnection()
     {

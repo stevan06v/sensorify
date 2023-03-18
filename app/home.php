@@ -12,12 +12,14 @@ if (!isset($_SESSION['username_err'])) {
 if (!isset($_SESSION['email_err'])) {
     $_SESSION['email_err'] = "";
 }
-if(!isset($_SESSION['last_guestURL'])){
+if (!isset($_SESSION['last_guestURL'])) {
     $_SESSION['last_guestURL'] = "./home.php?enter=guest";
 }
-
-if(!isset($_SESSION['login'])){
+if (!isset($_SESSION['login'])) {
     $_SESSION['login'] = false;
+}
+if (!isset($_SESSION['username'])) {
+    $_SESSION['username'] = "";
 }
 
 ?>
@@ -51,10 +53,29 @@ if(!isset($_SESSION['login'])){
                 }
                 break;
             case 'login':
-                include('./components/login.php');
+                if (
+                    isset($_GET['login']) &&
+                    isset($_GET['enter']) &&
+                    $_GET['login'] == "success" &&
+                    $_SESSION['login'] == true
+                ) {
+
+                    include("./components/sidebar.php");
+                } else {
+                    include('./components/login.php');
+                }
                 break;
             default:
-                include('./components/signup.php');
+                if (
+                    isset($_GET['login']) &&
+                    isset($_GET['enter']) &&
+                    $_GET['login'] == "success" &&
+                    $_SESSION['login'] == true
+                ) {
+                    include("./components/sidebar.php");
+                } else {
+                    include('./components/signup.php');
+                }
                 break;
         }
     } else {
