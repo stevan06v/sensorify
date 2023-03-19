@@ -180,13 +180,13 @@ require_once './classes/model/User.class.php';
 
         print_user();
         echo "
-            <input type='text' id='name' class='input' name='name' placeholder='First name' required>
+            <input type='text' id='name' class='input' name='name' placeholder='First name' value='' required>
             <br>
-            <input type='text' id='lastname' class='input' name='lastname' placeholder='Last name' required>
+            <input type='text' id='lastname' class='input' name='lastname' placeholder='Last name' value='' required>
             <br>";
         print_email();
         echo "    
-            <input type='password' id='password' class='input' name='password' placeholder='Password' required>
+            <input type='password' id='password' class='input' name='password' placeholder='Password' value='' required>
             <br>
         </div>
         <div id='image-selector'> 

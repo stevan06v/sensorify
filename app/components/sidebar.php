@@ -6,34 +6,37 @@
     }
 
     #sidebar {
-        padding: 1vw;
+        padding: 1.5vw;
         -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.52);
         -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.52);
         width: fit-content;
         height: 100vh;
         overflow: auto;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
     }
 
     a {
         margin: 0;
         padding: 0;
+        text-decoration: none;
     }
 
-    .sidebar-box,
-    .bottom-box {
+    .sidebar-box{
         display: flex;
         border-radius: 9px;
         gap: 1.5vw;
-        padding: 0.8vw;
-        padding-right: 10vw;
+        padding: 0.9vw;
+        padding-right: 8vw;
         align-items: center;
         width: auto;
         height: min-content;
         margin-top: 1vh;
-        -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
-        -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
-        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
+        -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        -moz-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         cursor: pointer;
         color: hsla(0, 0%, 0%, 0.7);
     }
@@ -41,6 +44,7 @@
     .sidebar-box:hover {
         color: #1a8766;
     }
+
 
     #logo {
         top: 0;
@@ -51,8 +55,8 @@
     }
 
     .sidebar-text {
-        font-size: 1.2rem;
-        font-family: Black-Pure;
+        font-size: 1.15rem;
+        font-family: ExtraBold;
     }
 
     #sidebar-content {
@@ -64,17 +68,44 @@
         text-decoration: none;
     }
 
-    .profile-image{
-        width: 2vw;
+    .profile-image {
+        width: 3.5vw;
+        border-radius: 50px;
+        border: #1a8766 solid 2px;
+        -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
+        -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
+        box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
     }
+
     .sidebar-image {
         width: 2vw;
+    }
+
+    .bottom-box {
+        display: flex;
+        border-radius: 9px;
+        gap: 1.5vw;
+        padding: 0.9vw;
+        padding-right: 8vw;
+        align-items: center;
+        width: auto;
+        height: min-content;
+        -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        -moz-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        cursor: pointer;
+        color: hsla(0, 0%, 0%, 0.7);
+        margin-bottom: 5vh;
+    }
+
+    #sidebar-justifier {
+        display: flex;
+        flex-direction: column;
     }
 </style>
 
 <div id="sidebar">
     <div id="sidebar-content">
-
         <img id="logo" src="./img/logo/sensorify-dark.png" alt="sensorify-logo">
         <?php
         $content = array(
@@ -115,7 +146,7 @@
         $user_repo = new UserRepository();
 
         $image_src = $user_repo->getImageSrcByUserName($_SESSION['username']);
-
+        echo " </div>";
         echo "
         <a href='#'>
             <div class='bottom-box'>
@@ -125,5 +156,6 @@
         </a>
 ";
         ?>
+
     </div>
 </div>
