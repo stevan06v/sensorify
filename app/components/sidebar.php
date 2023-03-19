@@ -12,6 +12,7 @@
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.52);
         width: fit-content;
         height: 100vh;
+        overflow: auto;
     }
 
     a {
@@ -24,12 +25,12 @@
         display: flex;
         border-radius: 9px;
         gap: 1.5vw;
-        padding: 0.5vw;
+        padding: 0.8vw;
         padding-right: 10vw;
         align-items: center;
         width: auto;
         height: min-content;
-        margin-top: 1.5vh;
+        margin-top: 1vh;
         -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
         -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.52);
@@ -46,15 +47,13 @@
         width: 10vw;
         display: block;
         margin: auto;
-        margin-bottom: 2vw;
-
+        margin-bottom: 1vw;
     }
 
     .sidebar-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-family: Black-Pure;
     }
-
 
     #sidebar-content {
         display: flex;
@@ -66,11 +65,10 @@
     }
 
     .profile-image{
-        width: 3vw;
+        width: 2vw;
     }
     .sidebar-image {
         width: 2vw;
-
     }
 </style>
 
@@ -111,7 +109,6 @@
             </a>
         ";
         }
-
 
         require_once "./classes/repositories/UserRepository.class.php";
 

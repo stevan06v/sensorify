@@ -15,6 +15,7 @@ if (
             if ($user_repo->existsUser($_POST['email'], $_POST['password'])) {
                 header("Location: home.php?enter=login&login=success");
                 $_SESSION['login'] = true;
+                $_SESSION['username'] = $user_repo->getUserNameByEmail($_POST['email']);;
             } else {
                 generateLogin("User does not exsist");
             }

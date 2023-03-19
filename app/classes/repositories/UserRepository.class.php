@@ -94,6 +94,22 @@ class UserRepository
         }
     }
 
+    function getUserNameByEmail($email)
+    {
+        $sql = "select user_name from users where email= '$email'";
+        try {
+            $result = $this->connection->query($sql);
+            if ($result->num_rows == 0) {
+                throw new Exception("User not found.");
+            } else {
+                $row = $result->fetch_assoc();
+                return $row["user_name"];
+            }
+        } catch (mysqli_sql_exception $err) {
+            throw new Exception("SQL error occured: " . $err->getMessage());
+        }
+    }
+
     //getters & setters
     function getConnection()
     {
