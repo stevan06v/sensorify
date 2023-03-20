@@ -6,7 +6,7 @@ if (isset($_GET['content'])) {
             echo "<h1>overview</h1>";
             break;
         case "map":
-            echo "<h1>map</h1>";
+            include("./components/map.php");
             break;
         case "config":
             echo "<h1>config</h1>";
