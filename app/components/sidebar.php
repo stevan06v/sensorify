@@ -145,7 +145,7 @@
             <a href='".$routes[$i]."' class='nav-link'>
                 <div class='sidebar-box'>
                     <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
-                    <div class='sidebar-text no-select'>" . $content[$i] . "</div>
+                    <div class='sidebar-text no-select'>" . strtoupper($content[$i]) . "</div>
                 </div>
             </a>
         ";
