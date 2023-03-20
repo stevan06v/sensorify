@@ -38,6 +38,12 @@ if (!isset($_SESSION['username'])) {
 
 <body>
     <?php
+
+    if ($_SESSION['login']){
+        include("./components/sidebar.php");
+        include("./components/main.php");
+    }
+
     if (isset($_GET['enter'])) {
         switch ($_GET['enter']) {
             case 'guest':
@@ -55,12 +61,14 @@ if (!isset($_SESSION['username'])) {
             case 'login':
                 if (
                     isset($_GET['login']) &&
-                    isset($_GET['enter']) &&
-                    $_GET['login'] == "success" &&
+                    isset($_GET['enter'])
+                    &&
+                    $_GET['login'] == "success"
+                    &&
                     $_SESSION['login'] == true
                 ) {
-
-                    include("./components/sidebar.php");
+                    // include("./components/sidebar.php");
+                    include("./components/main.php");
                 } else {
                     include('./components/login.php');
                 }
@@ -68,11 +76,14 @@ if (!isset($_SESSION['username'])) {
             default:
                 if (
                     isset($_GET['login']) &&
-                    isset($_GET['enter']) &&
-                    $_GET['login'] == "success" &&
+                    isset($_GET['enter'])
+                    &&
+                    $_GET['login'] == "success"
+                    &&
                     $_SESSION['login'] == true
                 ) {
-                    include("./components/sidebar.php");
+                    // include("./components/sidebar.php");
+                    include("./components/main.php");
                 } else {
                     include('./components/signup.php');
                 }

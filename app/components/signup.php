@@ -5,7 +5,6 @@
 require_once './classes/repositories/UserRepository.class.php';
 require_once './classes/model/User.class.php';
 
-
     $user_repo = new UserRepository();
     
     $file_dest = "";
@@ -32,7 +31,8 @@ require_once './classes/model/User.class.php';
         $_SESSION['login'] == false &&
         empty($_SESSION['errors'])
     ) {
-        if ( # checking data for injections...
+        if ( 
+            # checking data for injections...
             preg_match($name_regex, $_POST['name']) &&
             preg_match($username_regex, $_POST['username']) &&
             preg_match($lastname_regex, $_POST['lastname']) &&
@@ -44,18 +44,15 @@ require_once './classes/model/User.class.php';
             $name = $_POST['name'];
             $lastname = $_POST['lastname'];
             $password = $_POST['password'];
-
             //$name, $lastname, $username, $password, $email
             $user = new User($username, $lastname, $username, $password, $email, $file_dest);
         } else {
             header('Location: home.php?login=cancelled');
         }
-
         if (!($user_repo->getConnection())) {
             //die("Connection failed: " . mysqli_connect_errno());
             header('Location: home.php?login=cancelled?connection=failed');
         } else {
-
             if (!$user_repo->exitsUsername($user->getUsername()) && !$user_repo->exitsEmail($user->getEmail())) {
                 upload_File();
                 $user->setImageDest($file_dest);

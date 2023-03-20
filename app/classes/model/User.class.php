@@ -11,7 +11,7 @@ class User
      private $password;
      private $email;
      private $image_dest;
-     private $addres;
+     private $address;
 
 
      function __construct($name, $lastname, $username, $password, $email, $image_dest)

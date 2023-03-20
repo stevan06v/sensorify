@@ -12,7 +12,6 @@
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.52);
         width: fit-content;
         height: 100vh;
-        overflow: auto;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -24,31 +23,32 @@
         text-decoration: none;
     }
 
-    .sidebar-box{
+
+    .sidebar-box {
         display: flex;
         border-radius: 9px;
         gap: 1.5vw;
         padding: 0.9vw;
-        padding-right: 8vw;
         align-items: center;
         width: auto;
-        height: min-content;
+        height: max-content;
         margin-top: 1vh;
         -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         -moz-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         cursor: pointer;
         color: hsla(0, 0%, 0%, 0.7);
+
+        padding-right: 10vw;
     }
 
     .sidebar-box:hover {
         color: #1a8766;
     }
 
-
     #logo {
         top: 0;
-        width: 10vw;
+        width: 15vw;
         display: block;
         margin: auto;
         margin-bottom: 1vw;
@@ -62,6 +62,7 @@
     #sidebar-content {
         display: flex;
         flex-direction: column;
+
     }
 
     .nav-link {
@@ -86,21 +87,16 @@
         border-radius: 9px;
         gap: 1.5vw;
         padding: 0.9vw;
-        padding-right: 8vw;
         align-items: center;
         width: auto;
         height: min-content;
-        -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        /* -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         -moz-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
-        box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
+        box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52); */
+
         cursor: pointer;
         color: hsla(0, 0%, 0%, 0.7);
         margin-bottom: 5vh;
-    }
-
-    #sidebar-justifier {
-        display: flex;
-        flex-direction: column;
     }
 </style>
 
@@ -130,9 +126,21 @@
             "./img/sidebar/grey/rooms.svg",
             "./img/sidebar/grey/user.svg"
         );
+        $routes = array(
+            "./home.php?content=overview",
+            "./home.php?content=map",
+            "./home.php?content=config",
+            "./home.php?content=devices",
+            "./home.php?content=users",
+            "./home.php?content=history",
+            "./home.php?content=docs",
+            "./home.php?content=rooms",
+            "./home.php?content=user"
+        );
+
         for ($i = 0; $i < sizeof($icons) - 1; $i++) {
             echo "
-            <a href='#' class='nav-link'>
+            <a href='".$routes[$i]."' class='nav-link'>
                 <div class='sidebar-box'>
                     <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
                     <div class='sidebar-text no-select'>" . $content[$i] . "</div>
@@ -148,7 +156,7 @@
         $image_src = $user_repo->getImageSrcByUserName($_SESSION['username']);
         echo " </div>";
         echo "
-        <a href='#'>
+        <a href='".$routes[sizeof($routes)-1]."'>
             <div class='bottom-box'>
                 <img class='profile-image no-drag' src='" . $image_src . "' alt='nav-icon'>
                 <div class='sidebar-text no-select' style='font-size:1.2rem;'>" . $_SESSION['username'] . "</div>
