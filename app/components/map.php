@@ -1,1 +1,0 @@
-<iframe width="2000" height="1000" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=8.66652,49.85138,8.6922,49.86637&amp;layer=mapnik" style="border: 1px solid black"></iframe><br />

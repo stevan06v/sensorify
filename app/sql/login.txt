@@ -1,9 +1,0 @@
----------------------
-username: stevan 
-passsword: Stevan2006
----------------------
-
----------------------
-username: sensorify 
-passsword: sensorify98
----------------------
