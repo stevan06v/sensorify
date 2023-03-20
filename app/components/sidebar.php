@@ -130,7 +130,7 @@
         );
         $routes = array(
             "./home.php?content=overview",
-            "./home.php?content=map",
+            "./home.php?content=map&type=default",
             "./home.php?content=config",
             "./home.php?content=devices",
             "./home.php?content=users",
