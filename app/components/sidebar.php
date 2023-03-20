@@ -48,7 +48,7 @@
 
     #logo {
         top: 0;
-        width: 15vw;
+        width: 12vw;
         display: block;
         margin: auto;
         margin-bottom: 1vw;
@@ -62,6 +62,8 @@
     #sidebar-content {
         display: flex;
         flex-direction: column;
+        padding: 0.1vw;
+        overflow-y:auto ;
 
     }
 
@@ -155,6 +157,7 @@
 
         $image_src = $user_repo->getImageSrcByUserName($_SESSION['username']);
         echo " </div>";
+
         echo "
         <a href='".$routes[sizeof($routes)-1]."'>
             <div class='bottom-box'>
@@ -164,6 +167,4 @@
         </a>
 ";
         ?>
-
-    </div>
 </div>

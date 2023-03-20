@@ -40,7 +40,7 @@ if (!isset($_SESSION['username'])) {
     <?php
 
     if ($_SESSION['login']){
-        include("./components/sidebar.php");
+      //  include("./components/sidebar.php");
         include("./components/main.php");
     }
 

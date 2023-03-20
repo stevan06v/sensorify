@@ -3,35 +3,35 @@
 if (isset($_GET['content'])) {
     switch ($_GET['content']) {
         case "overview":
-            echo "overview";
+            echo "<h1>overview</h1>";
             break;
         case "map":
-            echo "map";
+            echo "<h1>map</h1>";
             break;
         case "config":
-            echo "config";
+            echo "<h1>config</h1>";
             break;
         case "devices":
-            echo "devices";
+            echo "<h1>devices</h1>";
             break;
         case "users":
-            echo "users";
+            echo "<h1>users</h1>";
             break;
         case "history":
-            echo "history";
+            echo "<h1>history</h1>";
             break;
         case "docs":
-            echo "docs";
+            echo "<h1>docs</h1>";
             break;
         case "rooms":
-            echo "rooms";
+            echo "<h1>rooms</h1>";
             break;
         case "user":
-            echo "user";
+            echo "<h1>user</h1>";
             break;
         default:
-            echo "default";
+            echo "<h1>default<h1>";
             break;
-    }
-    echo "loaded";
+        }
 }
+

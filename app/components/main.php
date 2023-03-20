@@ -7,7 +7,8 @@
 
 <div id="main-flex">
     <?php
-        include("./app/components/sidebar.php");
-        include("./app/components/content.php");
+        include("./components/sidebar.php");
+        include("./components/content.php");
     ?>
+</div>
 </div>
