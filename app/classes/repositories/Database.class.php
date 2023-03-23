@@ -29,7 +29,6 @@ class Database
                 })
             </script>';
         }
-        
     }
     function isReachable()
     {
