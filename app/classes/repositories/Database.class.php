@@ -1,3 +1,4 @@
+
 <?php
 class Database
 {
@@ -10,14 +11,25 @@ class Database
         try {
             //self refers to static properties in the class 
             $connection = new mysqli(self::$dbserver, self::$dbusername, self::$dbpassword, self::$dbname);
-            if (!$connection) {
-                die("Database unreachable: " . mysqli_connect_errno());
-            } else {
-                return $connection;
-            }
-        } catch (mysqli_sql_exception $err) {
-            echo "Database currently unreachable... ";
+            return $connection;
+        } catch (mysqli_sql_exception $error) {
+            echo '
+            <script>
+                window.addEventListener("load", function () {
+                    PopupEngine.createModal({
+                        heading: "Database error",
+                        text: "Connection lost",
+                        buttons: [
+                            {
+                                text: "continue",
+                                closePopup: true
+                            }
+                        ]
+                    })
+                })
+            </script>';
         }
+        
     }
     function isReachable()
     {

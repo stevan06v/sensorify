@@ -34,13 +34,20 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
     <script src="./scripts//script.js" defer></script>
+    <script src="./libs/modules/PopupEngine/popupEngine.js"></script>
+    
+    <script>
+        PopupEngine.init({
+    doLogs: true
+    })
+    </script>
 </head>
 
 <body>
     <?php
 
-    if ($_SESSION['login']){
-      //  include("./components/sidebar.php");
+    if ($_SESSION['login']) {
+        //  include("./components/sidebar.php");
         include("./components/main.php");
     }
 

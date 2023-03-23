@@ -142,14 +142,18 @@
 
         for ($i = 0; $i < sizeof($icons) - 1; $i++) {
             echo "
-            <a href='".$routes[$i]."' class='nav-link'>
+            <a href='". $routes[$i] ."' class='nav-link'>
                 <div class='sidebar-box'>
-                    <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
-                    <div class='sidebar-text no-select'>" . strtoupper($content[$i]) . "</div>
+                    <img class='sidebar-image no-drag' src='". $icons[$i] ."' alt='nav-icon'>
+                    <div class='sidebar-text no-select'>". strtoupper($content[$i]) ."</div>
                 </div>
             </a>
         ";
         }
+
+        $🤡= "ich bin ein clown";
+        $🌚= "ich bin ein mond";
+        
 
         require_once "./classes/repositories/UserRepository.class.php";
 

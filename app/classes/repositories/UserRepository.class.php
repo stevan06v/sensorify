@@ -13,8 +13,7 @@ class UserRepository
         try {
             $this->connection = $database->getDataSource();
         } catch (mysqli_sql_exception $err) {
-            echo $err;
-            
+            echo $err;  
             exit;
         }
     }
