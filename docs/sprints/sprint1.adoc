@@ -1,0 +1,108 @@
+= Sprint 1
+Stevan Vlajic
+1.0.0, {docdate}: Medientechnik
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+:experimental:
+
+
+== What's new
+=== PHP-Files/Components
+==== Log-in page
+* Try out or just sign up:
+** username: stevanvlajic5@gmail.com
+** password: Stevan2006
+
+* Fully functional:
+** Login possible
+** Check if user exits
+** Saves log-in session storage
+* Throws errors (Pop-ups)
+
+==== Sign-up page
+* Fully functional:
+** Sign up working
+** Checks if user exits
+** Saves log-in session
+** Gd-Image saving works
+*** Profile picture
+* Throws errors (Pop-ups)
+
+
+==== Guest-in(guest login) page
+* Fully functional:
+** Guest login possible for testing the software
+** Generates Guest-ID randomly
+
+==== Logged in View
+* Structured in components:
+** content: `/app/components/contnet.php`
+** nav-top bar: `app/components/nav-top.php`
+** side-bar: `app/components/sidebar.php`
+*** fully functional --> data-base-request for user
+*** switch-case will be replaced by routing-library
+**** path: `app/libs/simplePHPRouter/...`
+
+=== Functionality
+==== Database
+* Fully working database-connection:
+** class can be found in: `/app/classes/repositories/Database.class.php`
+
+* Database is hosted on an oracle-cloud machine, so database export is not needed.
+** Oracle machine access can be found in:
+*** `/app/sql/*`
+**** For connection putty can be used
+
+* Problems with connection -> turn on VPN -> reload
+
+==== GD-Library
+* GD-Library is used for saving pictures and converting them
+** How to enable the gd-library in xamp
+*** tutorial can be found in: `/app/setup/libraries.txt` or:
+****  XAMP -> Apache -> Config -> PHP.ini
+**** -> search for: `extension=fileinfo`
+**** -> paste: `extension=gd` below
+
+==== Class-Repositories
+* Used for accessing the different entities
+* Current repositories:
+** User-repository:
+*** fully functional
+
+==== Docker
+* Project will be dockerized for self-hosting purposes
+* Not fully dockerized
+
+== Used Libraries/extern tools
+=== PHP-GD-LIBRARY
+* Local php library
+* Used for:
+** image-saving
+** image-manipulation
+*** compression
+*** resizing
+*** ...
+
+=== PHP-SIMPLE-ROUTING
+* `https://github.com/steampixel/simplePHPRouter.git`
+* Used for routing
+** Long switch-case statements are not necessary
+
+=== POP-UP-ENGINE
+* `https://github.com/elYanuki/PopupEngine.git`
+* Used for generating:
+* POP-ups
+* Modals
+* ...
+
+== Problem solving
+
+=== Database-access denied
+* Use VPN
+
+=== Something is not working while uploading image on sign up
+* Follow the tutorial in `/app/setup/libraries.txt`
+* Or follow the local-tutorial in this file under: `1.2.2. GD-Library`
