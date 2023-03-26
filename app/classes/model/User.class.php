@@ -1,7 +1,5 @@
 <?php
-
 require_once "./classes/model/Address.class.php";
-
 class User
 {
 
@@ -12,7 +10,6 @@ class User
      private $email;
      private $image_dest;
      private $address;
-
 
      function __construct($name, $lastname, $username, $password, $email, $image_dest)
      {

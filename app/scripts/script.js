@@ -48,12 +48,31 @@ if (typeof signup != "undefined" && signup != null) {
   let lastname = document.getElementById("lastname");
   let email = document.getElementById("email");
   let password = document.getElementById("password");
+  let submit = document.getElementById('submit');
 
   username.addEventListener("keyup", validateUsername);
   name.addEventListener("keyup", validateName);
   lastname.addEventListener("keyup", validateLastname);
   email.addEventListener("keyup", validateEmail);
   password.addEventListener("keyup", validatePassword);
+
+  submit.addEventListener("click", generateModal);
+
+  function generateModal() {
+    console.log("clicked");
+    if (sendButton.disabled) {
+        PopupEngine.createModal({
+          heading: "Sign-up error",
+          text: "Some input is missing!",
+          buttons: [
+            {
+              text: "continue",
+              closePopup: true,
+            },
+          ],
+        });
+    }
+  }
 
   setInterval(() => {
     if (
@@ -145,17 +164,17 @@ if (typeof guestin != "undefined" && guestin != null) {
   let generated = false;
   setInterval(() => {
     if (validateName() && validateLastName()) {
-      guestID.value = genrateUniqueGuestID(generated);  
+      guestID.value = genrateUniqueGuestID(generated);
       generated = true;
       guestLink.style.pointerEvents = "auto";
-      guestIcon.addEventListener('click', simulateClick);
+      guestIcon.addEventListener("click", simulateClick);
       console.log("added");
     } else {
       generated = false;
       guestLink.style.pointerEvents = "none";
       guestID.value = "";
-      guestID.placeholder = "Guest-ID"; 
-      guestIcon.removeEventListener('click', simulateClick);
+      guestID.placeholder = "Guest-ID";
+      guestIcon.removeEventListener("click", simulateClick);
     }
   }, 200);
 
@@ -177,9 +196,9 @@ if (typeof guestin != "undefined" && guestin != null) {
   }
 
   function simulateClick() {
-      let button = document.getElementById('guestin-btn')
-      console.log("click");
-      button.click();
+    let button = document.getElementById("guestin-btn");
+    console.log("click");
+    button.click();
   }
 
   function validateName() {
@@ -204,17 +223,15 @@ if (typeof guestin != "undefined" && guestin != null) {
     }
   }
 }
-let login = document.getElementById('login');
-if(typeof login != 'undefined' && login != null){
-
+let login = document.getElementById("login");
+if (typeof login != "undefined" && login != null) {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const passwordRegex = /^(?=.*[@#$%^&+=-€])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
 
-  let sendButton = document.getElementById('submit');
-  let email = document.getElementById('email');
-  let password = document.getElementById('password');
+  let sendButton = document.getElementById("submit");
+  let email = document.getElementById("email");
+  let password = document.getElementById("password");
 
-  
   email.addEventListener("keyup", validateEmail);
   password.addEventListener("keyup", validatePassword);
 
@@ -226,8 +243,7 @@ if(typeof login != 'undefined' && login != null){
     }
   }, 200);
 
-
- function validateEmail() {
+  function validateEmail() {
     let isValid = emailRegex.test(email.value);
     if (!isValid) {
       email.style.borderBlockColor = "#e30a0a77";
@@ -248,5 +264,4 @@ if(typeof login != 'undefined' && login != null){
       return true;
     }
   }
-
 }

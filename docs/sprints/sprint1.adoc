@@ -8,7 +8,6 @@ Stevan Vlajic
 :toc: left
 :experimental:
 
-
 == What's new
 === PHP-Files/Components
 ==== Log-in page
@@ -30,7 +29,6 @@ Stevan Vlajic
 ** Gd-Image saving works
 *** Profile picture
 * Throws errors (Pop-ups)
-
 
 ==== Guest-in(guest login) page
 * Fully functional:

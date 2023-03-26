@@ -94,14 +94,14 @@ input{
     background-color: rgb(255, 255, 255);
 }
 
-#submit{
+#submit,.popupEngineModalButton{
     width: 12vw;
     padding: 0.5vw;
     display: block;
     font-size: 1.5rem;
     font-family: ExtraBold;
     cursor: pointer;
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);  
+    /* box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);   */
     color: white;
     border-radius: 5px;
     background-color: #1a8766;
@@ -109,7 +109,10 @@ input{
     margin: auto;
     box-shadow: -2px -1px 20px -10px rgba(0,0,0,0.75);
 }
-
+.popupEngineModalButton{
+    font-size: 1.2rem;
+    box-shadow: none;
+}
 input[type="file"]{
     display: none;
     visibility: none;
@@ -133,9 +136,8 @@ input[type="file"]{
     -webkit-user-drag: none;
     cursor: pointer; 
     transition: ease opacity .7s;
-
-
 }
+
 #guest-icon:hover{
     opacity: 1;
 }
@@ -198,6 +200,31 @@ input[type="file"]{
   .no-drag{
     -webkit-user-drag: none;
   }
+
+  .popupEngineModalContent{
+    width: min-content;
+    width: max-content;
+    border-radius: 15px; 
+    color: black;
+    background-color: white;
+    box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
+    border: 5px solid #1a8766;
+  }
+
+  .popupEngineModalHeading{
+    font-family: BlackItalic;
+    font-size: 2rem;
+  }
+.popupEngineModalText{
+    font-family: MediumItalic;
+    font-size: 1rem;
+}
+  
+
+  @font-face {
+    font-family: MediumItalic;
+    src: url('../font/source-sans-pro/SourceSans3-MediumItalic.ttf');
+}
 
 @font-face {
     font-family: Black-Pure;
