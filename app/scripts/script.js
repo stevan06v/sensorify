@@ -48,7 +48,7 @@ if (typeof signup != "undefined" && signup != null) {
   let lastname = document.getElementById("lastname");
   let email = document.getElementById("email");
   let password = document.getElementById("password");
-  let submit = document.getElementById('submit');
+  let submit = document.getElementById("submit");
 
   username.addEventListener("keyup", validateUsername);
   name.addEventListener("keyup", validateName);
@@ -56,23 +56,21 @@ if (typeof signup != "undefined" && signup != null) {
   email.addEventListener("keyup", validateEmail);
   password.addEventListener("keyup", validatePassword);
 
-  submit.addEventListener("click", generateModal);
-
-  function generateModal() {
+  submit.addEventListener("click", () => {
     console.log("clicked");
     if (sendButton.disabled) {
-        PopupEngine.createModal({
-          heading: "Sign-up error",
-          text: "Some input is missing!",
-          buttons: [
-            {
-              text: "continue",
-              closePopup: true,
-            },
-          ],
-        });
+      PopupEngine.createModal({
+        heading: "Sign-up error",
+        text: "Some input is missing!",
+        buttons: [
+          {
+            text: "continue",
+            closePopup: true,
+          },
+        ],
+      });
     }
-  }
+  });
 
   setInterval(() => {
     if (

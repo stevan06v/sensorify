@@ -1,4 +1,5 @@
 #!/bin/bash
+# sudo file-rights
 chmod 777 git-publisher.sh
 # clear images in ./app/upload/
 rm -r ./app/upload/*
