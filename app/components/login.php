@@ -22,8 +22,8 @@ if (
             <script>
                 window.addEventListener("load", function () {
                     PopupEngine.createModal({
-                        heading: "Login-error",
-                        text: "User could not be found!",
+                        heading: "Log-in error",
+                        text: "Can not find this user!",
                         buttons: [
                             {
                                 text: "continue",
