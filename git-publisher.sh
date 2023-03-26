@@ -2,7 +2,7 @@
 chmod 777 git-publisher.sh
 
 # clear images in ./app/upload/
-rm -r "./app/upload/*"
+rm -r "/app/upload/*.png"
 
 # publish to github 
 git add .
