@@ -45,9 +45,14 @@ if (!isset($_SESSION['username'])) {
 
 <body>
     <?php
+    require_once "./classes/repositories/UserRepository.class.php";
+    require_once "./classes/ModalSender.class.php";
+
+    
+    $user_repo = new UserRepository();
+    $modal_sender = new ModalSender();
 
     if ($_SESSION['login']) {
-        //  include("./components/sidebar.php");
         include("./components/main.php");
     }
 

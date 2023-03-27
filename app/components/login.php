@@ -1,9 +1,5 @@
 <?php
 
-require_once "./classes/repositories/UserRepository.class.php";
-
-$user_repo = new UserRepository();
-
 if (
     isset($_POST['email']) &&
     isset($_POST['password'])
@@ -18,24 +14,11 @@ if (
             $_SESSION['username'] = $user_repo->getUserNameByEmail($_POST['email']);;
         } else {
             generateLogin("");
-            echo '
-            <script>
-                window.addEventListener("load", function () {
-                    PopupEngine.createModal({
-                        heading: "Log-in error",
-                        text: "Can not find this user!",
-                        buttons: [
-                            {
-                                text: "continue",
-                                closePopup: true
-                            }
-                        ]
-                    })
-                })
-            </script>';
+            $modal_sender->triggerModal("Log-in error", "Can not find this user!");
         }
     } else {
         $_SESSION['login'] = false;
+        $modal_sender->triggerModal("Log-in error", "Regex does not match!");
     }
 } else {
     if (!$_SESSION['login']) {
@@ -47,7 +30,6 @@ if (
 
 function generateLogin($err)
 {
-    echo $err;
     echo "
     <div class='form-swapper-flex'>
     <div id=left-arrow-box>

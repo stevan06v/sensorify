@@ -1,6 +1,8 @@
 #!/bin/bash
 # sudo file-rights
 chmod 777 git-publisher.sh
+rm -r ./app/.idea/ && rm -r ./app/.vscode/
+git pull
 # clear images in ./app/upload/
 rm -r ./app/upload/*
 # publish to github

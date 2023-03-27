@@ -51,21 +51,8 @@ if (
     }
     if (!($user_repo->getConnection())) {
         header('Location: home.php?login=cancelled?connection=failed');
-        echo '
-            <script>
-                window.addEventListener("load", function () {
-                    PopupEngine.createModal({
-                        heading: "Database error",
-                        text: "Connection to database failed.",
-                        buttons: [
-                            {
-                                text: "continue",
-                                closePopup: true
-                            }
-                        ]
-                    })
-                })
-            </script>';
+                
+        $modal_sender->triggerModal("Database error", "Connection to database failed.");
     } else {
         if (!$user_repo->exitsUsername($user->getUsername()) && !$user_repo->exitsEmail($user->getEmail())) {
             upload_File();
@@ -73,23 +60,11 @@ if (
 
             if (!$user_repo->insert($user)) {
                 array_push($_SESSION['errors'], "error occurred while inserting into database!");
+                # remove file after error --> user not in database
                 exec("rm -r $file_dest");
                 header('Location: home.php?login=cancelled');
-                echo '
-            <script>
-                window.addEventListener("load", function () {
-                    PopupEngine.createModal({
-                        heading: "Database error",
-                        text: "Error occured while inserting data into database.",
-                        buttons: [
-                            {
-                                text: "continue",
-                                closePopup: true
-                            }
-                        ]
-                    })
-                })
-            </script>';
+
+                $modal_sender->triggerModal("Database error", "Error occured while inserting data into database." );
             } else {
                 $_SESSION['login'] = true;
                 $user_repo->getConnection()->close();
@@ -106,6 +81,7 @@ if (
         load_signUpForm();
     }
 }
+
 
 function exists_username($username, $connection)
 {
@@ -178,6 +154,8 @@ function load_signUpForm()
             $email =  "placeholder='" . "This email is taken" . "'";
             echo "<input type='email' id='email' class='input' name='email' $email required> <br>";
             unset($_SESSION['email_err']);
+            global $modal_sender;
+            $modal_sender->triggerModal("Sign-up error", "Email already exists!");
         }
     }
     function print_user()
@@ -188,6 +166,8 @@ function load_signUpForm()
             $msg =  "placeholder='" . "This user name is taken" . "'";
             echo "<input type='text' id='username' class='input' name='username' $msg required> <br>";
             unset($_SESSION['username_err']);
+            global $modal_sender;
+            $modal_sender->triggerModal("Sign-up error", "Username already exists!");
         }
     }
 
