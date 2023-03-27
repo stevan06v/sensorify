@@ -2,7 +2,6 @@
 
 include '.\libs\simplePHPRouter\src\Steampixel\Route.php';
 use Steampixel\Route;
-
   
 if (isset($_GET['content'])) {
     switch ($_GET['content']) {
