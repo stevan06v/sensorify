@@ -1,8 +1,10 @@
 <?php
-
+    $user_repo = new UserRepository();
 if (
     isset($_POST['email']) &&
-    isset($_POST['password'])
+    isset($_POST['password']) &&
+    isset($_POST['submit']) &&
+    !empty($_POST['submit'])
 ) {
     $password_regex = "/^(?=.*[@#$%^&+=-€])(?=.*[A-Z])(?=.*[a-z]).{8,}$/";
     if (
@@ -49,7 +51,7 @@ function generateLogin($err)
                 <img src='./img/login.svg' id='login-icon' alt='guest'>
             </a>
         </div> 
-        <input type='submit' id='submit' name='submit'>
+        <input type='submit' id='submit' name='submit' value='Log in'>
     </form>
 
     <div id='right-arrow-box'>

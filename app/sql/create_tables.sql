@@ -14,17 +14,16 @@ create table users(
     email varchar(100) not null,
     password varchar(50) not null,
     creation_date timestamp,
+    login_date timestamp,
     image_dest varchar(100) not null,
     user_id int primary key auto_increment
 );
-
 create table rooms(
     room_name varchar(30) not null,
     user_id int,
     room_id int primary key auto_increment,
     foreign key(user_id) references users(user_id)
 );
-
 create table addresses(
     zip_code varchar(50) not null,
     street varchar(50) not null,
@@ -33,7 +32,6 @@ create table addresses(
     user_id int,
     foreign key (user_id) references users(user_id)
 );
-
 create table sensors(
     ip_address varchar(50) not null,
     ssid varchar(50) not null,
@@ -46,10 +44,14 @@ create table sensors(
 );
 
 create table devices(
-    type varchar(50) not null,
+    device_type varchar(50) not null,
     ip_address varchar(50) not null,
     sensor_id int,
     foreign key (sensor_id) references sensors(sensor_id)
 );
 
-
+delete from users where name is not null;
+delete from rooms where room_name is not null;
+delete from addresses where zip_code is not null;
+delete from sensors where ssid is not null;
+delete from devices where device_type is not null;

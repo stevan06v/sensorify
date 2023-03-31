@@ -35,11 +35,11 @@ if (!isset($_SESSION['username'])) {
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
     <script src="./scripts//script.js" defer></script>
     <script src="./libs/modules/PopupEngine/popupEngine.js"></script>
-    
+
     <script>
         PopupEngine.init({
-    doLogs: true
-    })
+            doLogs: true
+        })
     </script>
 </head>
 
@@ -48,8 +48,7 @@ if (!isset($_SESSION['username'])) {
     require_once "./classes/repositories/UserRepository.class.php";
     require_once "./classes/ModalSender.class.php";
 
-    
-    $user_repo = new UserRepository();
+
     $modal_sender = new ModalSender();
 
     if ($_SESSION['login']) {
@@ -61,9 +60,8 @@ if (!isset($_SESSION['username'])) {
             case 'guest':
                 if (
                     isset($_GET['login']) &&
-                    isset($_GET['enter']) &&
                     $_GET['login'] == "success" &&
-                    $_SESSION['guest-login'] == true
+                    $_SESSION['guest-login']
                 ) {
                     echo "your are successfully logged in as a guest!!!";
                 } else {
@@ -73,11 +71,9 @@ if (!isset($_SESSION['username'])) {
             case 'login':
                 if (
                     isset($_GET['login']) &&
-                    isset($_GET['enter'])
-                    &&
                     $_GET['login'] == "success"
                     &&
-                    $_SESSION['login'] == true
+                    $_SESSION['login']
                 ) {
                     // include("./components/sidebar.php");
                     include("./components/main.php");
@@ -87,12 +83,11 @@ if (!isset($_SESSION['username'])) {
                 break;
             default:
                 if (
-                    isset($_GET['login']) &&
-                    isset($_GET['enter'])
+                    isset($_GET['login'])
                     &&
                     $_GET['login'] == "success"
                     &&
-                    $_SESSION['login'] == true
+                    $_SESSION['login']
                 ) {
                     // include("./components/sidebar.php");
                     include("./components/main.php");

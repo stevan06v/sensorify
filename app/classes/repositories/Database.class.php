@@ -1,4 +1,3 @@
-
 <?php
 class Database
 {
@@ -6,13 +5,12 @@ class Database
     private static $dbname = "sensorifydb";
     private static $dbusername = "stevan";
     private static $dbpassword = "Stevan2006";
+
     function getDataSource()
     {
-        try {
-            //self refers to static properties in the class 
-            $connection = new mysqli(self::$dbserver, self::$dbusername, self::$dbpassword, self::$dbname);
-            return $connection;
-        } catch (mysqli_sql_exception $error) {
+        //self refers to static properties in the class 
+        $connection = new mysqli(self::$dbserver, self::$dbusername, self::$dbpassword, self::$dbname);
+        if ($connection->connect_error) {
             echo '
             <script>
                 window.addEventListener("load", function () {
@@ -28,12 +26,14 @@ class Database
                     })
                 })
             </script>';
+        }else{
+            return $connection;
         }
     }
     function isReachable()
     {
         if (mysqli_ping($this->getDataSource())) {
-            return true; 
+            return true;
         } else {
             return false;
         }

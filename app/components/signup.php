@@ -29,6 +29,7 @@ if (
     isset($_POST['password']) &&
     isset($_POST['submit']) &&
     $_SESSION['login'] == false &&
+    !empty($_POST['submit']) &&
     empty($_SESSION['errors'])
 ) {
     if (
@@ -51,20 +52,18 @@ if (
     }
     if (!($user_repo->getConnection())) {
         header('Location: home.php?login=cancelled?connection=failed');
-                
+
         $modal_sender->triggerModal("Database error", "Connection to database failed.");
     } else {
         if (!$user_repo->exitsUsername($user->getUsername()) && !$user_repo->exitsEmail($user->getEmail())) {
             upload_File();
             $user->setImageDest($file_dest);
-
             if (!$user_repo->insert($user)) {
-                array_push($_SESSION['errors'], "error occurred while inserting into database!");
+                $_SESSION['errors'][] = "error occurred while inserting into database!";
                 # remove file after error --> user not in database
-                exec("rm -r $file_dest");
+                exec("rm -r $file_dest"); 
                 header('Location: home.php?login=cancelled');
-
-                $modal_sender->triggerModal("Database error", "Error occured while inserting data into database." );
+                $modal_sender->triggerModal("Database error", "Error occured while inserting data into database.");
             } else {
                 $_SESSION['login'] = true;
                 $user_repo->getConnection()->close();
@@ -178,12 +177,10 @@ function load_signUpForm()
     <div id=left-arrow-box>
     <a href='$last_guestURL'><img src='./img/left.svg' class='arrow' alt='left-arrow' id='left-arrow'></a>
     </div>
-
     <form id='signup' action='./home.php' method='post' enctype='multipart/form-data'>
     <h3 id='login_headline'>Sign up</h3>
     <div id='signup-grid'>
         <div id='input-box'>";
-
     print_user();
     echo "
             <input type='text' id='name' class='input' name='name' placeholder='First name' value='' required>
@@ -191,7 +188,7 @@ function load_signUpForm()
             <input type='text' id='lastname' class='input' name='lastname' placeholder='Last name' value='' required>
             <br>";
     print_email();
-    echo "    
+    echo "
             <input type='password' id='password' class='input' name='password' placeholder='Password' value='' required>
             <br>
         </div>
@@ -201,7 +198,7 @@ function load_signUpForm()
             <input onchange='displayImage(this)' id='fileimage' type='file' name='file' accept='image/png, image/jpg, image/svg, image/jpeg'/> 
         </div>
     </div>
-    <input type='submit' id='submit' name='submit'>
+    <input type='submit' id='submit' name='submit' value='Sign up'>
 </form>
 <div id='right-arrow-box'>
 <a href='./home.php?enter=login'><img src='./img/right.svg' class='arrow' alt='right-arrow' id='right-arrow'></a>

@@ -44,9 +44,9 @@ class UserRepository
             throw new Exception("Error while checking data...: " . $err);
         }
     }
-
     function exitsUsername($username)
     {
+        global $modal_sender;
         $sql = "select * from users where user_name = '$username'";
         try {
             $result = $this->connection->query($sql);
@@ -57,7 +57,7 @@ class UserRepository
                 return true;
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occurred: " . $err->getMessage());
+            $modal_sender->triggerModal("Database-error", "Lost connection to the database!");
         }
     }
 
@@ -108,6 +108,19 @@ class UserRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
+
+    function getUserIDbyName($name)
+    {
+        $sql = "select user_id from users where user_name= '$name'";
+           $result = $this->connection->query($sql);
+            if ($result->num_rows == 0) {
+                return "user not found";
+            } else {
+                $row = $result->fetch_assoc();
+                return $row["user_id"];
+            }
+    }
+
 
     //getters & setters
     function getConnection()

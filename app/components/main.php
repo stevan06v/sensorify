@@ -11,7 +11,6 @@
     ?>
     <div>
         <?php
-             include("./components/nav-top.php");
              include("./components/content.php");
         ?>
     </div>

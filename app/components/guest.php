@@ -52,7 +52,7 @@ function generateGuestLogin()
             
                <input type='submit' id='guestin-btn'>
 
-                <a href='#' id='guest-link' >
+                <a href='#' id='guest-link'>
                     <img src='./img/guest.svg' id='guest-icon' alt='guest'>
                 </a>
             </div>

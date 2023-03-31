@@ -1,14 +1,13 @@
 <?php
 
-include '.\libs\simplePHPRouter\src\Steampixel\Route.php';
-use Steampixel\Route;
-  
+
 if (isset($_GET['content'])) {
     switch ($_GET['content']) {
         case "overview":
             echo "<h1>overview</h1>";
             break;
         case "map":
+            include("./components/nav-top.php");
             include("./components/map.php");
             break;
         case "config":
@@ -18,6 +17,7 @@ if (isset($_GET['content'])) {
             echo "<h1>devices</h1>";
             break;
         case "users":
+            include("./components/users.php");
             echo "<h1>users</h1>";
             break;
         case "history":
