@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 # sudo file-rights
 chmod 777 git-publisher.sh
 rm -r ./app/.idea/ && rm -r ./app/.vscode/

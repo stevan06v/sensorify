@@ -1,53 +1,55 @@
-body{
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     color: #1a8766;
-   
+
 }
 
-#login_headline{
+#login_headline {
     text-align: center;
     font-family: ExtraBold;
     font-size: 2.7rem;
     color: #000000;
 }
-input{
+
+input {
     cursor: pointer;
 }
-#signup,#guestin,#login{
+
+#signup, #guestin, #login {
     padding-left: 5vw;
     padding-right: 5vw;
     padding-bottom: 2vw;
     width: max-content;
-    border-radius: 30px; 
-    box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
+    border-radius: 30px;
+    box-shadow: -2px -1px 35px -10px rgba(0, 0, 0, 0.75);
     color: hsla(0, 0%, 0%, 0.705);
 }
 
-#guestin-btn{
+#guestin-btn {
     display: none;
 }
 
-.form-swapper-flex{
+.form-swapper-flex {
     display: flex;
     justify-content: center;
     position: fixed;
     top: 50%;
-    left: 50%; 
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
 
-#guest{
+#guest {
     padding-left: 5vw;
     padding-right: 5vw;
-    border-radius: 30px; 
-    box-shadow: -2px -1px 35px -10px rgba(0,0,0,0.75);
+    border-radius: 30px;
+    box-shadow: -2px -1px 35px -10px rgba(0, 0, 0, 0.75);
 }
 
 
-#left-arrow-box,#right-arrow-box{
+#left-arrow-box, #right-arrow-box {
     display: flex;
     align-items: center;
     margin-left: -1.5vw;
@@ -59,42 +61,44 @@ input{
     cursor: pointer;
     -webkit-user-drag: none;
 }
-.arrow{
-    opacity: 0.5; 
+
+.arrow {
+    opacity: 0.5;
     transition: ease opacity 0.7s;
 }
-.arrow:hover{
-    opacity: 1; 
+
+.arrow:hover {
+    opacity: 1;
 }
 
 
-#signup-grid{
+#signup-grid {
     display: flex;
     gap: 4vw;
     justify-content: center;
     margin-bottom: 1vw;
     align-items: center;
-} 
+}
 
-.input{
+.input {
     color: #1a8766;
     font-family: BoldItalic;
     font-size: 20px;
     display: block;
     margin: auto;
     text-align: center;
-    border-radius: 5px; 
+    border-radius: 5px;
     width: 12vw;
     padding: 0.5vw;
     justify-content: center;
     transition: ease width .4s;
-    border: 1px solid #1a876667;  
+    border: 1px solid #1a876667;
     color: #000000;
     cursor: pointer;
     background-color: rgb(255, 255, 255);
 }
 
-#submit,.popupEngineModalButton{
+#submit, .popupEngineModalButton {
     width: 12vw;
     padding: 0.5vw;
     display: block;
@@ -107,121 +111,136 @@ input{
     background-color: #1a8766;
     border: none;
     margin: auto;
-    box-shadow: -2px -1px 20px -10px rgba(0,0,0,0.75);
+    box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
 }
-.popupEngineModalButton{
+
+.popupEngineModalButton {
     font-size: 1.2rem;
     box-shadow: none;
 }
-input[type="file"]{
+
+input[type="file"] {
     display: none;
     visibility: none;
     cursor: pointer;
 }
 
-.file_image{
+.file_image {
     cursor: pointer;
     width: 12vw;
     height: 12vw;
     border-radius: 50%;
     border: #1a876698 5px solid;
     opacity: 0.4;
-    box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
+    box-shadow: -2px -1px 15px -10px rgba(0, 0, 0, 0.75);
     -webkit-user-drag: none;
 }
-#guest-icon,#login-icon{
+
+#guest-icon, #login-icon {
     width: 12vw;
     height: 12vw;
     opacity: 0.4;
     -webkit-user-drag: none;
-    cursor: pointer; 
+    cursor: pointer;
     transition: ease opacity .7s;
 }
 
-#guest-icon:hover{
+#guest-icon:hover {
     opacity: 1;
 }
 
-.guest-login-wrapper{
+.guest-login-wrapper {
     display: flex;
     justify-content: center;
     position: fixed;
     top: 50%;
-    left: 50%; 
+    left: 50%;
     transform: translate(-50%, -50%);
-   
-}
-  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #1a876657;
-    font-family: BoldItalic;
-  }
-  ::-moz-placeholder { /* Firefox 19+ */
-    color: #1a876657;
-    font-family: BoldItalic;
-  }
-  :-ms-input-placeholder { /* IE 10+ */
-    color: #1a876657;
-    font-family: BoldItalic;
-  }
-  :-moz-placeholder { /* Firefox 18- */
-    color: #1a876657;
-    font-family: BoldItalic;
-  }
 
-.input:focus{
+}
+
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #1a876657;
+    font-family: BoldItalic;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #1a876657;
+    font-family: BoldItalic;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #1a876657;
+    font-family: BoldItalic;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: #1a876657;
+    font-family: BoldItalic;
+}
+
+.input:focus {
     outline: none;
     box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
 }
 
 
-#input-box{}
+#input-box {}
 
-#image-selector{
-   text-align: center;
-   font-size: 5rem;
-   display: -ms-flexbox;
-   display: -webkit-flex;
-   display: flex;
-   align-items: center;
+#image-selector {
+    text-align: center;
+    font-size: 5rem;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
 }
-.bottom-box{
-   
+
+.bottom-box {
+
     margin-top: auto;
 }
+
 .no-select {
-    -webkit-touch-callout: none; 
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none; 
-    -moz-user-select: none; 
+    -khtml-user-select: none;
+    -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; 
-  }
+    user-select: none;
+}
 
-  .no-drag{
+.no-drag {
     -webkit-user-drag: none;
-  }
+}
 
-  .popupEngineModalContent{
+.popupEngineModalContent {
     width: min-content;
     width: max-content;
-    border-radius: 15px; 
+    border-radius: 15px;
     color: black;
     background-color: white;
-    box-shadow: -2px -1px 15px -10px rgba(0,0,0,0.75);
+    box-shadow: -2px -1px 15px -10px rgba(0, 0, 0, 0.75);
     border: 5px solid #1a8766;
-  }
+}
 
-  .popupEngineModalHeading{
+
+.popupEngineModalHeading {
     font-family: BlackItalic;
     font-size: 2rem;
-  }
-.popupEngineModalText{
+}
+
+.popupEngineModalText {
     font-family: MediumItalic;
     font-size: 1rem;
 }
-  
 
-  @font-face {
+
+@font-face {
     font-family: MediumItalic;
     src: url('../font/source-sans-pro/SourceSans3-MediumItalic.ttf');
 }
@@ -230,19 +249,23 @@ input[type="file"]{
     font-family: Black-Pure;
     src: url('../font/source-sans-pro/SourceSans3-Black.ttf');
 }
+
 @font-face {
     font-family: BlackItalic;
     src: url('../font/source-sans-pro/SourceSans3-BlackItalic.ttf');
 }
+
 @font-face {
     font-family: ExtraBold;
     src: url('../font/source-sans-pro/SourceSans3-ExtraBold.ttf');
 }
+
 @font-face {
     font-family: BoldItalic;
     src: url('../font/source-sans-pro/SourceSans3-BoldItalic.ttf');
 }
+
 @font-face {
-    font-family:ExtraBoldItalic;
+    font-family: ExtraBoldItalic;
     src: url('../font/source-sans-pro/SourceSans3-ExtraBoldItalic.ttf');
 }

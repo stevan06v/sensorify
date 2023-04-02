@@ -18,7 +18,6 @@ if (isset($_GET['content'])) {
             break;
         case "users":
             include("./components/users.php");
-            echo "<h1>users</h1>";
             break;
         case "history":
             echo "<h1>history</h1>";

@@ -120,6 +120,17 @@ class UserRepository
                 return $row["user_id"];
             }
     }
+    function getUserNamebyId($id)
+    {
+        $sql = "select user_name from users where user_id= '$id'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["user_name"];
+        }
+    }
 
 
     //getters & setters

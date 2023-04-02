@@ -46,7 +46,7 @@ if (
         $lastname = $_POST['lastname'];
         $password = $_POST['password'];
         //$name, $lastname, $username, $password, $email
-        $user = new User($username, $lastname, $username, $password, $email, $file_dest);
+        $user = new User($name,$lastname, $username, $password, $email, $file_dest);
     } else {
         header('Location: home.php?login=cancelled');
     }
