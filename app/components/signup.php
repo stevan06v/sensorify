@@ -133,8 +133,8 @@ function upload_file()
 # php-gd library
 function compress_image($dest, $file_extenetion)
 {
-    $height = 170;
-    $width = 170;
+    $height = 170 * 4;
+    $width = 170 *4;
     if ($file_extenetion == "jpg" || $file_extenetion == "jpeg") {
         $image = imagecreatefromjpeg($dest);
         imagejpeg(imagescale($image, $width, $height), $dest);

@@ -29,7 +29,7 @@ if (isset($_GET['content'])) {
             echo "<h1>rooms</h1>";
             break;
         case "user":
-            echo "<h1>user</h1>";
+            include("./components/user.php");
             break;
         default:
             echo "<h1>default<h1>";

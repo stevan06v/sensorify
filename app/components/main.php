@@ -33,9 +33,6 @@
     <?php
     include("./components/sidebar.php");
     ?>
-
-
-
     <?php
     include("./components/content.php");
     ?>

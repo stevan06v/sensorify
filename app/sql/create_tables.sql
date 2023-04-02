@@ -55,3 +55,90 @@ delete from rooms where room_name is not null;
 delete from addresses where zip_code is not null;
 delete from sensors where ssid is not null;
 delete from devices where device_type is not null;
+
+
+
+use sensorifydb;
+delete from users where name is not null;
+delete from rooms where room_name is not null;
+delete from addresses where zip_code is not null;
+delete from sensors where ssid is not null;
+delete from devices where device_type is not null;
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Alice', 'Johnson', 'alicejohnson', 'alicejohnson@example.com', 'password123', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Bob', 'Smith', 'bobsmith', 'bobsmith@example.com', 'password456', './upload/6429e3f0100da3.03500164.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Charlie', 'Brown', 'charliebrown', 'charliebrown@example.com', 'password789', './upload/6429e3f0100da3.03500164.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Diana', 'Lee', 'dianalee', 'dianalee@example.com', 'passwordabc', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Eric', 'Wong', 'ericwong', 'ericwong@example.com', 'passworddef', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Frank', 'Miller', 'frankmiller', 'frankmiller@example.com', 'password123', './upload/642940baa46078.78436909.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Grace', 'Davis', 'gracedavis', 'gracedavis@example.com', 'password456', './upload/642940baa46078.78436909.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Henry', 'Johnson', 'henryjohnson', 'henryjohnson@example.com', 'password789', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Isabella', 'Lee', 'isabellalee', 'isabellalee@example.com', 'passwordabc', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Jacob', 'Wong', 'jacobwong', 'jacobwong@example.com', 'passworddef', './upload/642940baa46078.78436909.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Katie', 'Jones', 'katiejones', 'katiejones@example.com', 'password123', './upload/6429e3f0100da3.03500164.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Lucas', 'Nguyen', 'lucasnguyen', 'lucasnguyen@example.com', 'password456', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Mia', 'Garcia', 'miagarcia', 'miagarcia@example.com', 'password789', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Noah', 'Zhang', 'noahzhang', 'noahzhang@example.com', 'passwordabc', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Olivia', 'Chen', 'oliviachen', 'oliviachen@example.com', 'passworddef', './upload/642940baa46078.78436909.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Patrick', 'Wilson', 'patrickwilson', 'patrickwilson@example.com', 'password123', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Quinn', 'Nguyen', 'quinnnguyen', 'quinnnguyen@example.com', 'password456', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Ryan', 'Garcia', 'ryangarcia', 'ryangarcia@example.com', 'HSjhfdshhdsk23', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Sophia', 'Zhang', 'sophiazhang', 'sophiazhang@example.com', 'passwordabc', './upload/642940baa46078.78436909.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Thomas', 'Chen', 'thomaschen', 'thomaschen@example.com', 'passworddef', './upload/642940baa46078.78436909.png');
+
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Ursula', 'Smith', 'ursulasmith', 'ursulasmith@example.com', 'password123', './upload/6429e3f0100da3.03500164.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Victor', 'Nguyen', 'victornguyen', 'victornguyen@example.com', 'password456', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Wendy', 'Garcia', 'wendygarcia', 'wendygarcia@example.com', 'password789', './upload/6429e3f0100da3.03500164.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Xavier', 'Zhang', 'xavierzhang', 'xavierzhang@example.com', 'passwordabc', './upload/6429db32b8e901.29262970.png');
+
+INSERT INTO users (name, lastname, user_name, email, password, image_dest)
+VALUES ('Yara', 'Chen', 'yaraChen', 'yarachen@example.com', 'passworddef', './upload/642940baa46078.78436909.png');
+
+select * from users order by creation_date asc;

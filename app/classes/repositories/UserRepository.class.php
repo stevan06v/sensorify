@@ -60,7 +60,6 @@ class UserRepository
             $modal_sender->triggerModal("Database-error", "Lost connection to the database!");
         }
     }
-
     function exitsEmail($email)
     {
         $sql = "select * from users where email = '$email'";
@@ -76,7 +75,6 @@ class UserRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
-
     function getImageSrcByUserName($username)
     {
         $sql = "select image_dest from users where user_name = '$username'";
@@ -131,6 +129,42 @@ class UserRepository
             return $row["user_name"];
         }
     }
+
+
+    function getNamebyUsername($user_name)
+    {
+        $sql = "select name from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["name"];
+        }
+    }
+    function getLastNamebyUsername($user_name)
+    {
+        $sql = "select lastname from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["lastname"];
+        }
+    }
+    function getImageDestbyUsername($user_name)
+    {
+        $sql = "select image_dest from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["image_dest"];
+        }
+    }
+
 
 
     //getters & setters

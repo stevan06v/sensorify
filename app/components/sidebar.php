@@ -63,7 +63,7 @@
         display: flex;
         flex-direction: column;
         padding: 0.1vw;
-        overflow-y:auto ;
+        overflow-y: auto;
 
     }
 
@@ -74,7 +74,7 @@
     .profile-image {
         width: 3.5vw;
         border-radius: 50px;
-        border: #1a8766 solid 2px;
+        border: #1a876698 solid 2px;
         -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
         -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
@@ -92,10 +92,6 @@
         align-items: center;
         width: auto;
         height: min-content;
-        /* -webkit-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
-        -moz-box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
-        box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52); */
-
         cursor: pointer;
         color: hsla(0, 0%, 0%, 0.7);
         margin-bottom: 5vh;
@@ -142,18 +138,18 @@
 
         for ($i = 0; $i < sizeof($icons) - 1; $i++) {
             echo "
-            <a href='". $routes[$i] ."' class='nav-link'>
+            <a href='" . $routes[$i] . "' class='nav-link'>
                 <div class='sidebar-box'>
-                    <img class='sidebar-image no-drag' src='". $icons[$i] ."' alt='nav-icon'>
-                    <div class='sidebar-text no-select'>". strtoupper($content[$i]) ."</div>
+                    <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
+                    <div class='sidebar-text no-select'>" . strtoupper($content[$i]) . "</div>
                 </div>
             </a>
         ";
         }
 
-        $🤡= "ich bin ein clown";
-        $🌚= "ich bin ein mond";
-        
+        $🤡 = "ich bin ein clown";
+        $🌚 = "ich bin ein mond";
+
 
         require_once "./classes/repositories/UserRepository.class.php";
 
@@ -163,7 +159,7 @@
         echo " </div>";
 
         echo "
-        <a href='".$routes[sizeof($routes)-1]."'>
+        <a href='" . $routes[sizeof($routes) - 1] . "'>
             <div class='bottom-box'>
                 <img class='profile-image no-drag' src='" . $image_src . "' alt='nav-icon'>
                 <div class='sidebar-text no-select' style='font-size:1.2rem;'>" . $_SESSION['username'] . "</div>
@@ -171,4 +167,4 @@
         </a>
 ";
         ?>
-</div>
+    </div>
