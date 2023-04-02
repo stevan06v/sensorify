@@ -2,7 +2,7 @@
 clear
 # sudo file-rights
 chmod 777 git-publisher.sh
-rm -r ./app/.idea/ && rm -r ./app/.vscode/
+rm -r ./.idea/ && rm -r ./.vscode/
 git pull
 # clear images in ./app/upload/
 rm -r ./app/upload/*
