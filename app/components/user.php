@@ -18,6 +18,10 @@
         font-size: 15px;
     }
 
+    .sub-page-box {
+        height: 65vh;
+    }
+
     .profile-image-acc {
         width: 12vw;
         border-radius: 160px;
@@ -50,42 +54,42 @@
     </div>';
 
 
-    
-
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
-    echo ' 
-       <form action="./home.php?content=user" method="post">
-            <input type="text" name="name" id="username" placeholder="Change username">
-            <input type="submit" value="edit">
-       </form>';
 
 
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
+    echo ' 
+       <form action="./home.php?content=user" method="post">
+            <input type="text" name="name" id="username" placeholder="Change username">
+            <input type="submit" value="edit">
+       </form>';
 
-?>
+
+
+    ?>
 
 
 </div>
