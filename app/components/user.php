@@ -19,7 +19,7 @@
     }
 
     .sub-page-box {
-        height: 67vh;
+        height: auto;
     }
 
     .profile-image-acc {

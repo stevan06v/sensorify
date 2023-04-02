@@ -42,8 +42,35 @@ if (!isset($_SESSION['username'])) {
         })
     </script>
 </head>
-
 <body>
+
+    <!-- Loading screen -->
+    <div class="loading" id="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+        // Show the loading screen
+        document.getElementById('loading-screen').style.display = 'flex';
+
+        // Load the content from the database using AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                // Hide the loading screen
+                document.getElementById('loading-screen').style.display = 'none';
+
+                // Update the content with the response from the server
+                document.getElementById('content').innerHTML = xhr.responseText;
+            }
+        };
+        xhr.open('GET', './home.php', true);
+        xhr.send();
+    </script>
+
+
     <?php
     require_once "./classes/repositories/UserRepository.class.php";
     require_once "./classes/ModalSender.class.php";

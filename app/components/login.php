@@ -20,6 +20,8 @@ if (
         }
     } else {
         $_SESSION['login'] = false;
+      
+        generateLogin("");  
         $modal_sender->triggerModal("Log-in error", "Regex does not match!");
     }
 } else {

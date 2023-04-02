@@ -46,42 +46,42 @@
     }
 
     .delete_user {
-        width:2.2vw;
+        width: 2.2vw;
     }
 </style>
-<div class="sub-page-box">
-    <div class="sub-page-headerBox">
-        <h3 class="sub-page-header">
-            Edit your accounts:
-        </h3>
-    </div>
-    <div id="accounts">
-        <?php
-        require_once("./classes/repositories/Database.class.php");
-        require_once("./classes/repositories/UserRepository.class.php");
-        $datbase = new Database();
-        $user_repo = new UserRepository();
-        $conn = $datbase->getDataSource();
+    <div class="sub-page-box">
+        <div class="sub-page-headerBox">
+            <h3 class="sub-page-header">
+                Edit your accounts:
+            </h3>
+        </div>
+        <div id="accounts">
+            <?php
+            require_once("./classes/repositories/Database.class.php");
+            require_once("./classes/repositories/UserRepository.class.php");
+            $datbase = new Database();
+            $user_repo = new UserRepository();
+            $conn = $datbase->getDataSource();
 
-        $table = "users";
-        $query = "select * from $table";
+            $table = "users";
+            $query = "select * from $table";
 
-        if (isset($_GET["delete"])) {
-            $sql = "delete from $table where user_id=" . $_GET["delete"];
-            if ($_GET["delete"] == $user_repo->getUserIDbyName($_SESSION['username'])) {
-                $modal_sender->triggerModal("Account-error", "Your are logged in as: @" . $_SESSION['username']);
-            } else {
-                $user = $user_repo->getUserNamebyId($_GET["delete"]);
-                if ($result = $conn->query($sql)) {
-                    $modal_sender->triggerModal("Notification", "$user just got deleted.");
+            if (isset($_GET["delete"])) {
+                $sql = "delete from $table where user_id=" . $_GET["delete"];
+                if ($_GET["delete"] == $user_repo->getUserIDbyName($_SESSION['username'])) {
+                    $modal_sender->triggerModal("Account-error", "Your are logged in as: @" . $_SESSION['username']);
+                } else {
+                    $user = $user_repo->getUserNamebyId($_GET["delete"]);
+                    if ($result = $conn->query($sql)) {
+                        $modal_sender->triggerModal("Notification", "$user just got deleted.");
+                    }
                 }
             }
-        }
-        $curr_user= "current-user";
-        if ($result = $conn->query($query)) {
-            if ($result->num_rows >= 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '
+            $curr_user = "current-user";
+            if ($result = $conn->query($query)) {
+                if ($result->num_rows >= 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '
                     <div class="account">
                         <div class="account-props">
                             <img src="' . $row["image_dest"] . '" alt="" srcset="" class="profile-image">
@@ -92,13 +92,11 @@
                         </div>
                         <a href="./home.php?content=users&delete=' . $row["user_id"] . '"><img class="delete_user" src="./img/sidebar/grey/trash-can.svg" alt="" srcset=""></a>
                     </div>';
-
-                
+                    }
+                } else {
+                    echo "no users are selected";
                 }
-            } else {
-                echo "no users are selected";
             }
-        }
-        ?>
+            ?>
+        </div>
     </div>
-</div>
