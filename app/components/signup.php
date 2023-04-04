@@ -46,7 +46,7 @@ if (
         $lastname = $_POST['lastname'];
         $password = $_POST['password'];
         //$name, $lastname, $username, $password, $email
-        $user = new User($name,$lastname, $username, $password, $email, $file_dest);
+        $user = new User($name,$lastname, $username, str_replace(' ', '', $password), $email, $file_dest);
     } else {
         header('Location: home.php?login=cancelled');
     }
@@ -80,8 +80,6 @@ if (
         load_signUpForm();
     }
 }
-
-
 function exists_username($username, $connection)
 {
     $sql = "select user_name from users where user_name='$username'";

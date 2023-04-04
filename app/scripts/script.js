@@ -17,11 +17,6 @@ function displayImage(e) {
     reader.readAsDataURL(e.files[0]);
   }
 }
-/*
-Dear male-hackers and female-hackers. The code-section below does not mean there are 
-just this little regex checks for you to pass. There are more server-side-checks, so have fun trying to pass through 
-the regex with your stinyk SQL-INJECTIONS. Cheers, Stevan ;).
-*/
 // regex checking input form
 let signup = document.getElementById("signup");
 if (typeof signup != "undefined" && signup != null) {

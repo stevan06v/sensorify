@@ -16,6 +16,7 @@ create table users(
     creation_date timestamp,
     login_date timestamp,
     image_dest varchar(100) not null,
+    phonenumber varchar(100),
     user_id int primary key auto_increment
 );
 create table rooms(
@@ -56,15 +57,7 @@ delete from addresses where zip_code is not null;
 delete from sensors where ssid is not null;
 delete from devices where device_type is not null;
 
-
-
-use sensorifydb;
-delete from users where name is not null;
-delete from rooms where room_name is not null;
-delete from addresses where zip_code is not null;
-delete from sensors where ssid is not null;
-delete from devices where device_type is not null;
-
+-- test insert statements 
 INSERT INTO users (name, lastname, user_name, email, password, image_dest)
 VALUES ('Alice', 'Johnson', 'alicejohnson', 'alicejohnson@example.com', 'password123', './upload/6429db32b8e901.29262970.png');
 
@@ -124,7 +117,6 @@ VALUES ('Sophia', 'Zhang', 'sophiazhang', 'sophiazhang@example.com', 'passwordab
 
 INSERT INTO users (name, lastname, user_name, email, password, image_dest)
 VALUES ('Thomas', 'Chen', 'thomaschen', 'thomaschen@example.com', 'passworddef', './upload/642940baa46078.78436909.png');
-
 
 INSERT INTO users (name, lastname, user_name, email, password, image_dest)
 VALUES ('Ursula', 'Smith', 'ursulasmith', 'ursulasmith@example.com', 'password123', './upload/6429e3f0100da3.03500164.png');

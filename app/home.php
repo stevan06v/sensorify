@@ -42,6 +42,7 @@ if (!isset($_SESSION['username'])) {
         })
     </script>
 </head>
+
 <body>
 
     <!-- Loading screen -->
@@ -55,19 +56,23 @@ if (!isset($_SESSION['username'])) {
         // Show the loading screen
         document.getElementById('loading-screen').style.display = 'flex';
 
-        // Load the content from the database using AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                // Hide the loading screen
-                document.getElementById('loading-screen').style.display = 'none';
+        try {
+    // Load the content from the database using AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        // Hide the loading screen
+                        document.getElementById('loading-screen').style.display = 'none';
 
-                // Update the content with the response from the server
-                document.getElementById('content').innerHTML = xhr.responseText;
-            }
-        };
-        xhr.open('GET', './home.php', true);
-        xhr.send();
+                        // Update the content with the response from the server
+                        document.getElementById('content').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.open('GET', './home.php', true);
+                xhr.send();
+        } catch (e) {
+           
+        }
     </script>
 
 

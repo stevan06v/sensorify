@@ -24,7 +24,7 @@
 
     .profile-image-acc {
         width: 12vw;
-        border-radius: 160px;
+        border-radius: 50%;
         border: #1a87669a solid 3px;
         box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
     }
@@ -59,7 +59,6 @@
         padding-right: 1.5vw;
         display: flex;
         gap: 2vw;
-
     }
 
     .submit {
@@ -76,6 +75,10 @@
         box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
     }
 
+    #profile_image {
+        cursor: pointer;
+    }
+
     .user-sub-head {
         font-size: 20px;
         font-family: Black-Pure;
@@ -85,11 +88,103 @@
     }
 </style>
 
+<script>
+    // load imageinto page
+    function displayProfileImage(e) {
+        if (e.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document
+                    .querySelector("#profile_image")
+                    .setAttribute("src", e.target.result);
+                document.getElementById("profile_image").style.opacity = "1";
+            };
+            reader.readAsDataURL(e.files[0]);
+            simulateClick();
+        }
+    }
 
+    function simulateClick() {
+        let button = document.getElementById("submit");
+        console.log("click");
+        button.click();
+    }
+</script>
 <div class="sub-page-box">
     <?php
+    //name, lastname, user_name, email, password
+    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password");
+    $types = array("text", "text", "text", "email", "password", "password");
+    $names = array("name", "lastname", "user_name", "email", "password", "new-password");
+    $placeholders_sec = array("Phone number", "Country", "Zip Code", "Address", "House no.", "City");
+    $names_sec = array("phonenumber", "country", "zipcode", "address", "houseno", "city");
+
     require_once("./classes/repositories/UserRepository.class.php");
     $user_repo = new UserRepository();
+    $conn = $user_repo->getConnection();
+
+    $file_dest = "";
+
+    if (!empty($_POST["submit"])) {
+        upload_file();
+        // exec("rm -r $file_dest"); 
+        $sql = "update users set image_dest='" . $file_dest . "' where user_name='" . $_SESSION['username'] . "'";
+        $result = $conn->query($sql);
+
+        echo "
+            <script>
+                setTimeout(function() {
+                    window.location.href = window.location.href;
+                }, 10); 
+            </script>
+        ";
+    }
+
+    for ($i = 0; $i < sizeof($names)-2; $i++) {
+        if (isset($_POST[$names[$i]])) {
+            if ($names[$i] == 'user_name' && !empty($_POST[$names[$i]])) {
+                if (!$user_repo->exitsUsername($_POST[$names[$i]])) {
+                    $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
+                    $result = $conn->query($sql);
+                    $_SESSION['username'] = $_POST[$names[$i]];
+                    // refresh sidebar(update name)
+                    echo "
+                    <script>
+                        setTimeout(function() {
+                            window.location.href = window.location.href;
+                        }, 10); 
+                    </script>
+                ";
+                } else {
+                    $modal_sender->triggerModal("User-error", "Username is already taken or empty.");
+                }
+            } else {
+                if (!empty($_POST[$names[$i]])) {
+                    $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
+                    $result = $conn->query($sql);
+                } else {
+                    $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
+                }
+            }
+        }
+    }
+
+
+    #   validate password
+    if(isset($_POST['password']) && isset($_POST['retype-password'])){
+        if(!empty($_POST['password']) && !empty($_POST['retype-password'])){
+            if (str_replace(' ', '', $_POST['password']) == str_replace(' ', '', $_POST['retype-password'])) {
+                $query = "update users set password = '".$_POST['password']."' where user_name = '".$_SESSION['username']."'";
+                $result = $conn->query($query);
+                $modal_sender->triggerModal("Notification","Password got successfully updated");
+            } else {
+                $modal_sender->triggerModal("User-error", "Wrong password");
+            }
+        }else{
+            $modal_sender->triggerModal("User-error", "Empty password-field");
+        }
+        
+    }
 
 
     # get db-data
@@ -98,61 +193,99 @@
     $lastname = $user_repo->getLastNamebyUsername($user_name);
     $image_dest = $user_repo->getImageDestbyUsername($user_name);
 
-
     echo '
         <div class="account-props">
-            <img src="' . $image_dest . '" alt="" srcset="" class="profile-image-acc no-darg">
+        <form action="./home.php?content=user" method="post" enctype="multipart/form-data">
+                <div id="image-selector"> 
+                    <img src="' . $image_dest . '" id="profile_image" class="profile-image-acc no-darg" alt="profile_image" onclick="triggerClick()">
+                    <label for="fileimage"></label>
+                    <input onchange="displayProfileImage(this)" id="fileimage" type="file" name="file" accept="image/png, image/jpg, image/svg, image/jpeg"/> 
+                </div>
+            <input type="submit" id="submit" name="submit" style="display:none;" value="send">
+        </form>
+
             <div>
                 <div class="account-name">' . $name . ' ' . $lastname . '</div>
                 <div class="user-name">@' . $user_name . '</div>
             </div>
     </div>';
 
-
-
-    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password");
-    $types = array("text", "text", "text", "email", "password", "password");
-    $names = array("name", "lastname", "username", "email", "passord", "new-passord");
-
     echo "<div id='settings-content'>";
     echo "<div id='changeSettingsBox'>";
 
     echo "<div class='user-sub-head'>Change your data: </div>";
-    for ($i = 0; $i < 6; $i++) {
+    for ($i = 0; $i < 4; $i++) {
         echo ' 
-                        <form action="./home.php?content=user" method="post">
-                                <div class="settings-box">
-                                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '">
-                                    <input type="submit" value="edit" name="button" class="submit">
-                                </div>
-                            </form>';
+        <form action="./home.php?content=user" method="post">
+                <div class="settings-box">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '">
+                    <input type="submit" value="save" name="button" class="submit">
+                </div>
+            </form>';
     }
+    echo '
+    <form action="./home.php?content=user" method="post">
+        <div class="settings-box">
+            <input type="password" name="password" class="input2" placeholder="New password">
+        </div>
+        <div class="settings-box">
+            <input type="password" name="retype-password" class="input2" placeholder="Retype new password">
+            <input type="submit" value="save" name="button" class="submit">
+        </div>
+    </form>
+    ';
     echo "</div>";
-
     echo "<div>";
     echo "<div class='user-sub-head'>Add your data: </div>";
     for ($i = 0; $i < 6; $i++) {
         echo ' 
-                        <form action="./home.php?content=user" method="post">
-                                <div class="settings-box">
-                                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '">
-                                    <input type="submit" value="edit" name="button" class="submit" >
-                                </div>
-                            </form>';
+            <form action="./home.php?content=user" method="post">
+                <div class="settings-box">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' .  $placeholders_sec[$i] . '">
+                    <input type="submit" value="save" name="button" class="submit" >
+                </div>
+            </form>';
     }
 
     echo "</div>";
     echo "</div>";
 
-
-    if (!empty($_POST['button'])) {
+    function upload_file()
+    {
+        $upload_dir = "./upload/";
+        global $file_dest;
+        $file_name = $_FILES['file']['name'];
+        $file_tmp_name = $_FILES['file']['tmp_name'];
+        $file_error = $_FILES['file']['error'];
+        $file_ext = explode('.', $file_name);
+        $file_actual_ext = strtolower(end($file_ext));
+        $allowed = array('jpg', 'jpeg', 'png');
+        if (in_array($file_actual_ext, $allowed)) {
+            if ($file_error === 0) {
+                $file_name_new = uniqid('', true) . "." . $file_actual_ext;
+                if (!is_dir($upload_dir)) {
+                    # path, permissions
+                    mkdir($upload_dir, 0777);
+                }
+                $file_dest = './upload/' . $file_name_new;
+                move_uploaded_file($file_tmp_name, $file_dest);
+                compress_image($file_dest, $file_actual_ext);
+            }
+        }
     }
-
-
-
+    function compress_image($dest, $file_extenetion)
+    {
+        $height = 170 * 4;
+        $width = 170 * 4;
+        if ($file_extenetion == "jpg" || $file_extenetion == "jpeg") {
+            $image = imagecreatefromjpeg($dest);
+            imagejpeg(imagescale($image, $width, $height), $dest);
+        } else {
+            $image = imagecreatefrompng($dest);
+            imagepng(imagescale($image, $width, $height), $dest);
+        }
+    }
 
     ?>
-
-
 
 </div>

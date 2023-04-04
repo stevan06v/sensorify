@@ -64,9 +64,7 @@
         flex-direction: column;
         padding: 0.1vw;
         overflow-y: auto;
-
     }
-
     .nav-link {
         text-decoration: none;
     }
@@ -79,11 +77,9 @@
         -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
     }
-
     .sidebar-image {
         width: 2vw;
     }
-
     .bottom-box {
         display: flex;
         border-radius: 9px;
@@ -146,11 +142,6 @@
             </a>
         ";
         }
-
-        $🤡 = "ich bin ein clown";
-        $🌚 = "ich bin ein mond";
-
-
         require_once "./classes/repositories/UserRepository.class.php";
 
         $user_repo = new UserRepository();
@@ -165,6 +156,7 @@
                 <div class='sidebar-text no-select' style='font-size:1.2rem;'>" . $_SESSION['username'] . "</div>
             </div>
         </a>
-";
+    ";
+        
         ?>
     </div>

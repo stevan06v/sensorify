@@ -238,11 +238,6 @@ input[type="file"] {
     font-family: MediumItalic;
     font-size: 1rem;
 }
-
-
-
-
-
 .loading {
     display: flex;
     justify-content: center;
