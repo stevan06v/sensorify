@@ -31,7 +31,6 @@ if (
         header("Location: home.php?enter=login?login=success");
     }
 }
-
 function generateLogin($err)
 {
     echo "

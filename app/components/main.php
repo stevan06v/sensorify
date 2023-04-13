@@ -3,7 +3,6 @@
         display: flex;
 
     }
-
     .sub-page-box {
         box-shadow: -2px -1px 25px -10px rgba(0, 0, 0, 0.75);
         border-radius: 12px;

@@ -17,7 +17,6 @@ class PopupEngine{
 	static endModal
 	static observer
 
-
 	/**
 	 * creates the needed html and configures the engine
 	 * @param {JSON} config {object} of config options like doLogs, defaultPopupDelay. Check README for details.

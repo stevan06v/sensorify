@@ -169,7 +169,6 @@
         }
     }
 
-
     #   validate password
     if(isset($_POST['password']) && isset($_POST['retype-password'])){
         if(!empty($_POST['password']) && !empty($_POST['retype-password'])){
@@ -287,5 +286,4 @@
     }
 
     ?>
-
 </div>

@@ -1,7 +1,10 @@
 <?php
 class Database
 {
-    private static $dbserver = "sensorify.ddns.net";
+
+    //sensorify.ddns.net
+    //
+    private static $dbserver = "localhost";
     private static $dbname = "sensorifydb";
     private static $dbusername = "stevan";
     private static $dbpassword = "Stevan2006";
