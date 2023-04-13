@@ -118,6 +118,7 @@
     $names = array("name", "lastname", "user_name", "email", "password", "new-password");
     $placeholders_sec = array("Phone number", "Country", "Zip Code", "Address", "House no.", "City");
     $names_sec = array("phonenumber", "country", "zipcode", "address", "houseno", "city");
+    $text= array("Name","Lastname","Username","Email address","Password");
 
     require_once("./classes/repositories/UserRepository.class.php");
     $user_repo = new UserRepository();
@@ -131,13 +132,13 @@
         $sql = "update users set image_dest='" . $file_dest . "' where user_name='" . $_SESSION['username'] . "'";
         $result = $conn->query($sql);
 
-        echo "
+        echo '
             <script>
                 setTimeout(function() {
                     window.location.href = window.location.href;
-                }, 10); 
+                }, 10);        
             </script>
-        ";
+        ';
     }
 
     for ($i = 0; $i < sizeof($names)-2; $i++) {
@@ -155,6 +156,7 @@
                         }, 10); 
                     </script>
                 ";
+
                 } else {
                     $modal_sender->triggerModal("User-error", "Username is already taken or empty.");
                 }
@@ -162,6 +164,7 @@
                 if (!empty($_POST[$names[$i]])) {
                     $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
                     $result = $conn->query($sql);
+                    $modal_sender->triggerNotification($text[$i]." got successfully updated.");
                 } else {
                     $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
                 }
@@ -175,14 +178,13 @@
             if (str_replace(' ', '', $_POST['password']) == str_replace(' ', '', $_POST['retype-password'])) {
                 $query = "update users set password = '".$_POST['password']."' where user_name = '".$_SESSION['username']."'";
                 $result = $conn->query($query);
-                $modal_sender->triggerModal("Notification","Password got successfully updated");
+                $modal_sender->triggerNotification('Password for: '.$_SESSION['username'].' successfully updated.');
             } else {
                 $modal_sender->triggerModal("User-error", "Wrong password");
             }
         }else{
             $modal_sender->triggerModal("User-error", "Empty password-field");
         }
-        
     }
 
 
@@ -202,7 +204,6 @@
                 </div>
             <input type="submit" id="submit" name="submit" style="display:none;" value="send">
         </form>
-
             <div>
                 <div class="account-name">' . $name . ' ' . $lastname . '</div>
                 <div class="user-name">@' . $user_name . '</div>

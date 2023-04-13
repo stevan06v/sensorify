@@ -76,7 +76,7 @@
             } else {
                 $user = $user_repo->getUserNamebyId($_GET["delete"]);
                 if ($result = $conn->query($sql)) {
-                    $modal_sender->triggerModal("Notification", "$user just got deleted.");
+                    $modal_sender->triggerNotification('@'.$user.': just got deleted.');
                 }
             }
         }

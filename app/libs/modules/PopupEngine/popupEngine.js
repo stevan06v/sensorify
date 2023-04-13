@@ -1,17 +1,25 @@
 class PopupEngine{
 	static modal = document.createElement("div")
 	static modalContent = document.createElement("div")
-	static inline = document.createElement("div")
-	static inlinePopupDelay
 
+	static inline = document.createElement("div")
+	static inlinePopupDelay //timeout object not time value
+		
 	static initialized = false
 	static config = {
 		doLogs: true,
 		preferedInlinePopupPosition: "top",
-		defaultPopupDelay: 0,
+		defaultInlinePopupDelay: 0,
+
 		textColor: "white",
 		backgroundColor: "hsl(0,0%,15%)",
-		elemBackground: "hsl(0,0%,25%)"
+		elemBackground: "hsl(0,0%,25%)",
+
+		notificationOffset: {top: "1vw", bottom: "1vw", left: "1vw", right: "1vw"},
+		notificationOffsetPhone: {top: "1vh", bottom: "1vh"},
+		defaultNotificationLifetime: 5000,
+
+		phoneBreakpoint: 600
 	}
 
 	static endModal
@@ -37,18 +45,18 @@ class PopupEngine{
 					console.error('invalid value for coinfig doLogs: "' + config.preferedInlinePopupPosition + '" must be a boolean. Will default to true.');
 			}
 
-			if(config.defaultPopupDelay){
-				if(typeof config.defaultPopupDelay == "number" && config.defaultPopupDelay >= 0)
-					this.config.defaultPopupDelay = config.defaultPopupDelay
+			if(config.defaultInlinePopupDelay){
+				if(typeof config.defaultInlinePopupDelay === "number" && config.defaultInlinePopupDelay >= 0)
+					this.config.defaultInlinePopupDelay = config.defaultInlinePopupDelay
 				else
-					console.error('invalid default delay: "' + config.defaultPopupDelay + '" must be a number >= 0. Will default to 0');
+					console.error('invalid default delay: "' + config.defaultInlinePopupDelay + '" must be a number >= 0. Will default to 0');
 			}
 
 			if(config.preferedInlinePopupPosition){
 				if(["top","bottom"].includes(config.preferedInlinePopupPosition))
 					this.config.preferedInlinePopupPosition = config.preferedInlinePopupPosition
 				else
-					console.error('invalid prefered position: "' + config.preferedInlinePopupPosition + '" either "top" or "bottom". Config option will default to "top".');
+					console.error('invalid prefered position: "' + config.preferedInlinePopupPosition + '" either "top" or "bottom". Will default to "top".');
 			}
 
 			if(config.textColor){
@@ -59,6 +67,26 @@ class PopupEngine{
 			}
 			if(config.elemBackground){
 				this.config.elemBackground = config.elemBackground
+			}
+
+			if(config.notificationOffset){
+				this.config.notificationOffset = config.notificationOffset
+			}
+			if(config.notificationOffsetPhone){
+				this.config.notificationOffsetPhone = config.notificationOffsetPhone
+			}
+			if(config.defaultNotificationLifetime){
+				if(typeof config.defaultNotificationLifetime === "number")
+					this.config.defaultNotificationLifetime = config.defaultNotificationLifetime
+				else
+					console.error('invalid default notification lifetime value: "' + config.defaultNotificationLifetime + '" must be a number, will default to "5000".');
+			}
+
+			if(config.phoneBreakpoint){
+				if(typeof config.phoneBreakpoint === "number")
+					this.config.phoneBreakpoint = config.phoneBreakpoint
+				else
+					console.error('invalid phone breakpoint value: "' + config.phoneBreakpoint + '" must be a number, will default to "600".');
 			}
 		}
 
@@ -86,6 +114,22 @@ class PopupEngine{
 		document.body.appendChild(this.modal)
 		document.body.appendChild(this.inline)
 
+		let counter = 0
+		let yOptions = ["top", "bottom"]
+		let xOptions = ["left", "center", "right"]
+		yOptions.forEach(yAxis => {
+			xOptions.forEach(xAxis => {
+				counter++
+				let noti = document.createElement('div')
+				noti.classList.add("popupEngineNotificationContainer", yAxis, xAxis)
+				document.body.appendChild(noti)
+			});
+
+			let noti = document.createElement('div')
+			noti.classList.add("popupEngineNotificationContainer", "phone", "center", yAxis)
+			document.body.appendChild(noti)
+		});
+		
 		this.#createCSS()
 		this.#createDOMchangeListener()
 
@@ -105,6 +149,7 @@ class PopupEngine{
 		const stylesheet = style.sheet
 
 		//----------- modal -----------//
+
 		//#region 
 		stylesheet.insertRule(`:root{
 			--popupEngine-background-color: ${this.config.backgroundColor};
@@ -246,7 +291,81 @@ class PopupEngine{
 			margin: 0 0 .5rem 0;
 			font-weight: bold;
 		}`)
+		//#endregion
+		
+		//----------- Notification -----------//
+		
+		//#region 
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer) {
+			position: fixed;
+			display: flex;
+			flex-direction: column;
+			max-width: 20vw;
+			z-index: 999;
+			gap: 1vw;
+			height: auto;
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.top) {
+			top: ${this.config.notificationOffset.top};
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.bottom) {
+			bottom: ${this.config.notificationOffset.bottom};
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.left) {
+			left: ${this.config.notificationOffset.left};
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.right) {
+			right: ${this.config.notificationOffset.right};
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.center) {
+			left: 50%;
+			transform: translateX(-50%);
+		}`)
 
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.phone) {
+			width: 80vw;
+			max-width: 80vw !important;
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.phone.top) {
+			top: ${this.config.notificationOffsetPhone.top} !important;
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationContainer.phone.bottom) {
+			bottom: ${this.config.notificationOffsetPhone.bottom} !important;
+		}`)
+		
+		stylesheet.insertRule(`:where(.popupEngineNotification) {
+			padding: .5rem;
+			gap: .5rem;
+			display: flex;
+			align-items: center;
+			box-sizing: border-box;
+			background-color: var(--popupEngine-background-color);
+			box-shadow: 0 0 .3rem .3rem rgba(0,0,0,.1);
+			color: var(--popupEngine-color);
+		}`)
+
+		stylesheet.insertRule(`:where(.popupEngineNotificationHeading) {
+			font-size: 1rem;
+			margin: 0 0 .5rem 0;
+			font-weight: bold;
+		}`)
+
+		stylesheet.insertRule(`:where(.popupEngineNotificationText) {
+			margin: 0;
+			font-size: .9rem;
+		}`)
+		
+		stylesheet.insertRule(`:where(.popupEngineNotificationCloseIcon) {
+			display: grid;
+			place-items: center;
+			width: 1.5rem;
+			cursor: pointer;
+			margin-left: auto;
+		}`)
+		stylesheet.insertRule(`:where(.popupEngineNotificationCloseIcon p) {
+			margin: 0;
+			font-family: Segoe UI Symbol;
+		}`)
 		//#endregion
 	}
 
@@ -296,12 +415,12 @@ class PopupEngine{
 
 		let delay = parseInt(elem.dataset.popupDelay)
 		if(!elem.dataset.popupDelay){
-			delay = this.config.defaultPopupDelay
+			delay = this.config.defaultInlinePopupDelay
 		}
 		else if(!delay){
 			if(this.config.doLogs)
 				console.log("invalid delay entered using default value", elem);
-			delay = this.config.defaultPopupDelay
+			delay = this.config.defaultInlinePopupDelay
 		}
 
 		elem.onmouseenter = ()=>{
@@ -323,6 +442,89 @@ class PopupEngine{
 				})
 			},delay)
 		}
+	}
+
+	static createNotification(settings){
+		if(!this.#checkHTML() || !settings )return
+
+		if(!settings.position)
+			settings.position = ["top", "left"]
+
+		if(settings.position.length !== 2){
+			if(this.config.doLogs)
+				console.error("position setting is invalid: expecting a [array] that contains the y axis(top or bottom) and the x axis (left, center or right)")
+		}
+
+		let noti = document.createElement('div')
+		noti.classList.add("popupEngineNotification")
+
+		let content = document.createElement('div')
+
+		//create heading
+		if(settings.heading){
+			let heading = document.createElement("p")
+			heading.innerHTML = settings.heading
+			heading.classList.add("popupEngineNotificationHeading")
+
+			content.appendChild(heading)
+		}
+
+		//generate text
+		let popupText = document.createElement("p")
+		popupText.classList.add("popupEngineNotificationText")
+		popupText.innerHTML = settings.text || "no text specified"
+
+		content.appendChild(popupText)
+		noti.appendChild(content)
+
+		//create close icon
+		let close = document.createElement('div')
+		close.classList.add("popupEngineNotificationCloseIcon")
+		close.addEventListener("click", ()=>{
+			PopupEngine.closeNotification(noti)
+		})
+		let closeIcon = document.createElement('p')
+		closeIcon.innerHTML = "&#10006"
+
+		close.appendChild(closeIcon)
+		noti.appendChild(close)
+
+		//add custom classes
+		if(settings.CSSClass != undefined){
+			if(Array.isArray(settings.CSSClass))
+				noti.classList.add(...settings.CSSClass)
+			else
+				noti.classList.add(settings.CSSClass)
+		}
+
+		//append notification to container
+		let targetedContainer
+		if(window.innerWidth > this.config.phoneBreakpoint){ //desktop mode
+			targetedContainer = document.querySelector('.popupEngineNotificationContainer.' + settings.position[0] + '.' + settings.position[1])
+		}
+		else{//phone
+			if(["top","bottom"].includes(settings.position[0])){
+				targetedContainer = document.querySelector('.popupEngineNotificationContainer.phone.' + settings.position[0])
+			}
+			else{
+				targetedContainer = document.querySelector('.popupEngineNotificationContainer.phone.' + settings.position[1])
+			}
+		}
+
+		targetedContainer.appendChild(noti)
+
+		//add auto close
+		if(!settings.lifetime || settings.lifetime > 0){
+			setTimeout(function(){
+				PopupEngine.closeNotification(noti)
+			}, settings.lifetime || this.config.defaultNotificationLifetime)
+		}
+
+		return noti;
+	}
+
+	static closeNotification(noti) {
+		noti.remove()
 	}
 
 	/**
@@ -558,9 +760,11 @@ class PopupEngine{
 			})
 			data.inputValues = inputValues
 		}
+
 		if(closeAction){
 			closeAction(data)
 		}
+
 		if(closePopup){
 			this.modal.style.display = "none"
 			this.modal.style.opacity = 0
@@ -569,6 +773,7 @@ class PopupEngine{
 			this.endModal(data)
 		}
 	}
+
 	static #checkHTML(){
 		if (document.readyState === 'loading') {
 			if(this.config.doLogs)
@@ -584,6 +789,7 @@ class PopupEngine{
 
 		return true
 	}
+
 	/**
 	 * test method, creates one popup and outputs errors
 	 */
@@ -618,5 +824,9 @@ class PopupEngine{
 				}
 			]
 		})
+	}
+
+	static out(){
+		console.log("hello from export")
 	}
 }

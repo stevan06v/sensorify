@@ -87,6 +87,7 @@ if (!isset($_SESSION['username'])) {
         include("./components/main.php");
     }
 
+    
     if (isset($_GET['enter'])) {
         switch ($_GET['enter']) {
             case 'guest':
