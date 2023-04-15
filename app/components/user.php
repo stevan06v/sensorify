@@ -47,20 +47,17 @@
         background-color: rgb(255, 255, 255);
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.52);
     }
-
     .settings-box {
         display: flex;
         gap: 1vw;
         margin-bottom: 1vh;
     }
-
     #settings-content {
         padding-left: 1.5vw;
         padding-right: 1.5vw;
         display: flex;
         gap: 2vw;
     }
-
     .submit {
         padding: 0.6vw;
         display: block;
@@ -74,11 +71,9 @@
         margin: auto;
         box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
     }
-
     #profile_image {
         cursor: pointer;
     }
-
     .user-sub-head {
         font-size: 20px;
         font-family: Black-Pure;
@@ -118,12 +113,11 @@
     $names = array("name", "lastname", "user_name", "email", "password", "new-password");
     $placeholders_sec = array("Phone number", "Country", "Zip Code", "Address", "House no.", "City");
     $names_sec = array("phonenumber", "country", "zipcode", "address", "houseno", "city");
-    $text= array("Name","Lastname","Username","Email address","Password");
+    $text = array("Name", "Lastname", "Username", "Email address", "Password");
 
     require_once("./classes/repositories/UserRepository.class.php");
     $user_repo = new UserRepository();
     $conn = $user_repo->getConnection();
-
     $file_dest = "";
 
     if (!empty($_POST["submit"])) {
@@ -141,7 +135,7 @@
         ';
     }
 
-    for ($i = 0; $i < sizeof($names)-2; $i++) {
+    for ($i = 0; $i < sizeof($names) - 2; $i++) {
         if (isset($_POST[$names[$i]])) {
             if ($names[$i] == 'user_name' && !empty($_POST[$names[$i]])) {
                 if (!$user_repo->exitsUsername($_POST[$names[$i]])) {
@@ -156,7 +150,6 @@
                         }, 10); 
                     </script>
                 ";
-
                 } else {
                     $modal_sender->triggerModal("User-error", "Username is already taken or empty.");
                 }
@@ -164,25 +157,24 @@
                 if (!empty($_POST[$names[$i]])) {
                     $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
                     $result = $conn->query($sql);
-                    $modal_sender->triggerNotification($text[$i]." got successfully updated.");
+                    $modal_sender->triggerNotification($text[$i] . " got successfully updated.");
                 } else {
                     $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
                 }
             }
         }
     }
-
     #   validate password
-    if(isset($_POST['password']) && isset($_POST['retype-password'])){
-        if(!empty($_POST['password']) && !empty($_POST['retype-password'])){
+    if (isset($_POST['password']) && isset($_POST['retype-password'])) {
+        if (!empty($_POST['password']) && !empty($_POST['retype-password'])) {
             if (str_replace(' ', '', $_POST['password']) == str_replace(' ', '', $_POST['retype-password'])) {
-                $query = "update users set password = '".$_POST['password']."' where user_name = '".$_SESSION['username']."'";
+                $query = "update users set password = '" . $_POST['password'] . "' where user_name = '" . $_SESSION['username'] . "'";
                 $result = $conn->query($query);
-                $modal_sender->triggerNotification('Password for: '.$_SESSION['username'].' successfully updated.');
+                $modal_sender->triggerNotification('Password for: ' . $_SESSION['username'] . ' successfully updated.');
             } else {
                 $modal_sender->triggerModal("User-error", "Wrong password");
             }
-        }else{
+        } else {
             $modal_sender->triggerModal("User-error", "Empty password-field");
         }
     }
@@ -213,23 +205,33 @@
     echo "<div id='settings-content'>";
     echo "<div id='changeSettingsBox'>";
 
+
+    $values = array(
+        $name,
+        $lastname,
+        $user_name,
+        $user_repo->getEmailbyUsername($user_name)
+    );
+
     echo "<div class='user-sub-head'>Change your data: </div>";
     for ($i = 0; $i < 4; $i++) {
         echo ' 
         <form action="./home.php?content=user" method="post">
                 <div class="settings-box">
-                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '" value="'.$values[$i].'">
                     <input type="submit" value="save" name="button" class="submit">
                 </div>
             </form>';
     }
+
+    $password = $user_repo->getPasswordbyUsername($user_name);
     echo '
     <form action="./home.php?content=user" method="post">
         <div class="settings-box">
-            <input type="password" name="password" class="input2" placeholder="New password">
+            <input type="password" name="password" class="input2" placeholder="New password" value="' . $password . '">
         </div>
         <div class="settings-box">
-            <input type="password" name="retype-password" class="input2" placeholder="Retype new password">
+            <input type="password" name="retype-password" class="input2" placeholder="Retype new password" value="'.$password.'">
             <input type="submit" value="save" name="button" class="submit">
         </div>
     </form>

@@ -131,6 +131,44 @@ class UserRepository
     }
 
 
+
+    function getEmailbyUsername($user_name)
+    {
+        $sql = "select email from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["email"];
+        }
+    }
+
+    function getPasswordbyUsername($user_name)
+    {
+        $sql = "select password from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["password"];
+        }
+    }
+    
+    function getLastNamebyUsername($user_name)
+    {
+        $sql = "select lastname from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["lastname"];
+        }
+        
+    }
+
     function getNamebyUsername($user_name)
     {
         $sql = "select name from users where user_name= '$user_name'";
@@ -142,17 +180,7 @@ class UserRepository
             return $row["name"];
         }
     }
-    function getLastNamebyUsername($user_name)
-    {
-        $sql = "select lastname from users where user_name= '$user_name'";
-        $result = $this->connection->query($sql);
-        if ($result->num_rows == 0) {
-            return "user not found";
-        } else {
-            $row = $result->fetch_assoc();
-            return $row["lastname"];
-        }
-    }
+
     function getImageDestbyUsername($user_name)
     {
         $sql = "select image_dest from users where user_name= '$user_name'";
@@ -164,8 +192,6 @@ class UserRepository
             return $row["image_dest"];
         }
     }
-
-
 
     //getters & setters
     function getConnection()

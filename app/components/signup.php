@@ -112,6 +112,8 @@ function upload_file()
     $file_ext = explode('.', $file_name);
     $file_actual_ext = strtolower(end($file_ext));
     $allowed = array('jpg', 'jpeg', 'png');
+
+
     if (in_array($file_actual_ext, $allowed)) {
         if ($file_error === 0) {
             $file_name_new = uniqid('', true) . "." . $file_actual_ext;

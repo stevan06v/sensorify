@@ -8,15 +8,16 @@
         border: 3px solid #1a8766;
         border-radius: 7px;
         padding: 1vw;
+       
     }
 
     .popupEngineNotificationContainer {
-        font-size: 1.3rem;
-        
+        font-size: 0.9rem;
+       
     }               
 
     .popupEngineNotificationText {
-        font-size: 1.3rem;
+        font-size: 0.9rem;
     }
 
     .popupEngineModalContent {
@@ -27,13 +28,10 @@
         box-shadow: -2px -1px 15px -10px rgba(0, 0, 0, 0.75);
         border: 5px solid #1a8766;
     }
-
-
     .popupEngineModalHeading {
         font-family: BlackItalic;
         font-size: 2rem;
     }
-
     .popupEngineModalText {
         font-family: MediumItalic;
         font-size: 1rem;
