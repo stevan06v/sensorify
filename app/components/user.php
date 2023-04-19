@@ -108,18 +108,18 @@
 <div class="sub-page-box">
     <?php
     //name, lastname, user_name, email, password
-    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password");
-    $types = array("text", "text", "text", "email", "password", "password");
-    $names = array("name", "lastname", "user_name", "email", "password", "new-password");
-    $placeholders_sec = array("Phone number", "Country", "Zip Code", "Address", "House no.", "City");
-    $names_sec = array("phonenumber", "country", "zipcode", "address", "houseno", "city");
-    $text = array("Name", "Lastname", "Username", "Email address", "Password");
+    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password", "Phone number", "Country", "Zip Code","City", "Street","House no.");
+    $types = array("text", "text", "text", "email", "password", "password","phonenumber","text","text","text","text","text");
+    $names = array("name", "lastname", "user_name", "email", "password","new-password", "phone_number", "country", "zip_code", "city", "street", "house_number");
+    $text = array("Name", "Lastname", "Username", "Email address","Password","New Password", "Phone number", "Country", "Zip Code", "City","Street", "House no." );
 
     require_once("./classes/repositories/UserRepository.class.php");
     $user_repo = new UserRepository();
     $conn = $user_repo->getConnection();
     $file_dest = "";
 
+
+    # change profile-image
     if (!empty($_POST["submit"])) {
         upload_file();
         // exec("rm -r $file_dest"); 
@@ -135,9 +135,11 @@
         ';
     }
 
-    for ($i = 0; $i < sizeof($names) - 2; $i++) {
+    # ape-form
+    for ($i = 0; $i < sizeof($names); $i++) {
         if (isset($_POST[$names[$i]])) {
             if ($names[$i] == 'user_name' && !empty($_POST[$names[$i]])) {
+                # check if user exits
                 if (!$user_repo->exitsUsername($_POST[$names[$i]])) {
                     $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
                     $result = $conn->query($sql);
@@ -162,9 +164,11 @@
                     $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
                 }
             }
+            
         }
     }
-    #   validate password
+
+    #  password ape-form
     if (isset($_POST['password']) && isset($_POST['retype-password'])) {
         if (!empty($_POST['password']) && !empty($_POST['retype-password'])) {
             if (str_replace(' ', '', $_POST['password']) == str_replace(' ', '', $_POST['retype-password'])) {
@@ -182,6 +186,7 @@
 
     # get db-data
     $user_name = $_SESSION['username'];
+
     $name = $user_repo->getNamebyUsername($user_name);
     $lastname = $user_repo->getLastNamebyUsername($user_name);
     $image_dest = $user_repo->getImageDestbyUsername($user_name);
@@ -237,13 +242,26 @@
     </form>
     ';
     echo "</div>";
+
+
+
+
+    $values_sec = array(
+        $user_repo->getPhoneNumberbyUsername($user_name),
+        $user_repo->getCountrybyUsername($user_name),
+        $user_repo->getZipCodebyUsername($user_name),
+        $user_repo->getCitybyUsername($user_name),
+        $user_repo->getStreetbyUsername($user_name),
+        $user_repo->getHouseNumberbyUsername($user_name)
+    );
+
     echo "<div>";
     echo "<div class='user-sub-head'>Add your data: </div>";
-    for ($i = 0; $i < 6; $i++) {
+    for ($i = 6; $i < sizeof($names); $i++) {
         echo ' 
             <form action="./home.php?content=user" method="post">
                 <div class="settings-box">
-                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' .  $placeholders_sec[$i] . '">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' .  $placeholders[$i] . '" value="' . $values_sec[$i-6] . '">
                     <input type="submit" value="save" name="button" class="submit" >
                 </div>
             </form>';

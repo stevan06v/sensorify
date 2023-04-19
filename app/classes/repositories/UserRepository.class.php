@@ -155,7 +155,6 @@ class UserRepository
             return $row["password"];
         }
     }
-    
     function getLastNamebyUsername($user_name)
     {
         $sql = "select lastname from users where user_name= '$user_name'";
@@ -168,7 +167,6 @@ class UserRepository
         }
         
     }
-
     function getNamebyUsername($user_name)
     {
         $sql = "select name from users where user_name= '$user_name'";
@@ -180,7 +178,6 @@ class UserRepository
             return $row["name"];
         }
     }
-
     function getImageDestbyUsername($user_name)
     {
         $sql = "select image_dest from users where user_name= '$user_name'";
@@ -192,6 +189,77 @@ class UserRepository
             return $row["image_dest"];
         }
     }
+
+    function getPhoneNumberbyUsername($user_name)
+    {
+        $sql = "select phone_number from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["phone_number"];
+        }
+    }
+
+    function getCountrybyUsername($user_name)
+    {
+        $sql = "select country from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["country"];
+        }
+    }
+    function getZipCodebyUsername($user_name)
+    {
+        $sql = "select zip_code from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["zip_code"];
+        }
+    }
+    function getCitybyUsername($user_name)
+    {
+        $sql = "select city from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["city"];
+        }
+    }
+     function getHouseNumberbyUsername($user_name)
+    {
+        $sql = "select house_number from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["house_number"];
+        }
+    }
+
+    function getStreetbyUsername($user_name)
+    {
+        $sql = "select street from users where user_name= '$user_name'";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows == 0) {
+            return "user not found";
+        } else {
+            $row = $result->fetch_assoc();
+            return $row["street"];
+        }
+    }
+
+
 
     //getters & setters
     function getConnection()

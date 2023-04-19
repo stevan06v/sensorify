@@ -92,6 +92,9 @@
         color: hsla(0, 0%, 0%, 0.7);
         margin-bottom: 5vh;
     }
+    .marker{
+        color:#1a8766;
+    }
 </style>
 
 <div id="sidebar">
@@ -141,7 +144,9 @@
                 </div>
             </a>
         ";
+        
         }
+
         require_once "./classes/repositories/UserRepository.class.php";
 
         $user_repo = new UserRepository();
