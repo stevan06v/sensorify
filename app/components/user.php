@@ -47,17 +47,20 @@
         background-color: rgb(255, 255, 255);
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.52);
     }
+
     .settings-box {
         display: flex;
         gap: 1vw;
         margin-bottom: 1vh;
     }
+
     #settings-content {
         padding-left: 1.5vw;
         padding-right: 1.5vw;
         display: flex;
         gap: 2vw;
     }
+
     .submit {
         padding: 0.6vw;
         display: block;
@@ -71,9 +74,11 @@
         margin: auto;
         box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
     }
+
     #profile_image {
         cursor: pointer;
     }
+
     .user-sub-head {
         font-size: 20px;
         font-family: Black-Pure;
@@ -105,13 +110,14 @@
         button.click();
     }
 </script>
+
 <div class="sub-page-box">
     <?php
     //name, lastname, user_name, email, password
-    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password", "Phone number", "Country", "Zip Code","City", "Street","House no.");
-    $types = array("text", "text", "text", "email", "password", "password","phonenumber","text","text","text","text","text");
-    $names = array("name", "lastname", "user_name", "email", "password","new-password", "phone_number", "country", "zip_code", "city", "street", "house_number");
-    $text = array("Name", "Lastname", "Username", "Email address","Password","New Password", "Phone number", "Country", "Zip Code", "City","Street", "House no." );
+    $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password", "Phone number", "Country", "Zip Code", "City", "Street", "House no.");
+    $types = array("text", "text", "text", "email", "password", "password", "phonenumber", "text", "text", "text", "text", "text");
+    $names = array("name", "lastname", "user_name", "email", "password", "new-password", "phone_number", "country", "zip_code", "city", "street", "house_number");
+    $text = array("Name", "Lastname", "Username", "Email address", "Password", "New Password", "Phone number", "Country", "Zip Code", "City", "Street", "House no.");
 
     require_once("./classes/repositories/UserRepository.class.php");
     $user_repo = new UserRepository();
@@ -164,7 +170,6 @@
                     $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
                 }
             }
-            
         }
     }
 
@@ -223,7 +228,7 @@
         echo ' 
         <form action="./home.php?content=user" method="post">
                 <div class="settings-box">
-                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '" value="'.$values[$i].'">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' . $placeholders[$i] . '" value="' . $values[$i] . '">
                     <input type="submit" value="save" name="button" class="submit">
                 </div>
             </form>';
@@ -236,14 +241,12 @@
             <input type="password" name="password" class="input2" placeholder="New password" value="' . $password . '">
         </div>
         <div class="settings-box">
-            <input type="password" name="retype-password" class="input2" placeholder="Retype new password" value="'.$password.'">
+            <input type="password" name="retype-password" class="input2" placeholder="Retype new password" value="' . $password . '">
             <input type="submit" value="save" name="button" class="submit">
         </div>
     </form>
     ';
     echo "</div>";
-
-
 
 
     $values_sec = array(
@@ -261,7 +264,7 @@
         echo ' 
             <form action="./home.php?content=user" method="post">
                 <div class="settings-box">
-                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' .  $placeholders[$i] . '" value="' . $values_sec[$i-6] . '">
+                    <input type="' . $types[$i] . '" name="' . $names[$i] . '" class="input2" placeholder="' .  $placeholders[$i] . '" value="' . $values_sec[$i - 6] . '">
                     <input type="submit" value="save" name="button" class="submit" >
                 </div>
             </form>';
@@ -306,5 +309,24 @@
         }
     }
 
+
+    # logout button
+    if (isset($_POST['logout'])) {
+        $_SESSION['login'] = false;
+        $_SESSION['username'] = "";
+
+        echo "
+         <script>
+            location.reload();
+        </script>
+        ";
+    }
+
     ?>
+
+    <form action="./home.php?content=user" method="post">
+        <input type="submit" value="Log out" name="logout" class="submit" style="margin-top:3vh; font-size:1.3rem;">
+    </form>
+
+   
 </div>
