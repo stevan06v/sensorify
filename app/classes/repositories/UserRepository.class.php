@@ -17,6 +17,7 @@ class UserRepository
             exit;
         }
     }
+
     function insert($user)
     {
         try {
@@ -27,6 +28,7 @@ class UserRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
+    
 
     function existsUser($email, $password)
     {

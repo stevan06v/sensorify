@@ -5,8 +5,9 @@ class Room{
     private $room_id; 
     private $room_name;
 
-    function __construct($room_name, $room_id){
+    function __construct($room_name){
 
+        
     }
 
 
