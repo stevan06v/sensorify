@@ -8,7 +8,8 @@ class User
      private $password;
      private $email;
      private $image_dest;
-     private $address;
+     private $user_id;
+     
 
      function __construct($name, $lastname, $username, $password, $email, $image_dest)
      {

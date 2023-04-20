@@ -9,6 +9,7 @@
     .account-name {
         font-size: 3rem;
         font-family: Black-Pure;
+        word-break: break-all;
         color: black;
     }
 
