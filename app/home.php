@@ -33,7 +33,7 @@ if (!isset($_SESSION['username'])) {
     <title>Sensorify</title>
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
-    <script src="./scripts//script.js" defer></script>
+    <script src="./scripts/script.js" defer></script>
     <script src="./libs/modules/PopupEngine/popupEngine.js"></script>
 
     <script>

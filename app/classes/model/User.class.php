@@ -1,5 +1,5 @@
 <?php
-require_once "./classes/model/Address.class.php";
+
 class User
 {
      private $name;
