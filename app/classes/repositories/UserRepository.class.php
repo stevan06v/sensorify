@@ -90,7 +90,6 @@ class UserRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
-
     function getUserNameByEmail($email)
     {
         $sql = "select user_name from users where email= '$email'";

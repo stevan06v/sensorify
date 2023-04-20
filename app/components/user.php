@@ -113,22 +113,26 @@
 
 <div class="sub-page-box">
     <?php
+    require_once("./classes/repositories/UserRepository.class.php");
+    require_once("./classes/ImageUploader.class.php");
+
     //name, lastname, user_name, email, password
     $placeholders = array("New first name", "New last name", "New user name", "New email-address", "New password", "Retype password", "Phone number", "Country", "Zip Code", "City", "Street", "House no.");
     $types = array("text", "text", "text", "email", "password", "password", "phonenumber", "text", "text", "text", "text", "text");
     $names = array("name", "lastname", "user_name", "email", "password", "new-password", "phone_number", "country", "zip_code", "city", "street", "house_number");
     $text = array("Name", "Lastname", "Username", "Email address", "Password", "New Password", "Phone number", "Country", "Zip Code", "City", "Street", "House no.");
 
-    require_once("./classes/repositories/UserRepository.class.php");
-    $user_repo = new UserRepository();
-    $conn = $user_repo->getConnection();
-    $file_dest = "";
 
+    $upload_path = "./upload/";
+    $user_repo = new UserRepository();
+    $image_uploader = new ImageUploader($upload_path);
+    $conn = $user_repo->getConnection();
 
     # change profile-image
     if (!empty($_POST["submit"])) {
-        upload_file();
-        // exec("rm -r $file_dest"); 
+
+        $file_dest = $image_uploader->upload(680,680);
+        
         $sql = "update users set image_dest='" . $file_dest . "' where user_name='" . $_SESSION['username'] . "'";
         $result = $conn->query($sql);
 
@@ -162,12 +166,14 @@
                     $modal_sender->triggerModal("User-error", "Username is already taken or empty.");
                 }
             } else {
-                if (!empty($_POST[$names[$i]])) {
+                if (!empty($_POST[$names[$i]]) && $names[$i] != 'password' ) {
                     $sql = "update users set $names[$i]='" . str_replace(' ', '', $_POST[$names[$i]]) . "' where user_name='" . $_SESSION['username'] . "'";
                     $result = $conn->query($sql);
                     $modal_sender->triggerNotification($text[$i] . " got successfully updated.");
                 } else {
-                    $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
+                    if($names[$i] != 'password'){
+                        $modal_sender->triggerModal("User-error", "$names[$i] is already taken.");
+                    }               
                 }
             }
         }
@@ -187,8 +193,7 @@
             $modal_sender->triggerModal("User-error", "Empty password-field");
         }
     }
-
-
+    
     # get db-data
     $user_name = $_SESSION['username'];
 
@@ -272,43 +277,6 @@
 
     echo "</div>";
     echo "</div>";
-
-    function upload_file()
-    {
-        $upload_dir = "./upload/";
-        global $file_dest;
-        $file_name = $_FILES['file']['name'];
-        $file_tmp_name = $_FILES['file']['tmp_name'];
-        $file_error = $_FILES['file']['error'];
-        $file_ext = explode('.', $file_name);
-        $file_actual_ext = strtolower(end($file_ext));
-        $allowed = array('jpg', 'jpeg', 'png');
-        if (in_array($file_actual_ext, $allowed)) {
-            if ($file_error === 0) {
-                $file_name_new = uniqid('', true) . "." . $file_actual_ext;
-                if (!is_dir($upload_dir)) {
-                    # path, permissions
-                    mkdir($upload_dir, 0777);
-                }
-                $file_dest = './upload/' . $file_name_new;
-                move_uploaded_file($file_tmp_name, $file_dest);
-                compress_image($file_dest, $file_actual_ext);
-            }
-        }
-    }
-    function compress_image($dest, $file_extenetion)
-    {
-        $height = 170 * 4;
-        $width = 170 * 4;
-        if ($file_extenetion == "jpg" || $file_extenetion == "jpeg") {
-            $image = imagecreatefromjpeg($dest);
-            imagejpeg(imagescale($image, $width, $height), $dest);
-        } else {
-            $image = imagecreatefrompng($dest);
-            imagepng(imagescale($image, $width, $height), $dest);
-        }
-    }
-
 
     # logout button
     if (isset($_POST['logout'])) {

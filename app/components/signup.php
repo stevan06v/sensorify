@@ -4,8 +4,12 @@
 
 require_once './classes/repositories/UserRepository.class.php';
 require_once './classes/model/User.class.php';
+require_once("./classes/ImageUploader.class.php");
 
+
+$upload_path = "./upload/";
 $user_repo = new UserRepository();
+$image_uploader = new ImageUploader($upload_path);
 
 $file_dest = "";
 $name = "";
@@ -45,7 +49,7 @@ if (
         $name = $_POST['name'];
         $lastname = $_POST['lastname'];
         $password = $_POST['password'];
-        //$name, $lastname, $username, $password, $email
+       
         $user = new User($name,$lastname, $username, str_replace(' ', '', $password), $email, $file_dest);
     } else {
         header('Location: home.php?login=cancelled');
@@ -56,8 +60,11 @@ if (
         $modal_sender->triggerModal("Database error", "Connection to database failed.");
     } else {
         if (!$user_repo->exitsUsername($user->getUsername()) && !$user_repo->exitsEmail($user->getEmail())) {
-            upload_File();
+       
+            # upload image
+            $file_dest = $image_uploader->upload(680,680);
             $user->setImageDest($file_dest);
+
             if (!$user_repo->insert($user)) {
                 $_SESSION['errors'][] = "error occurred while inserting into database!";
                 # remove file after error --> user not in database
@@ -102,47 +109,7 @@ function exists_email($email, $connection)
         return true;
     }
 }
-function upload_file()
-{
-    $upload_dir = "./upload/";
-    global $file_dest;
-    $file_name = $_FILES['file']['name'];
-    $file_tmp_name = $_FILES['file']['tmp_name'];
-    $file_error = $_FILES['file']['error'];
-    $file_ext = explode('.', $file_name);
-    $file_actual_ext = strtolower(end($file_ext));
-    $allowed = array('jpg', 'jpeg', 'png');
 
-
-    if (in_array($file_actual_ext, $allowed)) {
-        if ($file_error === 0) {
-            $file_name_new = uniqid('', true) . "." . $file_actual_ext;
-
-            if (!is_dir($upload_dir)) {
-                # path, permissions
-                mkdir($upload_dir, 0777);
-            }
-
-            $file_dest = './upload/' . $file_name_new;
-            move_uploaded_file($file_tmp_name, $file_dest);
-            compress_image($file_dest, $file_actual_ext);
-            header("Location: home.php?uploadsuccess");
-        }
-    }
-}
-# php-gd library
-function compress_image($dest, $file_extenetion)
-{
-    $height = 170 * 4;
-    $width = 170 *4;
-    if ($file_extenetion == "jpg" || $file_extenetion == "jpeg") {
-        $image = imagecreatefromjpeg($dest);
-        imagejpeg(imagescale($image, $width, $height), $dest);
-    } else {
-        $image = imagecreatefrompng($dest);
-        imagepng(imagescale($image, $width, $height), $dest);
-    }
-}
 function load_signUpForm()
 {
     function print_email()

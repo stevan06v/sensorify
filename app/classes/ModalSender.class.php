@@ -8,18 +8,14 @@
         border: 3px solid #1a8766;
         border-radius: 7px;
         padding: 1vw;
-       
     }
-
     .popupEngineNotificationContainer {
         font-size: 0.9rem;
        
     }               
-
     .popupEngineNotificationText {
         font-size: 0.9rem;
     }
-
     .popupEngineModalContent {
         width: max-content;
         border-radius: 15px;
