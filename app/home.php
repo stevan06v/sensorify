@@ -51,7 +51,7 @@ if (!isset($_SESSION['username'])) {
     </div>
 
 
-    <!-- JavaScript -->
+
     <script>
         // Show the loading screen
         document.getElementById('loading-screen').style.display = 'flex';
