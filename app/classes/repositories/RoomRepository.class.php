@@ -32,10 +32,19 @@ class RoomRepository
         $sql = "delete from rooms where room_id = " . $room_id;
         $result = $this->connection->query($sql);
     }
-
     function getRooms()
     {
         $query = "select * from rooms";
+        if ($result = $this->connection->query($query)) {
+            if ($result->num_rows >= 0) {
+                return $result;
+            }
+        }
+    }
+
+    function get_room_name_by_room_id($id)
+    {
+        $query = "select room_name from rooms where room_id='".$id."'";
         if ($result = $this->connection->query($query)) {
             if ($result->num_rows >= 0) {
                 return $result;

@@ -66,6 +66,7 @@
     }
 
     .room_image {
+        cursor: pointer;
         width: 15vw;
         height: 15vh;
         border-top-left-radius: 5px;
@@ -97,18 +98,38 @@
         margin: auto;
         box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
     }
-    .room-flex{
+
+    .room-flex {
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: black;
     }
-    .creation_date{
+
+    .creation_date {
         font-family: BoldItalic;
         color: black;
     }
 </style>
 
+<?php
+require_once "./classes/model/Room.class.php";
+require_once "./classes/repositories/RoomRepository.class.php";
+require_once "./classes/repositories/UserRepository.class.php";
+require_once "./classes/ImageUploader.class.php";
+require_once "./classes/ModalSender.class.php";
+
+$dir = "./upload/rooms/";
+$image_uploader = new ImageUploader($dir);
+$user_repo = new UserRepository();
+$modal_sender = new ModalSender();
+$room_repo = new RoomRepository();
+
+$rooms = array();
+$user_id = $user_repo->getUserIDbyName($_SESSION['username']);
+
+
+?>
 
 <script>
     // load imageinto page
@@ -137,26 +158,15 @@
 
     <div class="sub-page-box">
         <h3 class="sub-page-header" style="text-align: left;">
-            Manage your rooms:
+            <?php
+            isset($_GET['show']) ? $title = $room_repo->get_room_name_by_room_id($_GET['show'])->fetch_assoc()['room_name'] : $title = "Manage the rooms: ";
+            echo $title;
+            ?>
         </h3>
 
         <div id="rooms">
             <?php
 
-            require_once "./classes/model/Room.class.php";
-            require_once "./classes/repositories/RoomRepository.class.php";
-            require_once "./classes/repositories/UserRepository.class.php";
-            require_once "./classes/ImageUploader.class.php";
-            require_once "./classes/ModalSender.class.php";
-
-            $dir = "./upload/rooms/";
-            $image_uploader = new ImageUploader($dir);
-            $user_repo = new UserRepository();
-            $modal_sender = new ModalSender();
-            $room_repo = new RoomRepository();
-
-            $rooms = array();
-            $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
 
             if (isset($_GET['delete'])) {
@@ -168,7 +178,6 @@
                     $modal_sender->triggerModal("Room error", "Error while deleting room.");
                 }
             }
-
 
             if (isset($_POST['submit'])) {
 
@@ -189,19 +198,22 @@
                 }
             }
 
-            try {
-                $result_set = $room_repo->getRooms($user_id);
-                while ($row = $result_set->fetch_assoc()) {
-                    $room = new Room($row['room_name'], $row['user_id'], $row['room_image']);
-                    $room->set_room_id($row['room_id']);
-                    $room->set_creation_date($row['creation_date']);
-                    array_push($rooms, $room);
-                }
+            if (isset($_GET['show'])) {
+                echo $_GET['show'];
+            } else {
+                try {
+                    $result_set = $room_repo->getRooms($user_id);
+                    while ($row = $result_set->fetch_assoc()) {
+                        $room = new Room($row['room_name'], $row['user_id'], $row['room_image']);
+                        $room->set_room_id($row['room_id']);
+                        $room->set_creation_date($row['creation_date']);
+                        array_push($rooms, $room);
+                    }
 
-                foreach ($rooms as $iterator) {
-                    echo '
+                    foreach ($rooms as $iterator) {
+                        echo '
                     <div class = "room">
-                        <img class="room_image" src="' . $iterator->get_room_image() . '" alt="room_image">
+                    <a href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"><img class="room_image" src="' . $iterator->get_room_image() . '" alt="room_image"></a>
                         
                         <div class="room-flex">
                             <div class="room_name">' . $iterator->get_room_name() . '</div>
@@ -212,14 +224,17 @@
                     </div>
                     
                     ';
+                    }
+                } catch (Exception $err) {
+                    $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
                 }
-            } catch (Exception $err) {
-                $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
             }
+
 
             ?>
         </div>
     </div>
+
 
     <div class="room-creator">
         <div class="sub-page-header">Room editor</div>
@@ -234,8 +249,5 @@
 
             <input type='submit' name='submit' id='submit' value='create'>
         </form>
-
-
     </div>
-
 </div>
