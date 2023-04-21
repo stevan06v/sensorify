@@ -44,7 +44,8 @@ CREATE TABLE `addresses` (
 CREATE TABLE `devices` (
   `device_type` varchar(50) NOT NULL,
   `ip_address` varchar(50) NOT NULL,
-  `sensor_id` int(11) DEFAULT NULL
+  `sensor_id` int(11) DEFAULT NULL,
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -56,7 +57,10 @@ CREATE TABLE `devices` (
 CREATE TABLE `rooms` (
   `room_name` varchar(30) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `room_id` int(11) NOT NULL
+  `room_id` int(11) NOT NULL,
+  `room_image` varchar(100) NOT NULL,
+  `room_owner` int(11) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -178,6 +182,9 @@ ALTER TABLE `addresses`
 --
 ALTER TABLE `devices`
   ADD CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensors` (`sensor_id`);
+
+ALTER TABLE `devices`
+  ADD CONSTRAINT `devices_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 
 --
 -- Constraints der Tabelle `rooms`

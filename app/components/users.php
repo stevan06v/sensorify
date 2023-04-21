@@ -80,6 +80,7 @@
                 }
             }
         }
+        
         $curr_user = "current-user";
         if ($result = $conn->query($query)) {
             if ($result->num_rows >= 0) {
