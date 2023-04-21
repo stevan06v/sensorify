@@ -60,24 +60,43 @@
     }
 </style>
 
-<div class="sub-page-box">
 
-    <label class="switch">
-        <input type="checkbox" id="mySwitchButton">
-        <span class="slider round"></span>
-    </label>
+<?php
 
-    <form id="myForm" method="GET" style="display:none;">
-        <input type="hidden" name="switchState" id="switchState">
-    </form>
+require_once "./classes/model/Device.class.php";
 
-    <div id="switchStateOutput"></div>
-</div>
+$devices = array();
+
+
+for ($i = 0; $i < sizeof($devices); $i++) {
+
+    echo "
+    <div class='sub-page-box'>
+
+        <label class='switch'>
+            <input type='checkbox' id='mySwitchButton'>
+            <span class='slider round'></span>
+        </label>
+
+        <form id='myForm' method='GET' style='display:none;'>
+            <input type='hidden' name='switchState' id='switchState'>
+        </form>
+
+        <div id='switchStateOutput'></div>
+    </div>
+    ";
+}
+
+
+
+?>
 
 <script>
     let switchButton = document.getElementById("mySwitchButton");
     let form = document.getElementById("myForm")
     let switchStateOutput = document.getElementById("switchStateOutput");
+
+
 
     switchButton.addEventListener("change", function() {
         let switchState = switchButton.checked ? "on" : "off";
@@ -87,6 +106,7 @@
                 response.json()
             })
             .then(data => {
+                console.log(data);
                 switchStateOutput.innerHTML = "State: " + data.state;
             })
             .catch(error => console.error(error));
@@ -94,24 +114,12 @@
 </script>
 
 
-
-
 <?php
 if (isset($_GET['state'])) {
-    echo "here we are GET";
+
     $switchState = $_GET["state"];
 
-    // Do something with the switch state here, e.g. turn a device on or off
-    // ..
-    $url = "http://192.168.0.12:/relay/0?turn=" . $switchState;
 
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
-    curl_close($curl);
-
-
-    // Send a response back to the client indicating whether the operation was successful or not
     $response = array("state" => true);
 
     echo json_encode($response);
