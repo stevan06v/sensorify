@@ -44,10 +44,10 @@
         margin-top: -0.4vh;
     }
 
-    .sub-page-box{
+    .sub-page-box {
         overflow: auto;
-    } 
-    
+    }
+
     .delete_user {
         width: 2.2vw;
     }
@@ -70,17 +70,22 @@
         $query = "select * from $table";
 
         if (isset($_GET["delete"])) {
-            $sql = "delete from $table where user_id=" . $_GET["delete"];
-            if ($_GET["delete"] == $user_repo->getUserIDbyName($_SESSION['username'])) {
-                $modal_sender->triggerModal("Account-error", "Your are logged in as: @" . $_SESSION['username']);
-            } else {
-                $user = $user_repo->getUserNamebyId($_GET["delete"]);
-                if ($result = $conn->query($sql)) {
-                    $modal_sender->triggerNotification('@'.$user.': just got deleted.');
+
+            try {
+                $sql = "delete from $table where user_id=" . $_GET["delete"];
+                if ($_GET["delete"] == $user_repo->getUserIDbyName($_SESSION['username'])) {
+                    $modal_sender->triggerModal("Account-error", "Your are logged in as: @" . $_SESSION['username']);
+                } else {
+                    $user = $user_repo->getUserNamebyId($_GET["delete"]);
+                    if ($result = $conn->query($sql)) {
+                        $modal_sender->triggerNotification('@' . $user . ': just got deleted.');
+                    }
                 }
+            } catch (Exception $err) {
+                $modal_sender->triggerModal("Account-error", "Delete your owned rooms first.");
             }
         }
-        
+
         $curr_user = "current-user";
         if ($result = $conn->query($query)) {
             if ($result->num_rows >= 0) {

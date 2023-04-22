@@ -166,9 +166,6 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
         <div id="rooms">
             <?php
-
-
-
             if (isset($_GET['delete'])) {
                 $room_id = $_GET['delete'];
                 try {
