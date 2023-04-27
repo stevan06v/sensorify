@@ -103,35 +103,35 @@
         <?php
         $content = array(
             "Overview",
+            "Rooms",
             "Map",
             "Config",
             "Devices",
             "Users",
             "History",
             "Docs",
-            "Rooms",
             "User"
         );
         $icons = array(
             "./img/sidebar/grey/overview.svg",
+            "./img/sidebar/grey/rooms.svg",
             "./img/sidebar/grey/maps.svg",
             "./img/sidebar/grey/json.svg",
             "./img/sidebar/grey/sensors.svg",
             "./img/sidebar/grey/users.svg",
             "./img/sidebar/grey/history.svg",
             "./img/sidebar/grey/docs.svg",
-            "./img/sidebar/grey/rooms.svg",
             "./img/sidebar/grey/user.svg"
         );
         $routes = array(
             "./home.php?content=overview",
+            "./home.php?content=rooms",
             "./home.php?content=map&type=default",
             "./home.php?content=config",
             "./home.php?content=devices",
             "./home.php?content=users",
             "./home.php?content=history",
             "./home.php?content=docs",
-            "./home.php?content=rooms",
             "./home.php?content=user"
         );
 

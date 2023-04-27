@@ -163,9 +163,9 @@ ALTER TABLE `sensors`
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
---
+-- 0 is all
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints der exportierten Tabellen
