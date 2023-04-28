@@ -12,7 +12,8 @@
         padding-bottom: 2vw;
         margin: auto;
         overflow-y: auto;
-        height: 80vh;
+        height: auto;
+        max-height:80vh;
     }
 
     .sub-page-headerBox {}

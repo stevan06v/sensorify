@@ -27,12 +27,19 @@ class RoomRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
+    function update_room_image_by_room_id($room_id, $room_image){
+        $sql = "update rooms set room_image = '$room_image' where room_id=$room_id";
+        $result = $this->connection->query($sql);
+    }
 
     function delete_by_room_id($room_id)
     {
         $sql = "delete from rooms where room_id = " . $room_id;
         $result = $this->connection->query($sql);
+    }
 
+    function get_connection(){
+        return $this->connection;
     }
 
     function getRooms()
