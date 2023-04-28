@@ -65,13 +65,25 @@
         gap: 1vw;
     }
 
-    .room_image {
+    .room_image_box {
         cursor: pointer;
-        width: 15vw;
-        height: 15vh;
+        display: block;
+        width: 100%;
+        height: 8vw;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px
     }
+
+    .room_image {
+        display: block;
+        margin: auto;
+        width:100%;
+        height: 10vw;
+    }
+
 
     .room {
         border-radius: 15px;
@@ -170,6 +182,7 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
                 $room_id = $_GET['delete'];
                 try {
                     $room_repo->delete_by_room_id($room_id);
+
                     $modal_sender->triggerNotification("Room got successfully deleted.");
                 } catch (Exception $err) {
                     $modal_sender->triggerModal("Room error", "Error while deleting room.");
@@ -195,6 +208,7 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
                 }
             }
 
+
             if (isset($_GET['show'])) {
                 echo $_GET['show'];
             } else {
@@ -208,10 +222,10 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
                     }
 
                     foreach ($rooms as $iterator) {
+
                         echo '
                     <div class = "room">
-                    <a href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"><img class="room_image" src="' . $iterator->get_room_image() . '" alt="room_image"></a>
-                        
+                    <a class="room_image_box" style="background-image:url(\''.$iterator->get_room_image().'\');" href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"></a>
                         <div class="room-flex">
                             <div class="room_name">' . $iterator->get_room_name() . '</div>
                             <div class="creation_date">' . $iterator->get_creation_date() . '</div>
@@ -219,7 +233,6 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
                         <a class="submit" href="./home.php?content=rooms&delete=' . $iterator->get_room_id() . '">remove</a>
                     </div>
-                    
                     ';
                     }
                 } catch (Exception $err) {
