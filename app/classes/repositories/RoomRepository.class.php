@@ -27,11 +27,14 @@ class RoomRepository
             throw new Exception("SQL error occured: " . $err->getMessage());
         }
     }
+
     function delete_by_room_id($room_id)
     {
         $sql = "delete from rooms where room_id = " . $room_id;
         $result = $this->connection->query($sql);
+
     }
+
     function getRooms()
     {
         $query = "select * from rooms";
@@ -51,4 +54,22 @@ class RoomRepository
             }
         }
     }
+
+
+    function get_room_image_path_by_room_id($room_id)
+    {
+        $sql = "select room_image from rooms where room_id = '$room_id'";
+        try {
+            $result = $this->connection->query($sql);
+            if ($result->num_rows == 0) {
+                throw new Exception("Room not found.");
+            } else {
+                $row = $result->fetch_assoc();
+                return $row["room_image"];
+            }
+        } catch (mysqli_sql_exception $err) {
+            throw new Exception("SQL error occured: " . $err->getMessage());
+        }
+    }
+
 }

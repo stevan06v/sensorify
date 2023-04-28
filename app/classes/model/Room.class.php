@@ -26,6 +26,12 @@ class Room{
     public function get_room_image() {
         return $this->room_image;
     }
+
+    public function get_formatted_creation_date(){
+        $dateString = $this->get_creation_date();
+        $dateTime = new DateTime($dateString);
+        return $dateTime->format('d.m.Y');
+    }
     
     public function set_room_image($image) {
     $this->room_image = $image;

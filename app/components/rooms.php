@@ -80,7 +80,7 @@
     .room_image {
         display: block;
         margin: auto;
-        width:100%;
+        width: 100%;
         height: 10vw;
     }
 
@@ -116,6 +116,7 @@
         justify-content: space-between;
         align-items: center;
         color: black;
+        gap: 2vw;
     }
 
     .creation_date {
@@ -181,9 +182,12 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
             if (isset($_GET['delete'])) {
                 $room_id = $_GET['delete'];
                 try {
-                    $room_repo->delete_by_room_id($room_id);
-
-                    $modal_sender->triggerNotification("Room got successfully deleted.");
+                    $img_path = $room_repo->get_room_image_path_by_room_id($room_id);
+                    if (file_exists($img_path)) {
+                        unlink($img_path);
+                        $room_repo->delete_by_room_id($room_id);
+                        $modal_sender->triggerNotification("Room got successfully deleted.");
+                    }
                 } catch (Exception $err) {
                     $modal_sender->triggerModal("Room error", "Error while deleting room.");
                 }
@@ -208,7 +212,6 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
                 }
             }
 
-
             if (isset($_GET['show'])) {
                 echo $_GET['show'];
             } else {
@@ -220,27 +223,29 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
                         $room->set_creation_date($row['creation_date']);
                         array_push($rooms, $room);
                     }
+                    $dateString = '2023-04-28 18:24:46';
+                    $dateTime = new DateTime($dateString);
+                    $formattedDate = $dateTime->format('d.m.Y');
 
                     foreach ($rooms as $iterator) {
-
                         echo '
-                    <div class = "room">
-                    <a class="room_image_box" style="background-image:url(\''.$iterator->get_room_image().'\');" href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"></a>
-                        <div class="room-flex">
-                            <div class="room_name">' . $iterator->get_room_name() . '</div>
-                            <div class="creation_date">' . $iterator->get_creation_date() . '</div>
-                        </div>
+                            <div class = "room">
+                            <a class="room_image_box" style="background-image:url(\'' . $iterator->get_room_image() . '\');" href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"></a>
+                                <div class="room-flex">
+                                    <div class="room_name">' . $iterator->get_room_name() . '</div>
+                                    <div class="creation_date">' . $iterator->get_formatted_creation_date() . '</div>
+                                </div>
 
-                        <a class="submit" href="./home.php?content=rooms&delete=' . $iterator->get_room_id() . '">remove</a>
-                    </div>
-                    ';
+                                <a class="submit" href="./home.php?content=rooms&delete=' . $iterator->get_room_id() . '">remove</a>
+                            </div>
+                            ';
                     }
                 } catch (Exception $err) {
                     $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
                 }
             }
 
-
+            
             ?>
         </div>
     </div>
