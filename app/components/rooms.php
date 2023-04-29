@@ -144,14 +144,17 @@
 require_once "./classes/model/Room.class.php";
 require_once "./classes/repositories/RoomRepository.class.php";
 require_once "./classes/repositories/UserRepository.class.php";
+require_once "./classes/repositories/RoomAccessRepository.class.php";
 require_once "./classes/ImageUploader.class.php";
 require_once "./classes/ModalSender.class.php";
+
 
 $dir = "./upload/rooms/";
 $image_uploader = new ImageUploader($dir);
 $user_repo = new UserRepository();
 $modal_sender = new ModalSender();
 $room_repo = new RoomRepository();
+$room_access_repo = new RoomAccessRepository();
 
 $rooms = array();
 $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
@@ -204,38 +207,47 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 </script>
 
 <?php
-isset($_GET['show']) ? $style = "room-block" : $style = "room-flex";
+
+isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $style = "room-block" : $style = "room-flex";
 echo '<div id="' . $style . '">';
 ?>
 <div class="sub-page-box">
     <h3 class="sub-page-header" style="text-align: left;">
         <?php
-        isset($_GET['show']) ? $title = $room_repo->get_room_name_by_room_id($_GET['show'])->fetch_assoc()['room_name'] : $title = "Manage the rooms: ";
+        isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $title = $room_repo->get_room_name_by_room_id($_GET['show'])->fetch_assoc()['room_name'] : $title = "Manage the rooms: ";
         echo $title;
         ?>
     </h3>
 
     <?php
-    isset($_GET['show']) ? $id = "rooms-no-grid" : $id = "rooms";
+    isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $id = "rooms-no-grid" : $id = "rooms";
     echo '<div id="' . $id . '">';
+
     ?>
+
     <?php
+
     if (isset($_GET['delete'])) {
         $room_id = $_GET['delete'];
-        try {
-            $img_path = $room_repo->get_room_image_path_by_room_id($room_id);
-            if (file_exists($img_path)) {
-                unlink($img_path);
+        if ($room_access_repo->hasAccess($_GET['delete'], $user_id)) {
+
+            try {
+                $img_path = $room_repo->get_room_image_path_by_room_id($room_id);
+                if (file_exists($img_path)) {
+                    unlink($img_path);
+                }
+                $room_repo->delete_by_room_id($room_id);
+                $modal_sender->triggerNotification("Room got successfully deleted.");
+            } catch (Exception $err) {
+                $modal_sender->triggerModal("Room error", "Error while deleting room.");
             }
-            $room_repo->delete_by_room_id($room_id);
-            $modal_sender->triggerNotification("Room got successfully deleted.");
-        } catch (Exception $err) {
-            $modal_sender->triggerModal("Room error", "Error while deleting room.");
+        } else {
+            $modal_sender->triggerModal("Room error", "You cannot delete the room. You do not have permissions.");
         }
     }
 
-    if (isset($_POST['submit'])) {
 
+    if (isset($_POST['submit'])) {
         $room_name = $_POST['room-name'];
         $file_dest = $image_uploader->upload(680, 500);
 
@@ -244,6 +256,12 @@ echo '<div id="' . $style . '">';
         if (!empty($room->get_room_name()) && !empty($room->get_room_image())) {
             try {
                 $room_repo->insert($room, $user_id);
+
+                $room_id = $room_repo->get_room_id_path_by_room_name($room->get_room_name());
+
+                # user who created room --> can access it 
+                $room_access_repo->insert($room_id, $user_id);
+
                 $modal_sender->triggerNotification("Room added successully.");
             } catch (Exception $err) {
                 $modal_sender->triggerModal("Room error", "Error occured while adding room.");
@@ -254,29 +272,37 @@ echo '<div id="' . $style . '">';
     }
 
     if (isset($_GET['show'])) {
-        if (isset($_POST['change-room-image'])) {
-            try {
+        if ($room_access_repo->hasAccess($_GET['show'], $user_id)) {
+            if (isset($_POST['change-room-image'])) {
+                try {
 
-                $old_img_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
+                    $old_img_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
 
-                # delete old image 
-                if (file_exists($old_img_path)) {
-                    unlink($old_img_path);
+                    # delete old image 
+                    if (file_exists($old_img_path)) {
+                        unlink($old_img_path);
+                    }
+
+                    $file_dest = $image_uploader->upload(800, 800);
+
+                    $room_repo->update_room_image_by_room_id($_GET['show'], $file_dest);
+
+                    $modal_sender->triggerNotification("Image got successfully updated");
+                } catch (Exception $err) {
+                    $modal_sender->triggerModal("Room error", "Image could not be updated.");
                 }
-
-                $file_dest = $image_uploader->upload(800, 800);
-
-                $room_repo->update_room_image_by_room_id($_GET['show'], $file_dest);
-
-                $modal_sender->triggerNotification("Image got successfully updated");
-            } catch (Exception $err) {
-                $modal_sender->triggerModal("Room error", "Image could not be updated.");
             }
-        }
 
-        $image_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
+            if (isset($_POST['modify-room'])) {
+                $room_name = $_POST['room-name'];
+                $selection = $_POST['admin-selection'];
 
-        echo '
+                echo $room_name . " " . $selection;
+            }
+
+            $image_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
+
+            echo '
             <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post" enctype="multipart/form-data">
                         <div id="image-selector"> 
                             <div id="room_thumbmail" style="background-image:url(\'' . $image_path . '\');" onclick="triggerClick()"></div>
@@ -287,30 +313,42 @@ echo '<div id="' . $style . '">';
                 </form>
         ';
 
-        echo '
+            echo '
                     <div id="room_show_flex">
-                        <form action="./home.php?content=rooms" method="post">
+                        <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post">
                             <label for="admin-selection">Room owner:</label>
                             <select name="admin-selection" id="country">';
 
-        $table = 'users';
-        $query = "select * from $table";
+            $table = 'users';
+            $query = "select * from $table";
 
-        if ($result = $room_repo->get_connection()->query($query)) {
-            if ($result->num_rows >= 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+            if ($result = $room_repo->get_connection()->query($query)) {
+                if ($result->num_rows >= 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+                    }
+                    echo '<option value="0">all</option>';
                 }
-                echo '<option value="0">all</option>';
-            } else {
-                echo "no users are selected";
             }
-        }
-        echo '  
-                            </select>
+            echo '  
+        </select>
+
+        <input id="text" name="room-name" class="input2" placeholder="Change room name">
+        <input id="submit" type="submit" name="modify-room" value="send">
                         </form>
                     </div>';
+        } else {
+            
+        generate_rooms();
+        $modal_sender->triggerModal("Room error", "Missing permissions to enter the room.");
+        }
     } else {
+       generate_rooms();
+    }
+
+
+function generate_rooms(){
+    global $room_repo,$user_id,$modal_sender,$rooms;
         try {
             $result_set = $room_repo->getRooms($user_id);
             while ($row = $result_set->fetch_assoc()) {
@@ -324,7 +362,7 @@ echo '<div id="' . $style . '">';
             $formattedDate = $dateTime->format('d.m.Y');
             foreach ($rooms as $iterator) {
                 echo '
-                            <div class = "room">
+                        <div class = "room">
                             <a class="room_image_box" style="background-image:url(\'' . $iterator->get_room_image() . '\');" href="./home.php?content=rooms&show=' . $iterator->get_room_id() . '"></a>
                                 <div class="room-flex">
                                     <div class="room_name">' . $iterator->get_room_name() . '</div>
@@ -337,14 +375,14 @@ echo '<div id="' . $style . '">';
         } catch (Exception $err) {
             $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
         }
-    }
+}
+
     ?>
 </div>
 </div>
 
 <?php
-
-if (!isset($_GET['show'])) {
+if (!isset($_GET['show']) || !$room_access_repo->hasAccess($_GET['show'], $user_id)) {
     echo '
     <div class="room-creator">
     <div class="sub-page-header">Room editor</div>
@@ -360,5 +398,7 @@ if (!isset($_GET['show'])) {
 </div>
 </div>';
 }
+
+
 
 ?>

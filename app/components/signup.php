@@ -75,7 +75,7 @@ if (
                 $_SESSION['login'] = true;
                 $user_repo->getConnection()->close();
                 $_SESSION['username'] = $user->getUsername();
-                header('Location: home.php?enter=signup&login=success');
+                header('Location: home.php?content=user');
             }
         } else {
             $_SESSION['login'] = false;

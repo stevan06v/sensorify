@@ -38,7 +38,6 @@
         box-shadow: 0px 0px 2.5px 0px rgba(0, 0, 0, 0.52);
         cursor: pointer;
         color: hsla(0, 0%, 0%, 0.7);
-
         padding-right: 10vw;
     }
 
@@ -65,6 +64,7 @@
         padding: 0.1vw;
         overflow-y: auto;
     }
+
     .nav-link {
         text-decoration: none;
     }
@@ -77,9 +77,11 @@
         -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
         box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.52);
     }
+
     .sidebar-image {
         width: 2vw;
     }
+
     .bottom-box {
         display: flex;
         border-radius: 9px;
@@ -92,8 +94,9 @@
         color: hsla(0, 0%, 0%, 0.7);
         margin-bottom: 5vh;
     }
-    .marker{
-        color:#1a8766;
+
+    .marker {
+        color: #1a8766;
     }
 </style>
 
@@ -136,15 +139,24 @@
         );
 
         for ($i = 0; $i < sizeof($icons) - 1; $i++) {
-            echo "
-            <a href='" . $routes[$i] . "' class='nav-link'>
+
+            echo " <a href='" . $routes[$i] . "' class='nav-link marker'>";
+            if ($_GET['content'] == strtolower($content[$i])) {
+                echo " 
+                <div class='sidebar-box marker'>
+                    <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
+                    <div class='sidebar-text no-select'>" . strtoupper($content[$i]) . "</div>
+                </div>
+                ";
+            } else {
+                echo " 
                 <div class='sidebar-box'>
                     <img class='sidebar-image no-drag' src='" . $icons[$i] . "' alt='nav-icon'>
                     <div class='sidebar-text no-select'>" . strtoupper($content[$i]) . "</div>
                 </div>
-            </a>
-        ";
-        
+                ";
+            }
+            echo "</a>";
         }
 
         require_once "./classes/repositories/UserRepository.class.php";
@@ -162,6 +174,6 @@
             </div>
         </a>
     ";
-        
+
         ?>
     </div>
