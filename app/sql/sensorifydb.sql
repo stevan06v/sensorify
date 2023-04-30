@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Apr 2023 um 23:47
+-- Erstellungszeit: 30. Apr 2023 um 13:46
 -- Server-Version: 10.4.28-MariaDB
 -- PHP-Version: 8.2.4
 
@@ -63,6 +63,47 @@ CREATE TABLE `rooms` (
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `rooms`
+--
+
+INSERT INTO `rooms` (`room_name`, `user_id`, `room_id`, `room_image`, `room_owner`, `creation_date`) VALUES
+('Schlafzimmer', 35, 30, './upload/rooms/644c5c86712ea7.44496283.png', 0, '2023-04-28 23:53:42'),
+('Schlafzimmer', 35, 31, './upload/rooms/644c5c8b9df7a8.31934367.png', 0, '2023-04-28 23:53:47'),
+('Living room', 36, 34, './upload/rooms/644c5fa0824484.27752271.png', 0, '2023-04-29 00:06:56'),
+('Living room', 37, 35, './upload/rooms/644c61ad47ba09.10088095.png', 0, '2023-04-29 00:15:41');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `rooms_access`
+--
+
+CREATE TABLE `rooms_access` (
+  `room_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `rooms_access`
+--
+
+INSERT INTO `rooms_access` (`room_id`, `user_id`) VALUES
+(22, 32),
+(23, 32),
+(22, 32),
+(22, 33),
+(26, 33),
+(27, 33),
+(26, 33),
+(29, 35),
+(30, 35),
+(30, 35),
+(32, 36),
+(32, 36),
+(32, 36),
+(33, 37);
+
 -- --------------------------------------------------------
 
 --
@@ -107,7 +148,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`name`, `lastname`, `user_name`, `email`, `password`, `creation_date`, `image_dest`, `phone_number`, `country`, `zip_code`, `city`, `house_number`, `street`, `user_id`) VALUES
-('Stevan', 'Vlajic', 'stevan06v', 'stevanvlajic5@gmail.com', 'Stevan2006', '2023-04-20 13:12:06', './upload/644138c4dc4b97.00440962.png', '6604669179', 'Austria', '4020', 'Linz', '89', 'Limesstraße', 30);
+('Stevan', 'Vlajic', 'stevagmail', 'stevanvlaj5@gmail.com', 'dfghjklößeR', '2023-04-28 23:45:16', './upload/644c5a8c53bf57.58686760.png', NULL, NULL, NULL, NULL, NULL, NULL, 35),
+('Stevan', 'Vlajic', 'vfsafan', 'stevanvlajfdagdc5@gmail.com', 'fdsaDFAFDFDG', '2023-04-29 00:09:47', './upload/644c604bb4a7c9.66316348.jpg', NULL, NULL, NULL, NULL, NULL, NULL, 36),
+('Stevan', 'Vlajic', 'm_mitch', 'kk@gmail.com', 'hjkSSDSdd', '2023-04-29 00:15:29', './upload/644c61a1534dc1.68399793.png', NULL, NULL, NULL, NULL, NULL, NULL, 37),
+('Stevan', 'Vlajic', 'stevan06v', 'stevanvlajic5@gmail.com', 'Stevan-2006', '2023-04-29 12:28:58', './upload/644d0d8ab7faa6.55543406.png', NULL, NULL, NULL, NULL, NULL, NULL, 38);
 
 --
 -- Indizes der exportierten Tabellen
@@ -123,7 +167,8 @@ ALTER TABLE `addresses`
 -- Indizes für die Tabelle `devices`
 --
 ALTER TABLE `devices`
-  ADD KEY `sensor_id` (`sensor_id`);
+  ADD KEY `sensor_id` (`sensor_id`),
+  ADD KEY `devices_ibfk_2` (`room_id`);
 
 --
 -- Indizes für die Tabelle `rooms`
@@ -153,7 +198,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT für Tabelle `sensors`
@@ -163,9 +208,9 @@ ALTER TABLE `sensors`
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
--- 0 is all
+--
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints der exportierten Tabellen
@@ -181,9 +226,7 @@ ALTER TABLE `addresses`
 -- Constraints der Tabelle `devices`
 --
 ALTER TABLE `devices`
-  ADD CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensors` (`sensor_id`);
-
-ALTER TABLE `devices`
+  ADD CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensors` (`sensor_id`),
   ADD CONSTRAINT `devices_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 
 --
