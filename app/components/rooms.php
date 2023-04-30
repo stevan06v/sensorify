@@ -352,7 +352,16 @@ echo '<div id="' . $style . '">';
 
                     $curr_user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
-                    if($selection != $curr_user_id){
+                    echo '
+                    <script>
+                    document.getElementsByTagName("body")[0].style.display = "none";
+                        setTimeout(function() {
+                            window.location.href = window.location.href;               
+                        }, 10);    
+                    </script>
+                ';
+
+                    if ($selection != $curr_user_id) {
                         header("Location: ./home.php?content=rooms");
                         echo '
                         <script>
@@ -363,7 +372,6 @@ echo '<div id="' . $style . '">';
                         </script>
                     ';
                     }
-
                 } catch (Exception $err) {
                     $modal_sender->triggerModal("Room error", "Update failed");
                 }
