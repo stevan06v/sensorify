@@ -365,7 +365,6 @@ echo '<div id="' . $style . '">';
                     }
 
                 } catch (Exception $err) {
-                    echo $err;
                     $modal_sender->triggerModal("Room error", "Update failed");
                 }
             }
