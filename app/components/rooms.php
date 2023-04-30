@@ -74,7 +74,7 @@
     .room_image_box {
         cursor: pointer;
         display: block;
-        width: 100%;
+        width: 15vw;
         height: 8vw;
         background-repeat: no-repeat;
         background-size: cover;
@@ -131,12 +131,59 @@
 
     #room_thumbmail {
         display: block;
-        width: 50vw;
+        width: 40vw;
         height: 15rem;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
         border-radius: 5px;
+    }
+
+    /* Style for label */
+    label {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* Style for select box */
+    select {
+        font-size: 14px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 200px;
+    }
+
+    /* Style for option */
+    option {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #room-name-input {
+        padding: 6px;
+        outline: none;
+        color: #1a8766;
+        font-family: BoldItalic;
+        font-size: 14px;
+        display: block;
+        text-align: left;
+        border-radius: 5px;
+        width: 16vw;
+
+        transition: ease width .4s;
+        border: 1px solid #1a876667;
+        color: #000000;
+        cursor: pointer;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.52);
+
+    }
+
+    .room-form-flex {
+        display: flex;
+        justify-content: center;
+        gap: 1.5vw;
     }
 </style>
 
@@ -214,7 +261,7 @@ echo '<div id="' . $style . '">';
 <div class="sub-page-box">
     <h3 class="sub-page-header" style="text-align: left;">
         <?php
-        isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $title = $room_repo->get_room_name_by_room_id($_GET['show'])->fetch_assoc()['room_name'] : $title = "Manage the rooms: ";
+        isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $title = $room_repo->get_room_name_by_room_id($_GET['show']) : $title = "Manage the rooms: ";
         echo $title;
         ?>
     </h3>
@@ -226,7 +273,6 @@ echo '<div id="' . $style . '">';
     ?>
 
     <?php
-
     if (isset($_GET['delete'])) {
         $room_id = $_GET['delete'];
         if ($room_access_repo->hasAccess($_GET['delete'], $user_id)) {
@@ -242,10 +288,9 @@ echo '<div id="' . $style . '">';
                 $modal_sender->triggerModal("Room error", "Error while deleting room.");
             }
         } else {
-            $modal_sender->triggerModal("Room error", "You cannot delete the room. You do not have permissions.");
+            $modal_sender->triggerModal("Room error", "You can not delete the room. You do not have permissions.");
         }
     }
-
 
     if (isset($_POST['submit'])) {
         $room_name = $_POST['room-name'];
@@ -257,7 +302,7 @@ echo '<div id="' . $style . '">';
             try {
                 $room_repo->insert($room, $user_id);
 
-                $room_id = $room_repo->get_room_id_path_by_room_name($room->get_room_name());
+                $room_id = $room_repo->get_current_room_id();
 
                 # user who created room --> can access it 
                 $room_access_repo->insert($room_id, $user_id);
@@ -297,15 +342,41 @@ echo '<div id="' . $style . '">';
                 $room_name = $_POST['room-name'];
                 $selection = $_POST['admin-selection'];
 
-                echo $room_name . " " . $selection;
+                try {
+                    $room_repo->update_user_id_by_room_id($selection, $_GET['show']);
+                    $room_repo->update_room_name_by_room_id($room_name, $_GET['show']);
+
+                    $room_access_repo->updateAcess($selection, $_GET['show']);
+
+                    $modal_sender->triggerNotification("Room got sucessfully updated");
+
+                    $curr_user_id = $user_repo->getUserIDbyName($_SESSION['username']);
+
+                    if($selection != $curr_user_id){
+                        header("Location: ./home.php?content=rooms");
+                        echo '
+                        <script>
+                        document.getElementsByTagName("body")[0].style.display = "none";
+                            setTimeout(function() {
+                                window.location.href = window.location.href;
+                            }, 10);        
+                        </script>
+                    ';
+                    }
+
+                } catch (Exception $err) {
+                    echo $err;
+                    $modal_sender->triggerModal("Room error", "Update failed");
+                }
             }
 
             $image_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
 
+
             echo '
             <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post" enctype="multipart/form-data">
                         <div id="image-selector"> 
-                            <div id="room_thumbmail" style="background-image:url(\'' . $image_path . '\');" onclick="triggerClick()"></div>
+                            <div id="room_thumbmail" style="cursor:pointer; background-image:url(\'' . $image_path . '\');" onclick="triggerClick()"></div>
                             <label for="fileimage"></label>
                             <input onchange="displayRoomThumbmail(this)" id="fileimage" type="file" name="file" accept="image/png, image/jpg, image/svg, image/jpeg"/> 
                         </div>
@@ -316,50 +387,68 @@ echo '<div id="' . $style . '">';
             echo '
                     <div id="room_show_flex">
                         <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post">
-                            <label for="admin-selection">Room owner:</label>
-                            <select name="admin-selection" id="country">';
+                        
+                        <div class="room-form-flex">
+                        <div>    
+                            <label style="font-family:ExtraBold; color:black; font-size:1.2rem;" for="admin-selection">Room owner:</label>
+                            <select name="admin-selection" id="country">
+                ';
 
             $table = 'users';
             $query = "select * from $table";
 
+
+            $curr_room_owner_id = $room_repo->get_user_id_by_room_id($_GET['show']);
+            $curr_room_user_name = $user_repo->getUserNamebyId($curr_room_owner_id);
+
+            echo '<option value="' .  $curr_room_owner_id . '">' . $curr_room_user_name . '</option>';
             if ($result = $room_repo->get_connection()->query($query)) {
                 if ($result->num_rows >= 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+                        if ($row['user_id'] == $curr_room_owner_id) {
+                            continue;
+                        } else {
+                            echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+                        }
                     }
-                    echo '<option value="0">all</option>';
                 }
             }
+
+            $curr_room_name = $room_repo->get_room_name_by_room_id($_GET['show']);
+
             echo '  
         </select>
+        </div>
+            <input name="room-name" id="room-name-input" placeholder="Change room name" value="' . $curr_room_name . '">
+        </div>
 
-        <input id="text" name="room-name" class="input2" placeholder="Change room name">
         <input id="submit" type="submit" name="modify-room" value="send">
                         </form>
                     </div>';
         } else {
-            
-        generate_rooms();
-        $modal_sender->triggerModal("Room error", "Missing permissions to enter the room.");
+            generate_rooms();
+            $modal_sender->triggerModal("Room error", "Missing permissions to enter the room.");
         }
     } else {
-       generate_rooms();
+        generate_rooms();
     }
 
 
-function generate_rooms(){
-    global $room_repo,$user_id,$modal_sender,$rooms;
+    function generate_rooms()
+    {
+        global $room_repo, $user_id, $modal_sender, $rooms;
         try {
             $result_set = $room_repo->getRooms($user_id);
             while ($row = $result_set->fetch_assoc()) {
+
                 $room = new Room($row['room_name'], $row['user_id'], $row['room_image']);
+
                 $room->set_room_id($row['room_id']);
+
                 $room->set_creation_date($row['creation_date']);
+
                 array_push($rooms, $room);
             }
-            $dateString = '2023-04-28 18:24:46';
-            $dateTime = new DateTime($dateString);
-            $formattedDate = $dateTime->format('d.m.Y');
             foreach ($rooms as $iterator) {
                 echo '
                         <div class = "room">
@@ -375,7 +464,7 @@ function generate_rooms(){
         } catch (Exception $err) {
             $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
         }
-}
+    }
 
     ?>
 </div>

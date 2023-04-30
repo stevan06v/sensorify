@@ -41,5 +41,10 @@ class RoomAccessRepository
         }
         return in_array($room_id, $acessable_rooms);
     }
+
+    function updateAcess($user_id,  $room_id){
+        $query = "update rooms_access set user_id = $user_id where room_id = $room_id";
+        $result = $this->connection->query($query);
+    }
 }
 ?>

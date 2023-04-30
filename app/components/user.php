@@ -40,7 +40,6 @@
         border-radius: 5px;
         width: 16vw;
         padding: 0.3vw;
-        /* justify-content: center; */
         transition: ease width .4s;
         border: 1px solid #1a876667;
         color: #000000;

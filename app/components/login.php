@@ -1,5 +1,5 @@
 <?php
-    $user_repo = new UserRepository();
+$user_repo = new UserRepository();
 if (
     isset($_POST['email']) &&
     isset($_POST['password']) &&
@@ -11,7 +11,7 @@ if (
         preg_match($password_regex, $_POST['password'])
     ) {
         if ($user_repo->existsUser($_POST['email'], $_POST['password'])) {
-            header("Location: home.php?enter=login&login=success");
+            header("Location: home.php?content=user");
             $_SESSION['login'] = true;
             $_SESSION['username'] = $user_repo->getUserNameByEmail($_POST['email']);;
         } else {
@@ -20,15 +20,15 @@ if (
         }
     } else {
         $_SESSION['login'] = false;
-      
-        generateLogin("");  
+
+        generateLogin("");
         $modal_sender->triggerModal("Log-in error", "Regex does not match!");
     }
 } else {
     if (!$_SESSION['login']) {
         generateLogin("");
     } else {
-        header("Location: home.php?enter=login?login=success");
+        header("Location: home.php?content=user");
     }
 }
 function generateLogin($err)
