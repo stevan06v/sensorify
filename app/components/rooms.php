@@ -187,25 +187,7 @@
     }
 </style>
 
-<?php
-require_once "./classes/model/Room.class.php";
-require_once "./classes/repositories/RoomRepository.class.php";
-require_once "./classes/repositories/UserRepository.class.php";
-require_once "./classes/repositories/RoomAccessRepository.class.php";
-require_once "./classes/ImageUploader.class.php";
-require_once "./classes/ModalSender.class.php";
 
-
-$dir = "./upload/rooms/";
-$image_uploader = new ImageUploader($dir);
-$user_repo = new UserRepository();
-$modal_sender = new ModalSender();
-$room_repo = new RoomRepository();
-$room_access_repo = new RoomAccessRepository();
-
-$rooms = array();
-$user_id = $user_repo->getUserIDbyName($_SESSION['username']);
-?>
 <script>
     // load imageinto page
     function displayRoomThumbmail(e) {
@@ -253,7 +235,25 @@ $user_id = $user_repo->getUserIDbyName($_SESSION['username']);
     }
 </script>
 
+
 <?php
+require_once "./classes/model/Room.class.php";
+require_once "./classes/repositories/RoomRepository.class.php";
+require_once "./classes/repositories/UserRepository.class.php";
+require_once "./classes/repositories/RoomAccessRepository.class.php";
+require_once "./classes/ImageUploader.class.php";
+require_once "./classes/ModalSender.class.php";
+
+
+$dir = "./upload/rooms/";
+$image_uploader = new ImageUploader($dir);
+$user_repo = new UserRepository();
+$modal_sender = new ModalSender();
+$room_repo = new RoomRepository();
+$room_access_repo = new RoomAccessRepository();
+
+$rooms = array();
+$user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
 isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $style = "room-block" : $style = "room-flex";
 echo '<div id="' . $style . '">';
