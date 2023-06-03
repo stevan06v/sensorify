@@ -87,16 +87,12 @@ for ($i = 0; $i < sizeof($devices); $i++) {
     ";
 }
 
-
-
 ?>
 
 <script>
     let switchButton = document.getElementById("mySwitchButton");
     let form = document.getElementById("myForm")
     let switchStateOutput = document.getElementById("switchStateOutput");
-
-
 
     switchButton.addEventListener("change", function() {
         let switchState = switchButton.checked ? "on" : "off";
@@ -118,7 +114,6 @@ for ($i = 0; $i < sizeof($devices); $i++) {
 if (isset($_GET['state'])) {
 
     $switchState = $_GET["state"];
-
 
     $response = array("state" => true);
 

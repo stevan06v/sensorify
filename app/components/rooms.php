@@ -177,13 +177,77 @@
         cursor: pointer;
         background-color: rgb(255, 255, 255);
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.52);
+    }
 
+    #add-submit {
+        background-color: #1a8766;
+        border: #1a8766;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        padding-top: 0.5vw;
+        padding-bottom: 0.5vw;
+        color: white;
+        border-radius: 5px;
+        font-family: ExtraBold;
     }
 
     .room-form-flex {
         display: flex;
-        justify-content: center;
         gap: 1.5vw;
+        justify-content: center;
+    }
+
+    .room-form-flex2 {
+        display: flex;
+        align-items: center;
+
+    }
+
+
+    .room-access-box {
+        font-family: ExtraBold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.28);
+        border-radius: 5px;
+        gap: 2vw;
+        padding: .5vw;
+        color: black;
+        font-size: medium;
+    }
+
+    h3 {
+        font-family: BoldItalic;
+        color: #000000;
+        border-bottom: #1a8766 2px solid;
+    }
+
+    .revoke-access {
+        color: red;
+        cursor: pointer;
+    }
+
+    #room-access-flex {
+        align-items: center;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        justify-content: center;
+        gap: 0.5vw;
+        max-width: min-content;
+    }
+
+    .trash-img {
+        width: 1.75vw;
+        cursor: pointer;
+
+    }
+
+    #room-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1vw;
     }
 </style>
 
@@ -269,7 +333,6 @@ echo '<div id="' . $style . '">';
     <?php
     isset($_GET['show']) && $room_access_repo->hasAccess($_GET['show'], $user_id) ? $id = "rooms-no-grid" : $id = "rooms";
     echo '<div id="' . $id . '">';
-
     ?>
 
     <?php
@@ -292,6 +355,7 @@ echo '<div id="' . $style . '">';
         }
     }
 
+    
     if (isset($_POST['submit'])) {
         $room_name = $_POST['room-name'];
         $file_dest = $image_uploader->upload(680, 500);
@@ -307,9 +371,9 @@ echo '<div id="' . $style . '">';
                 # user who created room --> can access it 
                 $room_access_repo->insert($room_id, $user_id);
 
-                $modal_sender->triggerNotification("Room added successully.");
+                $modal_sender->triggerNotification("Room added successfully.");
             } catch (Exception $err) {
-                $modal_sender->triggerModal("Room error", "Error occured while adding room.");
+                $modal_sender->triggerModal("Room error", "Error occurred while adding room.");
             }
         } else {
             $modal_sender->triggerModal("Room error", "Empty fields.");
@@ -318,6 +382,8 @@ echo '<div id="' . $style . '">';
 
     if (isset($_GET['show'])) {
         if ($room_access_repo->hasAccess($_GET['show'], $user_id)) {
+
+
             if (isset($_POST['change-room-image'])) {
                 try {
 
@@ -338,6 +404,18 @@ echo '<div id="' . $style . '">';
                 }
             }
 
+            if(isset($_POST['leave-room'])){
+                echo '
+                    <script>
+                    document.getElementsByTagName("body")[0].style.display = "none";
+                        setTimeout(function() {
+                                window.location = "./home.php?content=rooms";             
+                        }, 10);    
+                    </script>
+                ';
+
+            }
+
             if (isset($_POST['modify-room'])) {
                 $room_name = $_POST['room-name'];
                 $selection = $_POST['admin-selection'];
@@ -346,9 +424,9 @@ echo '<div id="' . $style . '">';
                     $room_repo->update_user_id_by_room_id($selection, $_GET['show']);
                     $room_repo->update_room_name_by_room_id($room_name, $_GET['show']);
 
-                    $room_access_repo->updateAcess($selection, $_GET['show']);
+                    $room_access_repo->updateAccess($selection, $_GET['show']);
 
-                    $modal_sender->triggerNotification("Room got sucessfully updated");
+                    $modal_sender->triggerNotification("Room got successfully updated");
 
                     $curr_user_id = $user_repo->getUserIDbyName($_SESSION['username']);
 
@@ -379,7 +457,6 @@ echo '<div id="' . $style . '">';
 
             $image_path = $room_repo->get_room_image_path_by_room_id($_GET['show']);
 
-
             echo '
             <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post" enctype="multipart/form-data">
                         <div id="image-selector"> 
@@ -388,50 +465,78 @@ echo '<div id="' . $style . '">';
                             <input onchange="displayRoomThumbmail(this)" id="fileimage" type="file" name="file" accept="image/png, image/jpg, image/svg, image/jpeg"/> 
                         </div>
                     <input type="submit" id="change-room-image" name="change-room-image" style="display:none;" value="send">
-                </form>
+                
         ';
 
             echo '
-                    <div id="room_show_flex">
-                        <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post">
-                        
+                    <div class="room_show_flex">
+                        <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post">                        
                         <div class="room-form-flex">
                         <div>    
-                            <label style="font-family:ExtraBold; color:black; font-size:1.2rem;" for="admin-selection">Room owner:</label>
-                            <select name="admin-selection" id="country">
+                            <label style="font-family:ExtraBold; color:black; font-size:1.2rem;" for="admin-selection">Room owner:</label>      
                 ';
 
-            $table = 'users';
-            $query = "select * from $table";
+            generate_user_selection();
 
+            $curr_room_name = $room_repo->get_room_name_by_room_id($_GET['show']);
+            echo '  
+            </div>
+                <input name="room-name" id="room-name-input" placeholder="Change room name" value="' . $curr_room_name . '">
+            </div>';
 
-            $curr_room_owner_id = $room_repo->get_user_id_by_room_id($_GET['show']);
-            $curr_room_user_name = $user_repo->getUserNamebyId($curr_room_owner_id);
+            echo '<div>';
+            echo '</form>';
 
-            echo '<option value="' .  $curr_room_owner_id . '">' . $curr_room_user_name . '</option>';
-            if ($result = $room_repo->get_connection()->query($query)) {
-                if ($result->num_rows >= 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        if ($row['user_id'] == $curr_room_owner_id) {
-                            continue;
-                        } else {
-                            echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
-                        }
+            echo '
+        <div class="room_show_flex">
+        <form action="./home.php?content=rooms&show=' . $_GET['show'] . '" method="post">';
+
+            echo '<div style="display:flex; gap:1.5vw; margin-top:1vh; justify-content:center; align-items:center;">';
+            echo '<div class="room-form-flex2">';
+            echo '<label style="font-family:ExtraBold; color:black; font-size:1.2rem;" for="admin-selection">Grant access:</label>';
+            generate_user_selection();
+            echo '</div>';
+            echo '<input id="add-submit" type="submit" name="grant-user" value="add">';
+            echo '</div>';
+            echo '</form>';
+
+            echo '<div>';
+
+            if (isset($_POST['grant-user'])) {
+                # user id
+                $selection = $_POST['admin-selection'];
+                $current_room_id = $_GET['show'];
+
+                if (!$room_access_repo->hasAccess($current_room_id, $selection)) {
+                    $room_access_repo->insert($current_room_id, $selection) != true ? $modal_sender->triggerModal("Room-Access-Error", "Error while inserting data!") : $modal_sender->triggerNotification("Room access successfully granted!");
+                    $modal_sender->triggerNotification("Successfully added room participant!");
+                }
+
+            } 
+
+            if (isset($_GET['revoke_access'])) {
+                try {
+                    if($room_repo->get_user_id_by_room_id($_GET['show']) != $_GET['revoke_access']){
+                        $room_access_repo->revoke_room_access($_GET['show'], $_GET['revoke_access']);
+                    }else{
+                        $modal_sender->triggerModal("Permission error", "You can not delete the room owner!");
                     }
+                } catch (Exception $err) {
+                    echo $err;
                 }
             }
 
-            $curr_room_name = $room_repo->get_room_name_by_room_id($_GET['show']);
+            # generate room participants
+            generate_room_participants($_GET['show']);
 
-            echo '  
-        </select>
-        </div>
-            <input name="room-name" id="room-name-input" placeholder="Change room name" value="' . $curr_room_name . '">
-        </div>
+            echo '</div>';
 
-        <input id="submit" type="submit" name="modify-room" value="send">
-                        </form>
-                    </div>';
+            echo '</div>';
+
+            echo "<div id='room-btn'>";
+            echo '<input id="submit" type="submit" name="modify-room" value="save">';
+            echo '<input style="background-color:#871a29;" id="submit" type="submit" name="leave-room" value="leave">';
+            echo "</div>";
         } else {
             generate_rooms();
             $modal_sender->triggerModal("Room error", "Missing permissions to enter the room.");
@@ -440,6 +545,28 @@ echo '<div id="' . $style . '">';
         generate_rooms();
     }
 
+    function generate_room_participants($room_id)
+    {
+        global $room_access_repo, $modal_sender, $user_repo;
+
+        echo "<h3>Room participants: </h3>";
+
+        echo "<div id='room-access-flex'>";
+        try {
+            $result_set = $room_access_repo->get_room_participants($room_id);
+            while ($row = $result_set->fetch_assoc()) {
+                echo "
+                <div class='room-access-box'>
+                    <div>@" . $user_repo->getUserNamebyId($row['user_id']) . "</div>
+                      <a class='revoke-access' href='home.php?content=rooms&show=$room_id&revoke_access=" . $row['user_id'] . "'>x</a>
+                </div>
+                ";
+            }
+        } catch (Exception $err) {
+            echo $err;
+        }
+        echo "<div>";
+    }
 
     function generate_rooms()
     {
@@ -465,14 +592,40 @@ echo '<div id="' . $style . '">';
                                     <div class="creation_date">' . $iterator->get_formatted_creation_date() . '</div>
                                 </div>
                                 <a class="submit" href="./home.php?content=rooms&delete=' . $iterator->get_room_id() . '">remove</a>
-                            </div>
-                            ';
+                            </div>';
             }
         } catch (Exception $err) {
-            $modal_sender->triggerModal("Room error", "Error occured reading rooms.");
+            $modal_sender->triggerModal("Room error", "Error occurred reading rooms.");
         }
     }
 
+    function generate_user_selection()
+    {
+
+        global $user_repo, $room_repo;
+
+        echo '<select name="admin-selection" id="country">';
+        $table = 'users';
+        $query = "select * from $table";
+
+
+        $curr_room_owner_id = $room_repo->get_user_id_by_room_id($_GET['show']);
+        $curr_room_user_name = $user_repo->getUserNamebyId($curr_room_owner_id);
+
+        echo '<option value="' .  $curr_room_owner_id . '">' . $curr_room_user_name . '</option>';
+        if ($result = $room_repo->get_connection()->query($query)) {
+            if ($result->num_rows >= 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($row['user_id'] == $curr_room_owner_id) {
+                        continue;
+                    } else {
+                        echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+                    }
+                }
+            }
+        }
+        echo "</select>";
+    }
     ?>
 </div>
 </div>

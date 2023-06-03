@@ -24,7 +24,7 @@ class RoomRepository
             VALUES ('" . $room->get_room_name() . "', '" . $user_id . "', '" . $room->get_room_image() . "' )";
             return mysqli_query($this->connection, $sql);
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ class RoomRepository
                 return $row["room_name"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
     function get_room_image_path_by_room_id($room_id)
@@ -94,7 +94,7 @@ class RoomRepository
                 return $row["room_image"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ class RoomRepository
                 return $row["room_id"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
     function get_user_id_by_room_id($room_id)
@@ -125,7 +125,7 @@ class RoomRepository
                 return $row["user_id"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
 
@@ -141,7 +141,7 @@ class RoomRepository
                 return $row["room_id"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
 
@@ -157,7 +157,7 @@ class RoomRepository
                 return $row["room_id"];
             }
         } catch (mysqli_sql_exception $err) {
-            throw new Exception("SQL error occured: " . $err->getMessage());
+            throw new Exception("SQL error occurred: " . $err->getMessage());
         }
     }
 }
