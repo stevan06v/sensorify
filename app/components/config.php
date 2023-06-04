@@ -14,7 +14,10 @@
         align-items: center;
     }
 
-    .config-image{
+    code{
+        max-width: 20vw;
+    } 
+    .config-image {
         width: 7vw;
     }
 </style>
@@ -22,11 +25,14 @@
 <div class="sub-page-box">
 
     <?php
+    
+    if (!isset($_SESSION["config-selection"])) {
+        $_SESSION["config-selection"] = "";
+    }
 
     if (isset($_GET['config-selection'])) {
-
+        $_SESSION["config-selection"] = $_GET['config-selection'];
         include($_GET['config-selection']);
-        
     } else {
 
         $previews = array(
@@ -59,7 +65,6 @@
             'In progress...',
             'In progress...'
         );
-
         echo '
             <h3 class="sub-page-header">
                 Choose your config-generator:
@@ -80,11 +85,7 @@
 
 
 
-
-
     ?>
-
-
 
 
 </div>

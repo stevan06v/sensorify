@@ -82,8 +82,9 @@ input {
 
 .input {
     color: #1a8766;
-    font-family: BoldItalic;
+    border: 1px solid #1a876667;
     font-size: 20px;
+    font-family: BoldItalic;
     display: block;
     margin: auto;
     text-align: center;
@@ -92,7 +93,6 @@ input {
     padding: 0.5vw;
     justify-content: center;
     transition: ease width .4s;
-    border: 1px solid #1a876667;
     color: #000000;
     cursor: pointer;
     background-color: rgb(255, 255, 255);

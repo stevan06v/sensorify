@@ -33,9 +33,14 @@ if (!isset($_SESSION['username'])) {
     <title>Sensorify</title>
     <link rel="stylesheet" href="./style/style.css">
     <script src="https://kit.fontawesome.com/61efd671c0.js" crossorigin="anonymous"></script>
+
     <script src="./scripts/script.js" defer></script>
     <script src="./libs/modules/PopupEngine/popupEngine.js"></script>
 
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+    
     <script>
         PopupEngine.init({
             doLogs: true
@@ -57,21 +62,21 @@ if (!isset($_SESSION['username'])) {
         document.getElementById('loading-screen').style.display = 'flex';
 
         try {
-    // Load the content from the database using AJAX
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        // Hide the loading screen
-                        document.getElementById('loading-screen').style.display = 'none';
+            // Load the content from the database using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Hide the loading screen
+                    document.getElementById('loading-screen').style.display = 'none';
 
-                        // Update the content with the response from the server
-                        document.getElementById('content').innerHTML = xhr.responseText;
-                    }
-                };
-                xhr.open('GET', './home.php', true);
-                xhr.send();
+                    // Update the content with the response from the server
+                    document.getElementById('content').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open('GET', './home.php', true);
+            xhr.send();
         } catch (e) {
-           
+
         }
     </script>
 
@@ -87,7 +92,7 @@ if (!isset($_SESSION['username'])) {
         include("./components/main.php");
     }
 
-    
+
     if (isset($_GET['enter'])) {
         switch ($_GET['enter']) {
             case 'guest':
