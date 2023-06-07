@@ -3,6 +3,7 @@ body {
     padding: 0;
     overflow-x: hidden;
     color: #1a8766;
+
 }
 
 #login_headline {
@@ -17,7 +18,7 @@ input {
 }
 
 #signup, #guestin, #login {
-    
+
     padding-left: 5vw;
     padding-right: 5vw;
     padding-bottom: 2vw;
@@ -81,6 +82,7 @@ input {
 }
 
 .input {
+
     color: #1a8766;
     border: 1px solid #1a876667;
     font-size: 20px;
@@ -239,6 +241,7 @@ input[type="file"] {
     border: 10px solid #fff;
     border-top-color: #1a8766;
     animation: spin 1.5s ease-in-out infinite;
+ 
 }
 
 @keyframes spin {

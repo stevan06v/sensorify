@@ -30,12 +30,13 @@
 </style>
 
 <div id="main-flex">
+    
     <?php
         include("./components/sidebar.php");
     ?>
+
     <?php
         include("./components/content.php");
     ?>
-
 
 </div>

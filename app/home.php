@@ -80,7 +80,6 @@ if (!isset($_SESSION['username'])) {
         }
     </script>
 
-
     <?php
     require_once "./classes/repositories/UserRepository.class.php";
     require_once "./classes/ModalSender.class.php";
