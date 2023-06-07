@@ -516,10 +516,13 @@ echo '<div id="' . $style . '">';
 
             if (isset($_GET['revoke_access'])) {
                 try {
-                    if($room_repo->get_user_id_by_room_id($_GET['show']) != $_GET['revoke_access']){
+                    if(
+                        $room_repo->get_user_id_by_room_id($_GET['show']) != $_GET['revoke_access'] &&
+                        $_GET['revoke_access'] != $user_repo->getUserIDbyName($_SESSION['username'])
+                    ){
                         $room_access_repo->revoke_room_access($_GET['show'], $_GET['revoke_access']);
                     }else{
-                        $modal_sender->triggerModal("Permission error", "You can not delete the room owner!");
+                        $modal_sender->triggerModal("Permission error", "You can not delete yourself!");
                     }
                 } catch (Exception $err) {
                     echo $err;

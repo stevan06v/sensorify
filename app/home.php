@@ -90,6 +90,7 @@ if (!isset($_SESSION['username'])) {
 
     if ($_SESSION['login']) {
         include("./components/main.php");
+       # header("Location: ./home.php?content=user");
     }
 
 
@@ -113,7 +114,6 @@ if (!isset($_SESSION['username'])) {
                     &&
                     $_SESSION['login']
                 ) {
-                    // include("./components/sidebar.php");
                     include("./components/main.php");
                 } else {
                     include('./components/login.php');
@@ -127,7 +127,6 @@ if (!isset($_SESSION['username'])) {
                     &&
                     $_SESSION['login']
                 ) {
-                    // include("./components/sidebar.php");
                     include("./components/main.php");
                 } else {
                     include('./components/signup.php');

@@ -31,10 +31,10 @@
 
 <div id="main-flex">
     <?php
-    include("./components/sidebar.php");
+        include("./components/sidebar.php");
     ?>
     <?php
-    include("./components/content.php");
+        include("./components/content.php");
     ?>
 
 

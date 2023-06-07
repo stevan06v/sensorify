@@ -76,7 +76,7 @@
                 $modal_sender->triggerNotification("Downloading config.json...");
 
                 echo "
-                    <script defer>
+                    <script>
                             window.addEventListener('load', function () {
                                 let fileToDownload = document.getElementById('file-to-download');
                                 fileToDownload.href = '$path';
@@ -85,7 +85,6 @@
                     </script>
                 ";
 
-                
             } else {
                 $modal_sender->triggerModal("JSON-error", "There is no config.json file!");
             }
