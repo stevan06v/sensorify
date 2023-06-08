@@ -1,4 +1,42 @@
 <style>
+    #moistureProgress {
+        width: 5vw;
+        background-color: #ddd;
+        height: 25vh;
+        border-radius: 10px;
+        transform: rotate(180deg);
+        margin: auto;
+    }
+
+    #moistureBar {
+        height: 1%;
+        height: 30px;
+        background-color: #1a8766;
+        border-radius: 10px;
+        transform: rotate(180deg);
+        text-align: center;
+        margin: auto;
+        padding: 1vw;
+        font-family: BoldItalic;
+        color: black;
+        font-size: 1rem;
+    }
+
+    #moisturePlugIn {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    #moistureProperties {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 25vh;
+        margin-left: .5vw;
+    }
+
+
     #humidityProgress {
         width: 5vw;
         background-color: #ddd;
@@ -20,6 +58,7 @@
         font-family: BoldItalic;
         color: black;
         font-size: 1rem;
+
     }
 
     #humidityPlugIn {
@@ -76,14 +115,16 @@
         color: black;
     }
 
-    #dht-sensor {
+    #plantify {
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: auto auto auto;
         gap: 2vw;
+        font-family: BoldItalic;
     }
 </style>
 
-<div id='dht-sensor'>
+
+<div id='plantify'>
     <div id='temperaturePlugIn'>
         <div id='maxVal'>50 °C</div>
         <div id='temperatureProgress'>
@@ -99,37 +140,57 @@
         </div>
         <div id='minVal'>0 %</div>
     </div>
+
+    <div id='moisturePlugIn'>
+        <div id='maxVal'>100 %</div>
+        <div id='moistureProgress'>
+            <div id='moistureBar'>...</div>
+        </div>
+        <div id='minVal'>0 %</div>
+    </div>
 </div>
 
-<?php echo "
+<?php
+echo "
 <script>
+    let hasReadOnce = false;
+
     // in seconds
     let requestBreak = 5;
+
     let humidityBefore = 0;
     let temperatureBefore = 0;
-    let hasReadOnce = false;
+    let moistureBefore = 0;
+
+    let temp = document.getElementById('temp');
+    let tempBefore = document.getElementById('tempBefore');
+
     let temperatureBar = document.getElementById('temperatureBar');
     let humidityBar = document.getElementById('humidityBar');
+    let moistureBar = document.getElementById('moistureBar');
 
     setInterval(() => {
-        fetch('http://" . $ip_address . "/dht11')
+        fetch('http://" . $ip_address . "/plantify')
             .then((res) => {
                 return res.json()
             })
             .then((data) => {
+
                 let humidity = data.humidity;
+                let moisture = data.moisture;
                 let actualTemperature = data.temperature;
 
                 let temperature = calcTemperaturePercentage(actualTemperature);
 
                 temperatureBar.innerHTML = actualTemperature + '°C';
                 humidityBar.innerHTML = humidity + '%';
+                moistureBar.innerHTML = moisture + '%';
 
 
-                if (hasReadOnce) {
+                if (hasReadOnce == true) {
 
                     // reading after is bigger than reading before
-                    if (humidity > humidityBefore) {
+                    if (humidity >= humidityBefore) {
                         moveUp(humidityBefore, humidity, humidityBar);
                         humidityBefore = humidity;
                     } else {
@@ -137,8 +198,17 @@
                         humidityBefore = humidity;
                     }
 
+                    // moisture
+                    if (moisture >= moistureBefore) {
+                        moveUp(moistureBefore, moisture, moistureBar);
+                        moistureBefore = moisture;
+                    } else {
+                        moveDown(moistureBefore, moisture, moistureBar);
+                        moistureBefore = moisture;
+                    }
+
                     // temperature
-                    if (temperature > temperatureBefore) {
+                    if (temperature >= temperatureBefore) {
                         moveUp(temperatureBefore, temperature, temperatureBar);
                         temperatureBefore = temperature;
                     } else {
@@ -146,12 +216,16 @@
                         temperatureBefore = temperature;
                     }
 
+
                 } else {
                     moveUp(0, humidity, humidityBar);
                     moveUp(0, temperature, temperatureBar);
+                    moveUp(0, moisture, moistureBefore);
+
 
                     humidityBefore = humidity;
                     temperatureBefore = temperature;
+                    moistureBefore = moisture;
 
                     hasReadOnce = true;
                 }
@@ -176,7 +250,7 @@
             var id = setInterval(frame, 10);
 
             function frame() {
-                if (height >= to) {
+                if (to <= height) {
                     clearInterval(id);
                     i = 0;
                 } else {
@@ -206,6 +280,6 @@
             }
         }
     }
-</script>
-";
+
+</script>";
 ?>

@@ -1,5 +1,6 @@
 <?php 
 class Device{
+    
     private $ip;
     private $is_on; 
     private $room_id;
@@ -10,6 +11,7 @@ class Device{
         $this->ip = $ip; 
         $this->device_name;
     }
+
     function trigger_device($switchState){
         $url = "http://". $this->ip .":/relay/0?turn=" . $switchState;
         
@@ -20,11 +22,13 @@ class Device{
 
         $switchState == "on" ? $this->is_on = true : $this->is_on = false; 
     }
+
     function is_reachable(){
         exec("ping -c 4 " . $this->ip, $output, $result);
         $result == 0 ? $valid = true : $valid = false; 
         return $valid;
     }
+
     function is_on(){
         return $this->is_on;
     }

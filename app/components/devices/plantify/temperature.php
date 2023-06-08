@@ -5,6 +5,7 @@
         height: 25vh;
         border-radius: 10px;
         transform: rotate(180deg);
+        margin: auto;
     }
 
     #temperatureBar {
@@ -19,10 +20,13 @@
         font-family: BoldItalic;
         color: black;
         font-size: 1rem;
+
     }
 
     #temperaturePlugIn {
         display: flex;
+        flex-direction: column;
+        margin: auto;
     }
 
     #temperatureProperties {
@@ -32,32 +36,40 @@
         height: 25vh;
         margin-left: .5vw;
     }
+
+    #minVal {
+        text-align: center;
+        font-family: BoldItalic;
+    }
+
+    #maxVal {
+        text-align: center;
+        font-family: BoldItalic;
+    }
 </style>
 
 
 
-<div id="temperaturePlugIn">
-    <div id="temperatureProgress">
-        <div id="temperatureBar">reading...</div>
+<div id='temperaturePlugIn'>
+    <div id='maxVal'>50 °C</div>
+    <div id='temperatureProgress'>
+        <div id='temperatureBar'>...</div>
     </div>
-    <div id="temperatureProperties">
-        <div id="maxVal">50 °C</div>
-        <div id="minVal">0 °C</div>
-    </div>
+    <div id='minVal'>0 °C</div>
 </div>
 
-
+<?php
+echo "
 <script>
-    
     // in seconds
     let requestBreak = 5;
     let temperatureBefore = 0;
     let hasReadOnce = false;
-    let temperatureBar = document.getElementById("temperatureBar");
+    let temperatureBar = document.getElementById('temperatureBar');
 
 
     setInterval(() => {
-        fetch("http://192.168.0.184/temperature")
+        fetch('http://".$ip_address."/temperature')
             .then((res) => {
                 return res.json()
             })
@@ -65,7 +77,7 @@
 
                 let actualTemperature = data.temperature;
 
-                temperatureBar.innerHTML = `${actualTemperature} °C`;
+                temperatureBar.innerHTML = actualTemperature + '°C';
 
                 let temperature = calcTemperaturePercentage(actualTemperature);
 
@@ -79,7 +91,7 @@
                         temperatureBefore = temperature;
                     }
                 } else {
-                    moveUp(0,temperature);
+                    moveUp(0, temperature);
 
                     temperatureBefore = temperature;
                     hasReadOnce = true;
@@ -102,7 +114,7 @@
         if (i == 0) {
             i = 1;
 
-            temperatureBar.style.height = from + "%";
+            temperatureBar.style.height = from + '%';
             var height = 1;
             var id = setInterval(frame, 10);
 
@@ -112,7 +124,7 @@
                     i = 0;
                 } else {
                     height++;
-                    temperatureBar.style.height = height + "%";
+                    temperatureBar.style.height = height + '%';
                 }
             }
         }
@@ -123,7 +135,7 @@
         if (i == 0) {
             i = 1;
 
-            temperatureBar.style.height = from + "%";
+            temperatureBar.style.height = from + '%';
             var height = from;
 
             var id = setInterval(frame, 10);
@@ -134,9 +146,10 @@
                     i = 0;
                 } else {
                     height--;
-                    temperatureBar.style.height = height + "%";
+                    temperatureBar.style.height = height + '%';
                 }
             }
         }
     }
 </script>
+";?>

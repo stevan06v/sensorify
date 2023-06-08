@@ -5,6 +5,7 @@
         height: 25vh;
         border-radius: 10px;
         transform: rotate(180deg);
+        margin: auto;
     }
 
     #humidityBar {
@@ -23,6 +24,8 @@
 
     #humidityPlugIn {
         display: flex;
+        flex-direction: column;
+        margin: auto;
     }
 
     #humidityProperties {
@@ -33,37 +36,46 @@
         height: 25vh;
         margin-left: .5vw;
     }
+
+    #minVal {
+        text-align: center;
+        font-family: BoldItalic;
+    }
+
+    #maxVal {
+        text-align: center;
+        font-family: BoldItalic;
+    }
 </style>
 
 
-<div id="humidityPlugIn">
-    <div id="humidityProgress">
-        <div id="humidityBar">reading...</div>
+<div id='humidityPlugIn'>
+    <div id='maxVal'>100 %</div>
+    <div id='humidityProgress'>
+        <div id='humidityBar'>...</div>
     </div>
-    <div id="humidityProperties">
-        <div id="maxVal">100 %</div>
-        <div id="minVal">0 %</div>
-    </div>
+    <div id='minVal'>0 %</div>
 </div>
 
-
+<?php
+echo "
 <script>
     // in secs
     let requestBreak = 5;
     let humidityBefore = 0;
     let hasReadOnce = false;
-    let humidityBar = document.getElementById("humidityBar");
+    let humidityBar = document.getElementById('humidityBar');
 
 
     setInterval(() => {
-        fetch("http://192.168.0.184/humidity")
+        fetch('http://" . $ip_address . "/humidity')
             .then((res) => {
                 return res.json()
             })
             .then((data) => {
 
                 let humidity = data.humidity;
-                humidityBar.innerHTML = `${humidity} %`;
+                humidityBar.innerHTML = humidity + '%';
 
                 if (hasReadOnce) {
                     // reading after is bigger than reading before
@@ -86,8 +98,6 @@
             })
     }, requestBreak * 1000);
 
-
-
     function moveUp(to) {
         var i = 0;
         if (i == 0) {
@@ -101,18 +111,18 @@
                     i = 0;
                 } else {
                     height++;
-                    humidityBar.style.height = height + "%";
+                    humidityBar.style.height = height + '%';
                 }
             }
         }
     }
-
+    
     function moveDown(from, to) {
         var i = 0;
         if (i == 0) {
             i = 1;
 
-            humidityBar.style.height = from + "%";
+            humidityBar.style.height = from + '%';
             var height = from;
 
             var id = setInterval(frame, 10);
@@ -123,9 +133,11 @@
                     i = 0;
                 } else {
                     height--;
-                    humidityBar.style.height = height + "%";
+                    humidityBar.style.height = height + '%';
                 }
             }
         }
     }
 </script>
+";
+?>

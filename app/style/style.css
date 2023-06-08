@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+
     overflow-x: hidden;
     color: #1a8766;
 
@@ -110,8 +111,9 @@ input {
     color: white;
     border-radius: 5px;
     background-color: #1a8766;
+    
     border: none;
-    margin: auto;
+
     box-shadow: -2px -1px 20px -10px rgba(0, 0, 0, 0.75);
 }
 
@@ -127,6 +129,7 @@ input[type="file"] {
 }
 
 .file_image {
+    
     cursor: pointer;
     width: 12vw;
     height: 12vw;
@@ -241,7 +244,7 @@ input[type="file"] {
     border: 10px solid #fff;
     border-top-color: #1a8766;
     animation: spin 1.5s ease-in-out infinite;
- 
+
 }
 
 @keyframes spin {

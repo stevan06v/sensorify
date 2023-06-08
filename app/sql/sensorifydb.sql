@@ -44,7 +44,7 @@ CREATE TABLE `addresses` (
 CREATE TABLE `devices` (
   `device_type` varchar(50) NOT NULL,
   `ip_address` varchar(50) NOT NULL,
-  `sensor_id` int(11) DEFAULT NULL,
+  `device_name` varchar(50) NOT NULL,
   `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -73,22 +73,6 @@ CREATE TABLE `rooms_access` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `sensors`
---
-
-CREATE TABLE `sensors` (
-  `ip_address` varchar(50) NOT NULL,
-  `ssid` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `port` int(20) NOT NULL,
-  `server_ip` varchar(50) NOT NULL,
-  `sensor_id` int(11) NOT NULL,
-  `room_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -123,7 +107,6 @@ ALTER TABLE `addresses`
 -- Indizes für die Tabelle `devices`
 --
 ALTER TABLE `devices`
-  ADD KEY `sensor_id` (`sensor_id`),
   ADD KEY `devices_ibfk_2` (`room_id`);
 
 --
@@ -133,12 +116,6 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`room_id`),
   ADD KEY `user_id` (`user_id`);
 
---
--- Indizes für die Tabelle `sensors`
---
-ALTER TABLE `sensors`
-  ADD PRIMARY KEY (`sensor_id`),
-  ADD KEY `room_id` (`room_id`);
 
 --
 -- Indizes für die Tabelle `users`
@@ -156,11 +133,7 @@ ALTER TABLE `users`
 ALTER TABLE `rooms`
   MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
---
--- AUTO_INCREMENT für Tabelle `sensors`
---
-ALTER TABLE `sensors`
-  MODIFY `sensor_id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
@@ -182,7 +155,6 @@ ALTER TABLE `addresses`
 -- Constraints der Tabelle `devices`
 --
 ALTER TABLE `devices`
-  ADD CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensors` (`sensor_id`),
   ADD CONSTRAINT `devices_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 
 --
@@ -191,12 +163,6 @@ ALTER TABLE `devices`
 ALTER TABLE `rooms`
   ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
---
--- Constraints der Tabelle `sensors`
---
-ALTER TABLE `sensors`
-  ADD CONSTRAINT `sensors_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
