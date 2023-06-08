@@ -48,7 +48,6 @@
 
 
 <script>
-
     let moistureBefore = 0;
     let hasReadOnce = false;
     let moistureBar = document.getElementById("moistureBar");
@@ -67,28 +66,32 @@
                 if (hasReadOnce) {
                     // reading after is bigger than reading before
                     if (moisture > moistureBefore) {
-                        moveUp(moisture);
+                        moveUp(moistureBefore, moisture);
                         moistureBefore = moisture;
                     } else {
                         moveDown(moisture, moistureBefore);
                         moistureBefore = moisture;
                     }
                 } else {
-                    moveUp(moisture);
+                    moveUp(0, moisture);
 
                     moistureBefore = moisture;
                     hasReadOnce = true;
                 }
             })
+
             .catch((err) => {
                 console.log(err);
             })
     }, 1000);
 
-    function moveUp(to) {
+    function moveUp(from, to) {
         var i = 0;
         if (i == 0) {
             i = 1;
+
+            moistureBar.style.height = from + "%"
+
             var height = 1;
             var id = setInterval(frame, 10);
 
@@ -103,6 +106,7 @@
             }
         }
     }
+
     function moveDown(from, to) {
         var i = 0;
         if (i == 0) {

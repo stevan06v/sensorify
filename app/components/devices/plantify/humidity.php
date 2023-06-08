@@ -47,8 +47,6 @@
 </div>
 
 
-
-
 <script>
     let humidityBefore = 0;
     let hasReadOnce = false;

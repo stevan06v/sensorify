@@ -120,4 +120,12 @@ if (isset($_GET['state'])) {
     echo json_encode($response);
 }
 
+
+include("./components/devices/plantify/humidity.php");
+include("./components/devices/plantify/temperature.php");
+
+
+
+
+
 ?>
