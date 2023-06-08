@@ -48,6 +48,8 @@
 
 
 <script>
+    // in secs
+    let requestBreak = 5; 
     let moistureBefore = 0;
     let hasReadOnce = false;
     let moistureBar = document.getElementById("moistureBar");
@@ -83,7 +85,7 @@
             .catch((err) => {
                 console.log(err);
             })
-    }, 1000);
+    }, requestBreak * 1000);
 
     function moveUp(from, to) {
         var i = 0;

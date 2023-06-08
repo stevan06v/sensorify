@@ -48,6 +48,8 @@
 
 
 <script>
+    // in secs
+    let requestBreak = 5;
     let humidityBefore = 0;
     let hasReadOnce = false;
     let humidityBar = document.getElementById("humidityBar");
@@ -82,7 +84,7 @@
             .catch((err) => {
                 console.log(err);
             })
-    }, 1000);
+    }, requestBreak * 1000);
 
 
 

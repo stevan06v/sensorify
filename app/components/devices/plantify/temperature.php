@@ -48,6 +48,9 @@
 
 
 <script>
+    
+    // in seconds
+    let requestBreak = 5;
     let temperatureBefore = 0;
     let hasReadOnce = false;
     let temperatureBar = document.getElementById("temperatureBar");
@@ -85,7 +88,7 @@
             .catch((err) => {
                 console.log(err);
             })
-    }, 1000);
+    }, requestBreak * 1000);
 
     function calcTemperaturePercentage(currentTemp) {
         let maxTemp = 50;

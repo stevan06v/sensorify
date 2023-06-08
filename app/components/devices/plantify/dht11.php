@@ -23,14 +23,14 @@
 
     #humidityPlugIn {
         display: flex;
+        flex-direction: column;
+        margin: auto;
     }
 
     #humidityProperties {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        height: 25vh;
-        margin-left: .5vw;
+        margin: auto;
     }
 
     #temperatureProgress {
@@ -57,53 +57,37 @@
 
     #temperaturePlugIn {
         display: flex;
-    }
-
-    #temperatureProperties {
-        display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        height: 25vh;
-        margin-left: .5vw;
+        margin: auto;
     }
 </style>
 
 
-
-
 <div id="temperaturePlugIn">
+    <div id="maxVal">50 °C</div>
     <div id="temperatureProgress">
-        <div id="temperatureBar">reading...</div>
+        <div id="temperatureBar">...</div>
     </div>
-    <div id="temperatureProperties">
-        <div id="maxVal">50 °C</div>
-        <div id="minVal">0 °C</div>
-    </div>
+    <div id="minVal">0 °C</div>
 </div>
 
-
 <div id="humidityPlugIn">
-
-    <div id="humidityProgress" class="humidityProperties">
-        <div id="maxVal">100 %</div>
-        <div id="humidityBar">reading...</div>
+    <div id="maxVal">100 %</div>
+    <div id="humidityProgress">
+        <div id="humidityBar">...</div>
     </div>
-
-    <div id="humidityProperties">
-
-        
-    </div>
-
+    <div id="minVal">0 %</div>
 </div>
 
 
 <script>
+    // in seconds
+    let requestBreak = 5;
     let humidityBefore = 0;
     let temperatureBefore = 0;
     let hasReadOnce = false;
     let temperatureBar = document.getElementById("temperatureBar");
     let humidityBar = document.getElementById("humidityBar");
-
 
 
     setInterval(() => {
@@ -148,7 +132,7 @@
             .catch((err) => {
                 console.log(err);
             })
-    }, 1000);
+    }, requestBreak * 1000);
 
 
     function calcTemperaturePercentage(currentTemp) {
