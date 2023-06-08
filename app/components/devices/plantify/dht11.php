@@ -83,13 +83,17 @@
 
 
 <div id="humidityPlugIn">
-    <div id="humidityProgress">
+
+    <div id="humidityProgress" class="humidityProperties">
+        <div id="maxVal">100 %</div>
         <div id="humidityBar">reading...</div>
     </div>
+
     <div id="humidityProperties">
-        <div id="maxVal">100 %</div>
-        <div id="minVal">0 %</div>
+
+        
     </div>
+
 </div>
 
 
