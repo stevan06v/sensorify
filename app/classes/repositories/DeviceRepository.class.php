@@ -27,6 +27,14 @@ class DeviceRepository
         }
     }
 
+    function delete_device($device_id)
+    {
+        $query = "delete from devices where device_id = " .$device_id;
+        if ($result = $this->connection->query($query)) {
+                return $result;
+        }
+    }
+
     function insert($ip_address, $room_id, $type, $name)
     {
         try {

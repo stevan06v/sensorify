@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 30. Apr 2023 um 13:46
+-- Erstellungszeit: 14. Jun 2023 um 13:18
 -- Server-Version: 10.4.28-MariaDB
 -- PHP-Version: 8.2.4
 
@@ -23,9 +23,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
-
--- --------------------------------------------------------
-
 --
 -- Tabellenstruktur für Tabelle `devices`
 --
@@ -34,7 +31,8 @@ CREATE TABLE `devices` (
   `device_type` varchar(50) NOT NULL,
   `ip_address` varchar(50) NOT NULL,
   `device_name` varchar(50) NOT NULL,
-  `room_id` int(11) NOT NULL
+  `room_id` int(11) NOT NULL,
+  `device_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -51,7 +49,15 @@ CREATE TABLE `rooms` (
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `rooms`
+--
 
+INSERT INTO `rooms` (`room_name`, `user_id`, `room_id`, `room_image`, `creation_date`) VALUES
+('Living room', 39, 36, './upload/rooms/6489a13cacf3e4.15478875.png', '2023-06-14 11:15:08'),
+('Living room', 39, 37, './upload/rooms/6489a1449cfa38.62293101.png', '2023-06-14 11:15:16');
+
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `rooms_access`
@@ -62,6 +68,13 @@ CREATE TABLE `rooms_access` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `rooms_access`
+--
+
+INSERT INTO `rooms_access` (`room_id`, `user_id`) VALUES
+(36, 39),
+(37, 39);
 
 -- --------------------------------------------------------
 
@@ -87,11 +100,21 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indizes für die Tabelle `addresses`
+-- Daten für Tabelle `users`
+--
 
+INSERT INTO `users` (`name`, `lastname`, `user_name`, `email`, `password`, `creation_date`, `image_dest`, `phone_number`, `country`, `zip_code`, `city`, `house_number`, `street`, `user_id`) VALUES
+('Stevan', 'Vlajic', 'stevan6v', 'stevanvlajic5@gmail.com', 'Stevan2006', '2023-06-14 11:15:46', './upload/6489a11eb33107.73039472.png', 'fassdafsad', 'safsafasd', 'fafasdfsd', 'sdfsadfasd', 'dsfasfdasf', 'dfafd', 39);
+
+--
+-- Indizes der exportierten Tabellen
+--
+
+--
 -- Indizes für die Tabelle `devices`
 --
 ALTER TABLE `devices`
+  ADD PRIMARY KEY (`device_id`),
   ADD KEY `devices_ibfk_2` (`room_id`);
 
 --
@@ -100,7 +123,6 @@ ALTER TABLE `devices`
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`room_id`),
   ADD KEY `user_id` (`user_id`);
-
 
 --
 -- Indizes für die Tabelle `users`
@@ -113,41 +135,23 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `devices`
+--
+ALTER TABLE `devices`
+  MODIFY `device_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT für Tabelle `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
-
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- Constraints der exportierten Tabellen
---
-
---
--- Constraints der Tabelle `addresses`
---
-ALTER TABLE `addresses`
-  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints der Tabelle `devices`
---
-ALTER TABLE `devices`
-  ADD CONSTRAINT `devices_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
-
---
--- Constraints der Tabelle `rooms`
---
-ALTER TABLE `rooms`
-  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

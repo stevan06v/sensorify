@@ -66,10 +66,10 @@
         box-shadow: -2px -1px 15px -10px rgba(0, 0, 0, 0.75);
     }
 
-    .device-name{
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-    } 
+    .device-name {
+
+        margin-bottom: 1vh;
+    }
 
     #device-grid {
         display: grid;
@@ -77,6 +77,23 @@
         gap: 1vw;
     }
 
+    .device-room {
+        background-color: #ccc;
+        padding: .5vw;
+        border-radius: 5px;
+
+    }
+
+    .remove-device {
+        padding: 0 0 .5vh 0;
+        color: #a91a1a;
+        margin: auto;
+        width: 1vw;
+        padding: .5vw;
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+    
 </style>
 <?php
 require_once "./classes/repositories/RoomRepository.class.php";
@@ -109,6 +126,11 @@ $device_repo = new DeviceRepository();
             }
         }
 
+        if (isset($_GET['remove'])) {
+            $device_repo->delete_device($_GET['remove']);
+            $modal_sender->triggerNotification("Device successfully removed!");
+        }
+
         ?>
 
         <div id="device-grid">
@@ -118,10 +140,13 @@ $device_repo = new DeviceRepository();
             while ($row = $devices->fetch_assoc()) {
                 $ip_address = $row['ip_address'];
                 echo '<div class="device-box">';
-                    echo "<div class='device-name'>" . $row['device_name'] . "</div>";
-                    include("./components/devices/plantify/" . $row["device_type"] . ".php");
-                    echo "<div class='device-name'>" . $room_repo->get_room_name_by_room_id($row['room_id']) . "</div>";
+                echo '<a href="./home.php?content=devices&remove=' . $row["device_id"] . '">
 
+                <img src="./img/x.svg" class="remove-device">
+                </a>';
+                echo "<div class='device-name'>" . $row['device_name'] . "</div>";
+                include("./components/devices/plantify/" . $row["device_type"] . ".php");
+                echo "<div class='device-room'>" . $room_repo->get_room_name_by_room_id($row['room_id']) . "</div>";
                 echo '</div>';
             }
 
